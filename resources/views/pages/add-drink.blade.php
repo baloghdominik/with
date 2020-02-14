@@ -44,7 +44,7 @@
                                 </div>
                                 <div class="card-content">
                                     <div class="card-body">
-                                        <form class="form form-horizontal" method="post" action="/withadmin/public/add-side"  enctype="multipart/form-data">
+                                        <form class="form form-horizontal" method="post" action="/withadmin/public/add-drink"  enctype="multipart/form-data">
                                             <div class="form-body">
                                                 <div class="row">
                                                     @csrf 
@@ -67,7 +67,7 @@
                                                                 <span>Ital neve</span>
                                                             </div>
                                                             <div class="col-md-8">
-                                                                <input type="text" id="food-name" class="form-control" name="name" placeholder="Köret megnevezése">
+                                                                <input type="text" id="food-name" class="form-control" name="name" placeholder="Ital megnevezése">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -77,7 +77,7 @@
                                                                 <span>Ital fogyasztói ára</span>
                                                             </div>
                                                             <div class="col-md-8">
-                                                                <input type="text" id="" class="form-control" name="price" placeholder="Köret eladási ára">
+                                                                <input type="text" id="" class="form-control" name="price" placeholder="Ital eladási ára">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -87,7 +87,7 @@
                                                                 <span>Ital akciós ára</span>
                                                             </div>
                                                             <div class="col-md-8">
-                                                                <input type="text" id="" class="form-control" name="saleprice" placeholder="Köret kedvezményes ára">
+                                                                <input type="text" id="" class="form-control" name="saleprice" placeholder="Ital kedvezményes ára">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -112,7 +112,7 @@
                                                                 <span>Ital beszerzési ára</span>
                                                             </div>
                                                             <div class="col-md-8">
-                                                                <input type="text" id="" class="form-control" name="makeprice" placeholder="Köret elkszítési költsége">
+                                                                <input type="text" id="" class="form-control" name="makeprice" placeholder="Ital elkszítési költsége">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -123,6 +123,68 @@
                                                             </div>
                                                             <div class="col-md-8">
                                                                 <p>~0 ft</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-12">
+                                                        <div class="form-group row">
+                                                            <div class="col-md-4">
+                                                                <span>Ital elkészítési ideje</span>
+                                                            </div>
+                                                            <div class="col-md-8">
+                                                                <fieldset class="form-group">
+                                                                        <select class="form-control" name="maketime" id="basicSelect">
+                                                                                <option value="0">Nincs elkészítési idő</option>
+                                                                                <option value="1">1 perc</option>
+                                                                                <option value="2">2 perc</option>
+                                                                                <option value="3">3 perc</option>
+                                                                                <option value="4">4 perc</option>
+                                                                                <option value="5">5 perc</option>
+                                                                                <option value="6">6 perc</option>
+                                                                                <option value="7">7 perc</option>
+                                                                                <option value="8">8 perc</option>
+                                                                                <option value="9">9 perc</option>
+                                                                                <option value="10">10 perc</option>
+                                                                                <option value="11">11 perc</option>
+                                                                                <option value="12">12 perc</option>
+                                                                                <option value="13">13 perc</option>
+                                                                                <option value="14">14 perc</option>
+                                                                                <option value="15">15 perc</option>
+                                                                                <option value="16">16 perc</option>
+                                                                                <option value="17">17 perc</option>
+                                                                                <option value="18">18 perc</option>
+                                                                                <option value="19">19 perc</option>
+                                                                                <option value="20">20 perc</option>
+                                                                                <option value="21">21 perc</option>
+                                                                                <option value="22">22 perc</option>
+                                                                                <option value="23">23 perc</option>
+                                                                                <option value="24">24 perc</option>
+                                                                                <option value="25">25 perc</option>
+                                                                                <option value="26">26 perc</option>
+                                                                                <option value="27">27 perc</option>
+                                                                                <option value="28">28 perc</option>
+                                                                                <option value="29">29 perc</option>
+                                                                                <option value="30">30 perc</option>
+                                                                                <option value="35">35 perc</option>
+                                                                                <option value="40">40 perc</option>
+                                                                                <option value="35">45 perc</option>
+                                                                                <option value="50">50 perc</option>
+                                                                                <option value="55">55 perc</option>
+                                                                                <option value="60">60 perc (1 óra)</option>
+                                                                                <option value="65">65 perc</option>
+                                                                                <option value="70">70 perc</option>
+                                                                                <option value="75">75 perc</option>
+                                                                                <option value="80">80 perc</option>
+                                                                                <option value="85">85 perc</option>
+                                                                                <option value="90">90 perc</option>
+                                                                                <option value="95">95 perc</option>
+                                                                                <option value="100">100 perc</option>
+                                                                                <option value="105">105 perc</option>
+                                                                                <option value="110">110 perc</option>
+                                                                                <option value="115">115 perc</option>
+                                                                                <option value="120">120 perc (2 óra)</option>
+                                                                        </select>
+                                                                </fieldset>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -266,7 +328,7 @@
                                                                 <span>Ital mérete (ml)</span>
                                                             </div>
                                                             <div class="col-md-8">
-                                                                <input type="number" id="drink-name" class="form-control" name="size" placeholder="Ital mérete mililiterben">
+                                                                <input type="number" id="drink-size" class="form-control" name="size" placeholder="Ital mérete mililiterben">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -276,6 +338,17 @@
                                                                 <span>Ital specifikációi</span>
                                                             </div>
                                                             <div class="col-md-8">
+                                                                <fieldset class="form-group">
+                                                                        <div class="vs-checkbox-con vs-checkbox-primary">
+                                                                                <input type="checkbox" name="vegan" value="0">
+                                                                                <span class="vs-checkbox">
+                                                                                <span class="vs-checkbox--check">
+                                                                                        <i class="vs-icon feather icon-check"></i>
+                                                                                </span>
+                                                                                </span>
+                                                                                <span class="">Ez az ital vegán</span>
+                                                                        </div>
+                                                                </fieldset>
                                                                 <fieldset class="form-group">
                                                                         <div class="vs-checkbox-con vs-checkbox-primary">
                                                                                 <input type="checkbox" name="lactosefree" value="0">
@@ -334,6 +407,36 @@
                                                                                 <option value="2000+">2000+ Kalória</option>
                                                                         </select>
                                                                 </fieldset>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-12">
+                                                        <div class="form-group row">
+                                                            <div class="col-md-4">
+                                                                <span>Külön is rendelhető</span>
+                                                            </div>
+                                                            <div class="col-md-8">
+                                                            <div class="custom-control custom-switch custom-control-inline">
+                                                                <input type="checkbox" name="available_separately" value="1" class="custom-control-input" id="customSwitch2" checked>
+                                                                <label class="custom-control-label" for="customSwitch2">
+                                                                </label>
+                                                                <span class="switch-label">Külön is rendelhető</span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-12">
+                                                        <div class="form-group row">
+                                                            <div class="col-md-4">
+                                                                <span>Elérhető</span>
+                                                            </div>
+                                                            <div class="col-md-8">
+                                                            <div class="custom-control custom-switch custom-control-inline">
+                                                                <input type="checkbox" name="available" value="1" class="custom-control-input" id="customSwitch3" checked>
+                                                                <label class="custom-control-label" for="customSwitch3">
+                                                                </label>
+                                                                <span class="switch-label">Jelenleg rendelhető</span>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>

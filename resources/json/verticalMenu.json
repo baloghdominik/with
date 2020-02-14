@@ -14,7 +14,7 @@
   {"url":"", "name":"Menü", "icon":"feather icon-menu",
     "submenu": [
         {"url":"add-meal", "name":"Új étel felvétele", "i18n":"nav.sk_layout_2_columns"},
-        {"url":"list-food", "name":"Ételek", "i18n":"nav.sk_layout_2_columns"},
+        {"url":"list-meal", "name":"Ételek", "i18n":"nav.sk_layout_2_columns"},
         {"url":"add-side", "name":"Új Köret felvétele", "i18n":"nav.sk_layout_2_columns"},
         {"url":"list-side", "name":"Köretek", "i18n":"nav.sk_layout_2_columns"},
         {"url":"add-drink", "name":"Új ital felvétele", "i18n":"nav.sk_layout_2_columns"},

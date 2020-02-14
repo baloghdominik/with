@@ -7,6 +7,7 @@ use Image;
 use App\Side;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class SideController extends Controller
 {
@@ -19,6 +20,21 @@ class SideController extends Controller
 
         return view('/pages/add-side', [
             'pageConfigs' => $pageConfigs
+        ]);
+    }
+
+    // List - Side
+    public function listSide(){
+        $pageConfigs = [
+            'pageHeader' => false
+        ];
+
+        $restaurantID = Auth::user()->restaurantid;
+        $side = DB::table('side')->where('restaurantid', $restaurantID)->get();
+        $day = date('w', strtotime(date("Y-m-d")));
+
+        return view('/pages/list-side', [
+            'pageConfigs' => $pageConfigs, 'side' => $side, 'day' => $day
         ]);
     }
 
@@ -49,10 +65,12 @@ class SideController extends Controller
             'fatfree' => ['boolean'],
             'sugarfree' => ['boolean'],
             'allergenicfree' => ['boolean'],
-            'calorie' => ['required', 'string']
+            'calorie' => ['required', 'string'],
+            'available_separately' => ['boolean'],
+            'available' => ['boolean'],
         ]);
 
-        $restaurantID = 0;
+        $restaurantID = Auth::user()->restaurantid;
         
         $count = DB::table('side')->count();
         if ($count == 0) {
@@ -90,6 +108,8 @@ class SideController extends Controller
         $side->sugarfree = $request->has('sugarfree');
         $side->allergenicfree = $request->has('allergenicfree');
         $side->calorie = request('calorie');
+        $side->available_separately = $request->has('available_separately');
+        $side->available = $request->has('available');
         $side->save();
 
         $this->validate($request, [

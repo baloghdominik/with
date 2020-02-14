@@ -21,7 +21,14 @@ Route::get('/dashboard-analytics', 'DashboardController@dashboardAnalytics');
 Route::get('/add-meal', 'MealController@addMeal');
 Route::get('/add-side', 'SideController@addSide');
 Route::get('/add-drink', 'DrinkController@addDrink');
+
+Route::get('/list-meal', 'MealController@listMeal');
+Route::get('/list-side', 'SideController@listSide');
+Route::get('/list-drink', 'DrinkController@listDrink');
+
 Route::post('/add-side', 'SideController@insertSide');
+Route::post('/add-drink', 'DrinkController@insertDrink');
+Route::post('/add-meal', 'MealController@insertMeal');
 
 // Route Components
 Route::get('/sk-layout-2-columns', 'StaterkitController@columns_2');

@@ -445,6 +445,36 @@
                                                             </div>
                                                         </div>
                                                     </div>
+                                                    <div class="col-12">
+                                                        <div class="form-group row">
+                                                            <div class="col-md-4">
+                                                                <span>Külön is rendelhető</span>
+                                                            </div>
+                                                            <div class="col-md-8">
+                                                            <div class="custom-control custom-switch custom-control-inline">
+                                                                <input type="checkbox" name="available_separately" value="1" class="custom-control-input" id="customSwitch2" checked>
+                                                                <label class="custom-control-label" for="customSwitch2">
+                                                                </label>
+                                                                <span class="switch-label">Külön is rendelhető</span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-12">
+                                                        <div class="form-group row">
+                                                            <div class="col-md-4">
+                                                                <span>Elérhető</span>
+                                                            </div>
+                                                            <div class="col-md-8">
+                                                            <div class="custom-control custom-switch custom-control-inline">
+                                                                <input type="checkbox" name="available" value="1" class="custom-control-input" id="customSwitch3" checked>
+                                                                <label class="custom-control-label" for="customSwitch3">
+                                                                </label>
+                                                                <span class="switch-label">Jelenleg rendelhető</span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                     <div class="col-md-8 offset-md-4">
                                                         <button type="submit" class="btn btn-primary mr-1 mb-1 waves-effect waves-light">Mentés</button>
                                                     </div>
