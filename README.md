@@ -1,4 +1,4 @@
-![With Logo](https://raw.githubusercontent.com/baloghdominik/with/master/public/images/logo_bg_readme.jpg?token=AFPHCVEKDCLGXZ7TWLOGSBC6G5DVQ)
+![With Logo](https://i.imgur.com/zObGaS8.jpg)
 
 # With
 ### With Restaurant Manager Software
