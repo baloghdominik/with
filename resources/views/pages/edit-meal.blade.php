@@ -1,6 +1,6 @@
 @extends('layouts/contentLayoutMaster')
 
-@section('title', 'Add Meal')
+@section('title', 'Edit Meal')
 
 @section('vendor-style')
         <!-- vendor css files -->
@@ -15,12 +15,13 @@
 
 @section('content')
 <section id="basic-horizontal-layouts">
-    <div class="row">
+<div class="row">
         <div class="col-12">
         <a href="{{ url('list-meal') }}" class="btn btn-outline-primary mr-1 mb-1 waves-effect waves-light">Étel lista</a>
         </div>
     </div>
                     <div class="row match-height">
+                        
                         <div class="col-md-12 col-12">
                         @if ($message = Session::get('success'))
                         <div class="alert alert-success alert-block">
@@ -44,11 +45,11 @@
                         <div class="col-md-8 col-12">
                             <div class="card" style="">
                                 <div class="card-header">
-                                    <h4 class="card-title">Új étel felvétele</h4>
+                                    <h4 class="card-title">Étel szerkesztése</h4>
                                 </div>
                                 <div class="card-content">
                                     <div class="card-body">
-                                    <form class="form form-horizontal" method="post" action="/withadmin/public/add-meal"  enctype="multipart/form-data">
+                                    <form class="form form-horizontal" method="post" action="/withadmin/public/update-meal/{{$meal->id}}"  enctype="multipart/form-data">
                                             <div class="form-body">
                                                 <div class="row">
                                                     @csrf 
@@ -58,6 +59,7 @@
                                                                 <span>Étel fotója</span>
                                                             </div>
                                                             <div class="col-md-8">
+                                                            <img src="{{ asset('images/meals/'.$meal->picid.'.jpg') }}" width="100%" height="auto" style="margin-bottom: 25px; border-radius: 1rem;">
                                                                 <div class="custom-file">
                                                                         <input type="file" name="image" class="custom-file-input" id="inputGroupFile01">
                                                                         <label class="custom-file-label" for="inputGroupFile01">Válasszon fotót</label>
@@ -71,7 +73,8 @@
                                                                 <span>Étel neve</span>
                                                             </div>
                                                             <div class="col-md-8">
-                                                                <input type="text" id="food-name" class="form-control" name="name" placeholder="Étel megnevezése">
+                                                                <input type="hidden" id="picid" class="form-control" name="picid" value="{{$meal->picid}}">
+                                                                <input type="text" id="food-name" class="form-control" name="name" value="{{$meal->name}}" placeholder="Étel megnevezése">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -81,7 +84,7 @@
                                                                 <span>Étel fogyasztói ára</span>
                                                             </div>
                                                             <div class="col-md-8">
-                                                                <input type="text" id="" class="form-control" name="price" placeholder="Étel eladási ára">
+                                                                <input type="text" id="" class="form-control" name="price" value="{{$meal->price}}" placeholder="Étel eladási ára">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -91,7 +94,7 @@
                                                                 <span>Étel akciós ára</span>
                                                             </div>
                                                             <div class="col-md-8">
-                                                                <input type="text" id="" class="form-control" name="saleprice" placeholder="Étel kedvezményes ára">
+                                                                <input type="text" id="" class="form-control" name="saleprice" value="{{$meal->saleprice}}" placeholder="Étel kedvezményes ára">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -101,6 +104,15 @@
                                                                 <span>Akció bekapcsolása</span>
                                                             </div>
                                                             <div class="col-md-8">
+                                                            @if($meal->sale)
+                                                            <div class="custom-control custom-switch custom-control-inline">
+                                                                <input type="checkbox" name="sale" value="1" class="custom-control-input" id="customSwitch1" checked>
+                                                                <label class="custom-control-label" for="customSwitch1">
+                                                                </label>
+                                                                <span class="switch-label">Akció állapota</span>
+                                                                </div>
+                                                            </div>
+                                                            @else
                                                             <div class="custom-control custom-switch custom-control-inline">
                                                                 <input type="checkbox" name="sale" value="0" class="custom-control-input" id="customSwitch1">
                                                                 <label class="custom-control-label" for="customSwitch1">
@@ -108,6 +120,7 @@
                                                                 <span class="switch-label">Akció állapota</span>
                                                                 </div>
                                                             </div>
+                                                            @endif
                                                         </div>
                                                     </div>
                                                     <div class="col-12">
@@ -116,7 +129,7 @@
                                                                 <span>Étel elkészítési ára</span>
                                                             </div>
                                                             <div class="col-md-8">
-                                                                <input type="text" id="" class="form-control" name="makeprice" placeholder="Étel elkszítési költsége">
+                                                                <input type="text" id="" class="form-control" name="makeprice" value="{{$meal->makeprice}}" placeholder="Étel elkszítési költsége">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -138,6 +151,7 @@
                                                             <div class="col-md-8">
                                                                 <fieldset class="form-group">
                                                                         <select class="form-control" name="maketime" id="basicSelect">
+                                                                                <option value="{{$meal->maketime}}" selected>{{$meal->maketime}} perc</option>
                                                                                 <option value="0">Nincs elkészítési idő</option>
                                                                                 <option value="1">1 perc</option>
                                                                                 <option value="2">2 perc</option>
@@ -199,15 +213,35 @@
                                                             </div>
                                                             <div class="col-md-6">
                                                             <fieldset>
-                                                                <div class="vs-checkbox-con vs-checkbox-primary">
+                                                                @if($meal->monday)
+                                                                    <div class="vs-checkbox-con vs-checkbox-primary">
                                                                         <input type="checkbox" name="monday" value="1" checked="">
                                                                         <span class="vs-checkbox">
                                                                         <span class="vs-checkbox--check">
                                                                                 <i class="vs-icon feather icon-check"></i>
                                                                         </span>
                                                                         </span>
-                                                                        <span class="">Hétfő</span>
-                                                                </div>
+                                                                        @if($day == 1)
+                                                                            <span class=""><b>Hétfő</b></span>
+                                                                        @else
+                                                                            <span class="">Hétfő</span>
+                                                                        @endif
+                                                                    </div>
+                                                                @else
+                                                                    <div class="vs-checkbox-con vs-checkbox-primary">
+                                                                        <input type="checkbox" name="monday" value="0">
+                                                                        <span class="vs-checkbox">
+                                                                        <span class="vs-checkbox--check">
+                                                                                <i class="vs-icon feather icon-check"></i>
+                                                                        </span>
+                                                                        </span>
+                                                                        @if($day == 1)
+                                                                            <span class=""><b>Hétfő</b></span>
+                                                                        @else
+                                                                            <span class="">Hétfő</span>
+                                                                        @endif
+                                                                    </div>
+                                                                @endif
                                                              </fieldset>
                                                             </div>
                                                         </div>
@@ -218,15 +252,35 @@
                                                             </div>
                                                             <div class="col-md-6">
                                                             <fieldset>
-                                                                <div class="vs-checkbox-con vs-checkbox-primary">
+                                                                @if($meal->tuesday)
+                                                                    <div class="vs-checkbox-con vs-checkbox-primary">
                                                                         <input type="checkbox" name="tuesday" value="1" checked="">
                                                                         <span class="vs-checkbox">
                                                                         <span class="vs-checkbox--check">
                                                                                 <i class="vs-icon feather icon-check"></i>
                                                                         </span>
                                                                         </span>
-                                                                        <span class="">Kedd</span>
-                                                                </div>
+                                                                        @if($day == 2)
+                                                                            <span class=""><b>Kedd</b></span>
+                                                                        @else
+                                                                            <span class="">Kedd</span>
+                                                                        @endif
+                                                                    </div>
+                                                                @else
+                                                                    <div class="vs-checkbox-con vs-checkbox-primary">
+                                                                        <input type="checkbox" name="tuesday" value="0">
+                                                                        <span class="vs-checkbox">
+                                                                        <span class="vs-checkbox--check">
+                                                                                <i class="vs-icon feather icon-check"></i>
+                                                                        </span>
+                                                                        </span>
+                                                                        @if($day == 2)
+                                                                            <span class=""><b>Kedd</b></span>
+                                                                        @else
+                                                                            <span class="">Kedd</span>
+                                                                        @endif
+                                                                    </div>
+                                                                @endif
                                                              </fieldset>
                                                             </div>
                                                         </div>
@@ -237,15 +291,35 @@
                                                             </div>
                                                             <div class="col-md-6">
                                                             <fieldset>
-                                                                <div class="vs-checkbox-con vs-checkbox-primary">
+                                                                @if($meal->wednesday)
+                                                                    <div class="vs-checkbox-con vs-checkbox-primary">
                                                                         <input type="checkbox" name="wednesday" value="1" checked="">
                                                                         <span class="vs-checkbox">
                                                                         <span class="vs-checkbox--check">
                                                                                 <i class="vs-icon feather icon-check"></i>
                                                                         </span>
                                                                         </span>
-                                                                        <span class="">Szerda</span>
-                                                                </div>
+                                                                        @if($day == 3)
+                                                                            <span class=""><b>Szerda</b></span>
+                                                                        @else
+                                                                            <span class="">Szerda</span>
+                                                                        @endif
+                                                                    </div>
+                                                                @else
+                                                                    <div class="vs-checkbox-con vs-checkbox-primary">
+                                                                        <input type="checkbox" name="wednesday" value="0">
+                                                                        <span class="vs-checkbox">
+                                                                        <span class="vs-checkbox--check">
+                                                                                <i class="vs-icon feather icon-check"></i>
+                                                                        </span>
+                                                                        </span>
+                                                                        @if($day == 3)
+                                                                            <span class=""><b>Szerda</b></span>
+                                                                        @else
+                                                                            <span class="">Szerda</span>
+                                                                        @endif
+                                                                    </div>
+                                                                @endif
                                                              </fieldset>
                                                             </div>
                                                         </div>
@@ -256,15 +330,35 @@
                                                             </div>
                                                             <div class="col-md-6">
                                                             <fieldset>
-                                                                <div class="vs-checkbox-con vs-checkbox-primary">
+                                                                @if($meal->thirsday)
+                                                                    <div class="vs-checkbox-con vs-checkbox-primary">
                                                                         <input type="checkbox" name="thirsday" value="1" checked="">
                                                                         <span class="vs-checkbox">
                                                                         <span class="vs-checkbox--check">
                                                                                 <i class="vs-icon feather icon-check"></i>
                                                                         </span>
                                                                         </span>
-                                                                        <span class="">Csütörtök</span>
-                                                                </div>
+                                                                        @if($day == 4)
+                                                                            <span class=""><b>Csütörtök</b></span>
+                                                                        @else
+                                                                            <span class="">Csütörtök</span>
+                                                                        @endif
+                                                                    </div>
+                                                                @else
+                                                                    <div class="vs-checkbox-con vs-checkbox-primary">
+                                                                        <input type="checkbox" name="thirsday" value="0">
+                                                                        <span class="vs-checkbox">
+                                                                        <span class="vs-checkbox--check">
+                                                                                <i class="vs-icon feather icon-check"></i>
+                                                                        </span>
+                                                                        </span>
+                                                                        @if($day == 4)
+                                                                            <span class=""><b>Csütörtök</b></span>
+                                                                        @else
+                                                                            <span class="">Csütörtök</span>
+                                                                        @endif
+                                                                    </div>
+                                                                @endif
                                                              </fieldset>
                                                             </div>
                                                         </div>
@@ -275,15 +369,35 @@
                                                             </div>
                                                             <div class="col-md-6">
                                                             <fieldset>
-                                                                <div class="vs-checkbox-con vs-checkbox-primary">
+                                                                @if($meal->friday)
+                                                                    <div class="vs-checkbox-con vs-checkbox-primary">
                                                                         <input type="checkbox" name="friday" value="1" checked="">
                                                                         <span class="vs-checkbox">
                                                                         <span class="vs-checkbox--check">
                                                                                 <i class="vs-icon feather icon-check"></i>
                                                                         </span>
                                                                         </span>
-                                                                        <span class="">Péntek</span>
-                                                                </div>
+                                                                        @if($day == 5)
+                                                                            <span class=""><b>Péntek</b></span>
+                                                                        @else
+                                                                            <span class="">Péntek</span>
+                                                                        @endif
+                                                                    </div>
+                                                                @else
+                                                                    <div class="vs-checkbox-con vs-checkbox-primary">
+                                                                        <input type="checkbox" name="friday" value="0">
+                                                                        <span class="vs-checkbox">
+                                                                        <span class="vs-checkbox--check">
+                                                                                <i class="vs-icon feather icon-check"></i>
+                                                                        </span>
+                                                                        </span>
+                                                                        @if($day == 5)
+                                                                            <span class=""><b>Péntek</b></span>
+                                                                        @else
+                                                                            <span class="">Péntek</span>
+                                                                        @endif
+                                                                    </div>
+                                                                @endif
                                                              </fieldset>
                                                             </div>
                                                         </div>
@@ -294,15 +408,35 @@
                                                             </div>
                                                             <div class="col-md-6">
                                                             <fieldset>
-                                                                <div class="vs-checkbox-con vs-checkbox-primary">
+                                                                @if($meal->saturday)
+                                                                    <div class="vs-checkbox-con vs-checkbox-primary">
                                                                         <input type="checkbox" name="saturday" value="1" checked="">
                                                                         <span class="vs-checkbox">
                                                                         <span class="vs-checkbox--check">
                                                                                 <i class="vs-icon feather icon-check"></i>
                                                                         </span>
                                                                         </span>
-                                                                        <span class="">Szombat</span>
-                                                                </div>
+                                                                        @if($day == 6)
+                                                                            <span class=""><b>Szombat</b></span>
+                                                                        @else
+                                                                            <span class="">Szombat</span>
+                                                                        @endif
+                                                                    </div>
+                                                                @else
+                                                                    <div class="vs-checkbox-con vs-checkbox-primary">
+                                                                        <input type="checkbox" name="saturday" value="0">
+                                                                        <span class="vs-checkbox">
+                                                                        <span class="vs-checkbox--check">
+                                                                                <i class="vs-icon feather icon-check"></i>
+                                                                        </span>
+                                                                        </span>
+                                                                        @if($day == 6)
+                                                                            <span class=""><b>Szombat</b></span>
+                                                                        @else
+                                                                            <span class="">Szombat</span>
+                                                                        @endif
+                                                                    </div>
+                                                                @endif
                                                              </fieldset>
                                                             </div>
                                                         </div>
@@ -313,15 +447,35 @@
                                                             </div>
                                                             <div class="col-md-6">
                                                             <fieldset>
-                                                                <div class="vs-checkbox-con vs-checkbox-primary">
+                                                                @if($meal->sunday)
+                                                                    <div class="vs-checkbox-con vs-checkbox-primary">
                                                                         <input type="checkbox" name="sunday" value="1" checked="">
                                                                         <span class="vs-checkbox">
                                                                         <span class="vs-checkbox--check">
                                                                                 <i class="vs-icon feather icon-check"></i>
                                                                         </span>
                                                                         </span>
-                                                                        <span class="">Vasárnap</span>
-                                                                </div>
+                                                                        @if($day == 7)
+                                                                            <span class=""><b>Vasárnap</b></span>
+                                                                        @else
+                                                                            <span class="">Vasárnap</span>
+                                                                        @endif
+                                                                    </div>
+                                                                @else
+                                                                    <div class="vs-checkbox-con vs-checkbox-primary">
+                                                                        <input type="checkbox" name="sunday" value="0">
+                                                                        <span class="vs-checkbox">
+                                                                        <span class="vs-checkbox--check">
+                                                                                <i class="vs-icon feather icon-check"></i>
+                                                                        </span>
+                                                                        </span>
+                                                                        @if($day == 7)
+                                                                            <span class=""><b>Vasárnap</b></span>
+                                                                        @else
+                                                                            <span class="">Vasárnap</span>
+                                                                        @endif
+                                                                    </div>
+                                                                @endif
                                                              </fieldset>
                                                             </div>
                                                         </div>
@@ -346,6 +500,17 @@
                                                             </div>
                                                             <div class="col-md-8">
                                                                 <fieldset class="form-group">
+                                                                    @if($meal->vegan)
+                                                                        <div class="vs-checkbox-con vs-checkbox-primary">
+                                                                                <input type="checkbox" name="vegan" value="1" checked>
+                                                                                <span class="vs-checkbox">
+                                                                                <span class="vs-checkbox--check">
+                                                                                        <i class="vs-icon feather icon-check"></i>
+                                                                                </span>
+                                                                                </span>
+                                                                                <span class="">Ez az étel Vegán</span>
+                                                                        </div>
+                                                                    @else
                                                                         <div class="vs-checkbox-con vs-checkbox-primary">
                                                                                 <input type="checkbox" name="vegan" value="0">
                                                                                 <span class="vs-checkbox">
@@ -355,8 +520,20 @@
                                                                                 </span>
                                                                                 <span class="">Ez az étel Vegán</span>
                                                                         </div>
+                                                                    @endif
                                                                 </fieldset>
                                                                 <fieldset class="form-group">
+                                                                    @if($meal->vegetarian)
+                                                                        <div class="vs-checkbox-con vs-checkbox-primary">
+                                                                                <input type="checkbox" name="vegetarian" value="1" checked>
+                                                                                <span class="vs-checkbox">
+                                                                                <span class="vs-checkbox--check">
+                                                                                        <i class="vs-icon feather icon-check"></i>
+                                                                                </span>
+                                                                                </span>
+                                                                                <span class="">Ez az étel Vegetáriánus</span>
+                                                                        </div>
+                                                                    @else
                                                                         <div class="vs-checkbox-con vs-checkbox-primary">
                                                                                 <input type="checkbox" name="vegetarian" value="0">
                                                                                 <span class="vs-checkbox">
@@ -366,8 +543,20 @@
                                                                                 </span>
                                                                                 <span class="">Ez az étel Vegetáriánus</span>
                                                                         </div>
+                                                                    @endif
                                                                 </fieldset>
                                                                 <fieldset class="form-group">
+                                                                    @if($meal->glutenfree)
+                                                                        <div class="vs-checkbox-con vs-checkbox-primary">
+                                                                                <input type="checkbox" name="glutenfree" value="1" checked>
+                                                                                <span class="vs-checkbox">
+                                                                                <span class="vs-checkbox--check">
+                                                                                        <i class="vs-icon feather icon-check"></i>
+                                                                                </span>
+                                                                                </span>
+                                                                                <span class="">Ez az étel Glutén mentes</span>
+                                                                        </div>
+                                                                    @else
                                                                         <div class="vs-checkbox-con vs-checkbox-primary">
                                                                                 <input type="checkbox" name="glutenfree" value="0">
                                                                                 <span class="vs-checkbox">
@@ -377,8 +566,20 @@
                                                                                 </span>
                                                                                 <span class="">Ez az étel Glutén mentes</span>
                                                                         </div>
+                                                                    @endif
                                                                 </fieldset>
                                                                 <fieldset class="form-group">
+                                                                    @if($meal->lactosefree)
+                                                                        <div class="vs-checkbox-con vs-checkbox-primary">
+                                                                                <input type="checkbox" name="lactosefree" value="1" checked>
+                                                                                <span class="vs-checkbox">
+                                                                                <span class="vs-checkbox--check">
+                                                                                        <i class="vs-icon feather icon-check"></i>
+                                                                                </span>
+                                                                                </span>
+                                                                                <span class="">Ez az étel Laktóz mentes</span>
+                                                                        </div>
+                                                                    @else
                                                                         <div class="vs-checkbox-con vs-checkbox-primary">
                                                                                 <input type="checkbox" name="lactosefree" value="0">
                                                                                 <span class="vs-checkbox">
@@ -388,8 +589,20 @@
                                                                                 </span>
                                                                                 <span class="">Ez az étel Laktóz mentes</span>
                                                                         </div>
+                                                                    @endif
                                                                 </fieldset>
                                                                 <fieldset class="form-group">
+                                                                    @if($meal->fatfree)
+                                                                        <div class="vs-checkbox-con vs-checkbox-primary">
+                                                                                <input type="checkbox" name="fatfree" value="1" checked>
+                                                                                <span class="vs-checkbox">
+                                                                                <span class="vs-checkbox--check">
+                                                                                        <i class="vs-icon feather icon-check"></i>
+                                                                                </span>
+                                                                                </span>
+                                                                                <span class="">Ez az étel nem tartalmaz hozzá adott zsírt</span>
+                                                                        </div>
+                                                                    @else
                                                                         <div class="vs-checkbox-con vs-checkbox-primary">
                                                                                 <input type="checkbox" name="fatfree" value="0">
                                                                                 <span class="vs-checkbox">
@@ -399,8 +612,20 @@
                                                                                 </span>
                                                                                 <span class="">Ez az étel nem tartalmaz hozzá adott zsírt</span>
                                                                         </div>
+                                                                    @endif
                                                                 </fieldset>
                                                                 <fieldset class="form-group">
+                                                                    @if($meal->sugarfree)
+                                                                        <div class="vs-checkbox-con vs-checkbox-primary">
+                                                                                <input type="checkbox" name="sugarfree" value="1" checked>
+                                                                                <span class="vs-checkbox">
+                                                                                <span class="vs-checkbox--check">
+                                                                                        <i class="vs-icon feather icon-check"></i>
+                                                                                </span>
+                                                                                </span>
+                                                                                <span class="">Ez az étel nem tartalmaz hozzá adott cukrot</span>
+                                                                        </div>
+                                                                    @else
                                                                         <div class="vs-checkbox-con vs-checkbox-primary">
                                                                                 <input type="checkbox" name="sugarfree" value="0">
                                                                                 <span class="vs-checkbox">
@@ -410,8 +635,20 @@
                                                                                 </span>
                                                                                 <span class="">Ez az étel nem tartalmaz hozzá adott cukrot</span>
                                                                         </div>
+                                                                    @endif
                                                                 </fieldset>
                                                                 <fieldset class="form-group">
+                                                                    @if($meal->allergenicfree)
+                                                                        <div class="vs-checkbox-con vs-checkbox-primary">
+                                                                                <input type="checkbox" name="allergenicfree" value="1" checked>
+                                                                                <span class="vs-checkbox">
+                                                                                <span class="vs-checkbox--check">
+                                                                                        <i class="vs-icon feather icon-check"></i>
+                                                                                </span>
+                                                                                </span>
+                                                                                <span class="">Ez az étel nem tartalmaz allergén alapanyagokat</span>
+                                                                        </div>
+                                                                    @else
                                                                         <div class="vs-checkbox-con vs-checkbox-primary">
                                                                                 <input type="checkbox" name="allergenicfree" value="0">
                                                                                 <span class="vs-checkbox">
@@ -421,6 +658,7 @@
                                                                                 </span>
                                                                                 <span class="">Ez az étel nem tartalmaz allergén alapanyagokat</span>
                                                                         </div>
+                                                                    @endif
                                                                 </fieldset>
                                                             </div>
                                                         </div>
@@ -433,6 +671,11 @@
                                                             <div class="col-md-8">
                                                                 <fieldset class="form-group">
                                                                         <select class="form-control" name="calorie" id="basicSelect">
+                                                                                @if($meal->calorie == NULL)
+                                                                                    <option value="NULL">Nincs megadva</option>
+                                                                                @else
+                                                                                    <option value="{{$meal->calorie}}" selected>{{$meal->calorie}} Kalória</option>
+                                                                                @endif
                                                                                 <option value="NULL">Nincs megadva</option>
                                                                                 <option value="0-200">0-200 Kalória</option>
                                                                                 <option value="200-400">200-400 Kalória</option>
@@ -456,13 +699,23 @@
                                                                 <span>Külön is rendelhető</span>
                                                             </div>
                                                             <div class="col-md-8">
-                                                            <div class="custom-control custom-switch custom-control-inline">
-                                                                <input type="checkbox" name="available_separately" value="1" class="custom-control-input" id="customSwitch2" checked>
-                                                                <label class="custom-control-label" for="customSwitch2">
-                                                                </label>
-                                                                <span class="switch-label">Külön is rendelhető</span>
-                                                                </div>
-                                                            </div>
+                                                                @if($meal->available_separately)
+                                                                    <div class="custom-control custom-switch custom-control-inline">
+                                                                        <input type="checkbox" name="available_separately" value="1" class="custom-control-input" id="customSwitch2" checked>
+                                                                        <label class="custom-control-label" for="customSwitch2">
+                                                                        </label>
+                                                                        <span class="switch-label">Külön is rendelhető</span>
+                                                                        </div>
+                                                                    </div>
+                                                                @else
+                                                                    <div class="custom-control custom-switch custom-control-inline">
+                                                                        <input type="checkbox" name="available_separately" value="0" class="custom-control-input" id="customSwitch2" >
+                                                                        <label class="custom-control-label" for="customSwitch2">
+                                                                        </label>
+                                                                        <span class="switch-label">Külön is rendelhető</span>
+                                                                        </div>
+                                                                    </div>
+                                                                @endif
                                                         </div>
                                                     </div>
                                                     <div class="col-12">
@@ -471,13 +724,23 @@
                                                                 <span>Elérhető</span>
                                                             </div>
                                                             <div class="col-md-8">
-                                                            <div class="custom-control custom-switch custom-control-inline">
-                                                                <input type="checkbox" name="available" value="1" class="custom-control-input" id="customSwitch3" checked>
-                                                                <label class="custom-control-label" for="customSwitch3">
-                                                                </label>
-                                                                <span class="switch-label">Jelenleg rendelhető</span>
-                                                                </div>
-                                                            </div>
+                                                                @if($meal->available)
+                                                                    <div class="custom-control custom-switch custom-control-inline">
+                                                                        <input type="checkbox" name="available" value="1" class="custom-control-input" id="customSwitch3" checked>
+                                                                        <label class="custom-control-label" for="customSwitch3">
+                                                                        </label>
+                                                                        <span class="switch-label">Jelenleg rendelhető</span>
+                                                                        </div>
+                                                                    </div>
+                                                                @else
+                                                                    <div class="custom-control custom-switch custom-control-inline">
+                                                                        <input type="checkbox" name="available" value="0" class="custom-control-input" id="customSwitch3">
+                                                                        <label class="custom-control-label" for="customSwitch3">
+                                                                        </label>
+                                                                        <span class="switch-label">Jelenleg rendelhető</span>
+                                                                        </div>
+                                                                    </div>
+                                                                @endif
                                                         </div>
                                                     </div>
                                                     <div class="col-md-8 offset-md-4">

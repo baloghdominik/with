@@ -15,6 +15,11 @@
 
 @section('content')
 <section id="basic-horizontal-layouts">
+    <div class="row">
+        <div class="col-12">
+        <a href="{{ url('list-side') }}" class="btn btn-outline-primary mr-1 mb-1 waves-effect waves-light">Köret lista</a>
+        </div>
+    </div>
     <div class="row match-height">
 
         <div class="col-md-12 col-12">
@@ -328,9 +333,10 @@
                                                                 <span>Köret leírása</span>
                                                             </div>
                                                             <div class="col-md-8">
-                                                              <fieldset class="form-group">
-                                                                <textarea class="form-control" id="basicTextarea" name="description" rows="5" placeholder="Étel leírás"></textarea>
+                                                            <fieldset class="form-label-group mb-0">
+                                                                <textarea data-length="500" class="form-control char-textarea active" id="textarea-counter" name="description" rows="5" placeholder="Köret leírás">{{$side->description}}</textarea>
                                                               </fieldset>
+                                                              <small class="counter-value float-right"><span class="char-count">0</span> / 500 </small>
                                                             </div>
                                                         </div>
                                                     </div>

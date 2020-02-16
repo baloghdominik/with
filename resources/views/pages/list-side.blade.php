@@ -17,7 +17,7 @@
 <section id="basic-horizontal-layouts">
     <div class="row">
         <div class="col-12">
-        <a href="add-side" class="btn btn-outline-primary mr-1 mb-1 waves-effect waves-light">Új köret</a>
+        <a href="{{ url('add-side') }}" class="btn btn-outline-primary mr-1 mb-1 waves-effect waves-light">Új köret</a>
         </div>
     </div>
 <div class="row" id="table-responsive">

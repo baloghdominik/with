@@ -15,6 +15,11 @@
 
 @section('content')
 <section id="basic-horizontal-layouts">
+    <div class="row">
+        <div class="col-12">
+        <a href="{{ url('list-drink') }}" class="btn btn-outline-primary mr-1 mb-1 waves-effect waves-light">Ital lista</a>
+        </div>
+    </div>
     <div class="row match-height">
 
         <div class="col-md-12 col-12">

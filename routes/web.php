@@ -26,6 +26,18 @@ Route::get('/list-meal', 'MealController@listMeal');
 Route::get('/list-side', 'SideController@listSide');
 Route::get('/list-drink', 'DrinkController@listDrink');
 
+Route::get('/edit-meal/{id}', 'MealController@editMeal');
+Route::get('/edit-side/{id}', 'SideController@editSide');
+Route::get('/edit-drink/{id}', 'DrinkController@editDrink');
+
+Route::get('/menu-settings', 'MenuController@listMenu');
+Route::get('/edit-menu/{id}', 'MenuController@editMenu');
+Route::get('/edit-category', 'MenuController@editCategory');
+
+Route::post('/update-meal/{id}', 'MealController@updateMeal');
+Route::post('/update-side/{id}', 'SideController@updateSide');
+Route::post('/update-drink/{id}', 'DrinkController@updateDrink');
+
 Route::post('/add-side', 'SideController@insertSide');
 Route::post('/add-drink', 'DrinkController@insertDrink');
 Route::post('/add-meal', 'MealController@insertMeal');

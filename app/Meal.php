@@ -8,6 +8,30 @@ class Meal extends Model
 {
     public $table = "meal";
     protected $fillable = [
-        'name', 'price', 'saleprice', 'makeprice'
+        'name', 
+        'picid',
+        'price', 
+        'saleprice', 
+        'sale', 
+        'makeprice', 
+        'maketime', 
+        'monday', 
+        'tuesday', 
+        'wednesday', 
+        'thirsday', 
+        'friday', 
+        'saturday', 
+        'sunday',
+        'description',
+        'vegan', 
+        'vegetarian', 
+        'glutenfree', 
+        'lactosefree', 
+        'fatfree', 
+        'sugarfree', 
+        'allergenicfree', 
+        'calorie', 
+        'available_separately', 
+        'available'
     ];
 }

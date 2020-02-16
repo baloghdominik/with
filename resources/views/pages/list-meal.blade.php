@@ -17,7 +17,7 @@
 <section id="basic-horizontal-layouts">
     <div class="row">
         <div class="col-12">
-        <a href="add-meal" class="btn btn-outline-primary mr-1 mb-1 waves-effect waves-light">Új étel</a>
+        <a href="{{ url('add-meal') }}" class="btn btn-outline-primary mr-1 mb-1 waves-effect waves-light">Új étel</a>
         </div>
     </div>
 <div class="row" id="table-responsive">
