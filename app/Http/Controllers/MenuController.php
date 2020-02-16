@@ -48,9 +48,13 @@ class MenuController extends Controller
         if ($meal === null) {
             return redirect('/');
         }
+        
+        $side = DB::table('side')->where('restaurantid', $restaurantID)->get();
+
+        $day = date('w', strtotime(date("Y-m-d")));
 
         return view('/pages/edit-menu', [
-            'pageConfigs' => $pageConfigs, 'id' => $id, 'meal' => $meal,
+            'pageConfigs' => $pageConfigs, 'id' => $id, 'meal' => $meal, 'side' => $side, 'day' => $day
         ]);
     }
 
