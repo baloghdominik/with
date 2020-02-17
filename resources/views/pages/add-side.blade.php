@@ -334,7 +334,7 @@
                                                             </div>
                                                             <div class="col-md-8">
                                                             <fieldset class="form-label-group mb-0">
-                                                                <textarea data-length="500" class="form-control char-textarea active" id="textarea-counter" name="description" rows="5" placeholder="Köret leírás">{{$side->description}}</textarea>
+                                                                <textarea data-length="500" class="form-control char-textarea active" id="textarea-counter" name="description" rows="5" placeholder="Köret leírás"></textarea>
                                                               </fieldset>
                                                               <small class="counter-value float-right"><span class="char-count">0</span> / 500 </small>
                                                             </div>

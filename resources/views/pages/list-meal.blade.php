@@ -83,6 +83,7 @@
                                                 <th scope="col">Vasárnap</th>
                                             @endif
                                             <th scope="col">Szerkesztés</th>
+                                            <th scope="col">Menü</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -173,6 +174,7 @@
                                             @endif
 
                                             <td><a href="edit-meal/{{$data->id}}" class="btn btn-icon btn-outline-primary mr-1 mb-1 waves-effect waves-light"><i class="feather icon-edit"></i></a></td>
+                                            <td><a href="edit-menu/{{$data->id}}" class="btn btn-icon btn-outline-primary mr-1 mb-1 waves-effect waves-light"><i class="feather icon-book"></i></a></td>
                                         </tr>
                                     @endforeach
                                     </tbody>

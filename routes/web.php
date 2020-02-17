@@ -34,6 +34,12 @@ Route::get('/menu-settings', 'MenuController@listMenu');
 Route::get('/edit-menu/{id}', 'MenuController@editMenu');
 Route::get('/edit-category', 'MenuController@editCategory');
 
+Route::post('/add-side-to-menu', 'MenuController@addSideToMeal');
+Route::post('/remove-side-from-menu', 'MenuController@removeSidefromMeal');
+
+Route::post('/add-drink-to-menu', 'MenuController@addDrinkToMeal');
+Route::post('/remove-drink-from-menu', 'MenuController@removeDrinkfromMeal');
+
 Route::post('/update-meal/{id}', 'MealController@updateMeal');
 Route::post('/update-side/{id}', 'SideController@updateSide');
 Route::post('/update-drink/{id}', 'DrinkController@updateDrink');

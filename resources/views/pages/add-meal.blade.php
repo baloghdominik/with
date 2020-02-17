@@ -333,7 +333,7 @@
                                                             </div>
                                                             <div class="col-md-8">
                                                               <fieldset class="form-label-group mb-0">
-                                                                <textarea data-length="500" class="form-control char-textarea active" id="textarea-counter" name="description" rows="5" placeholder="Étel leírás">{{$meal->description}}</textarea>
+                                                                <textarea data-length="500" class="form-control char-textarea active" id="textarea-counter" name="description" rows="5" placeholder="Étel leírás"></textarea>
                                                               </fieldset>
                                                               <small class="counter-value float-right"><span class="char-count">0</span> / 500 </small>
                                                             </div>
