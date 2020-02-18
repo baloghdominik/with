@@ -18,12 +18,12 @@
         {"url":"add-side", "name":"Új Köret felvétele"},
         {"url":"list-side", "name":"Köretek"},
         {"url":"add-drink", "name":"Új ital felvétele"},
-        {"url":"list-drink", "name":"Italok"},
-        {"url":"menu-settings", "name":"Menü beállítások"}
+        {"url":"list-drink", "name":"Italok"}
     ]
   },
   {"url":"", "name":"Beállítások", "icon":"feather icon-settings",
     "submenu": [
+        {"url":"category-settings", "name":"Kategóriák"},
         {"url":"opening", "name":"Nyitvatartás"},
         {"url":"delivery", "name":"Kiszállítás"},
         {"url":"settings", "name":"Beállítások"}

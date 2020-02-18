@@ -15,8 +15,8 @@ class CreateSideToMealTable extends Migration
     {
         Schema::create('side_to_meal', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('mealid');
-            $table->integer('sideid');
+            $table->bigInteger('mealid');
+            $table->bigInteger('sideid');
             $table->timestamps();
         });
     }

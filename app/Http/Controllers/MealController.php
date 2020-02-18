@@ -18,8 +18,17 @@ class MealController extends Controller
             'pageHeader' => false
         ];
 
+        $restaurantID = Auth::user()->restaurantid;
+
+        $categories = DB::table('category')
+            ->where('restaurantid', '=', $restaurantID)
+            ->get();
+        if ($categories === null) {
+            return redirect('/');
+        }
+
         return view('/pages/add-meal', [
-            'pageConfigs' => $pageConfigs
+            'pageConfigs' => $pageConfigs, 'categories' => $categories
         ]);
     }
 
@@ -30,6 +39,14 @@ class MealController extends Controller
         ];
 
         $restaurantID = Auth::user()->restaurantid;
+
+        $categories = DB::table('category')
+            ->where('restaurantid', '=', $restaurantID)
+            ->get();
+        if ($categories === null) {
+            return redirect('/');
+        }
+
         $meal = DB::table('meal')
             ->where('restaurantid', '=', $restaurantID)
             ->where('id', '=', $id)
@@ -40,7 +57,7 @@ class MealController extends Controller
         $day = date('w', strtotime(date("Y-m-d")));
 
         return view('/pages/edit-meal', [
-            'pageConfigs' => $pageConfigs, 'id' => $id, 'meal' => $meal, 'day' => $day
+            'pageConfigs' => $pageConfigs, 'id' => $id, 'meal' => $meal, 'categories' => $categories, 'day' => $day
         ]);
     }
 
@@ -52,6 +69,7 @@ class MealController extends Controller
             'image' => ['image'],
             'picid' => ['required', 'string'],
             'name' => ['required', 'string','min:3'],
+            'category' => ['required', 'integer','min:0'],
             'price' => ['required', 'integer', 'gte:saleprice', 'gte:makeprice', 'min:0', 'max:100000'],
             'saleprice' => ['required', 'integer', 'lte:price', 'gte:makeprice', 'min:0','max:100000'],
             'sale' => ['boolean'],
@@ -78,6 +96,7 @@ class MealController extends Controller
         ]);
 
         $restaurantID = Auth::user()->restaurantid;
+
         $meal = DB::table('meal')
             ->where('restaurantid', '=', $restaurantID)
             ->where('id', '=', $id)
@@ -88,6 +107,7 @@ class MealController extends Controller
 
         $meal = Meal::where('id', $id)->where('restaurantid', '=', $restaurantID)->first();
         $meal->name = request('name');
+        $meal->category = request('category');
         $meal->picid = request('picid');
         $meal->price = request('price');
         $meal->saleprice = request('saleprice');
@@ -149,11 +169,20 @@ class MealController extends Controller
         ];
 
         $restaurantID = Auth::user()->restaurantid;
+
+        $categories = DB::table('category')
+            ->where('restaurantid', '=', $restaurantID)
+            ->get();
+        if ($categories === null) {
+            return redirect('/');
+        }
+
         $meal = DB::table('meal')->where('restaurantid', $restaurantID)->get();
+
         $day = date('w', strtotime(date("Y-m-d")));
 
         return view('/pages/list-meal', [
-            'pageConfigs' => $pageConfigs, 'meal' => $meal, 'day' => $day
+            'pageConfigs' => $pageConfigs, 'meal' => $meal, 'categories' => $categories, 'day' => $day
         ]);
     }
 
@@ -164,6 +193,7 @@ class MealController extends Controller
          $validatedData = request()->validate([
             'image' => ['required','image'],
             'name' => ['required', 'string','min:3'],
+            'category' => ['required', 'integer','min:0'],
             'price' => ['required', 'integer', 'gte:saleprice', 'gte:makeprice', 'min:0', 'max:100000'],
             'saleprice' => ['required', 'integer', 'lte:price', 'gte:makeprice', 'min:0','max:100000'],
             'sale' => ['boolean'],
@@ -204,6 +234,7 @@ class MealController extends Controller
 
         $meal = new Meal;
         $meal->name = request('name');
+        $meal->category = request('category');
         $meal->picid = $picID;
         $meal->restaurantid = $restaurantID;
         $meal->price = request('price');

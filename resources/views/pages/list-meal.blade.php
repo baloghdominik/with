@@ -36,6 +36,7 @@
                                         <tr>
                                             <th width="400px">Kép</th>
                                             <th scope="col">Név</th>
+                                            <th scope="col">Kategória</th>
                                             <th scope="col">Ár</th>
                                             <th scope="col">Akciós ár</th>
                                             <th scope="col">Akció</th>
@@ -111,6 +112,12 @@
                                         @endif
                                             <td><img src="images/meals/{{$data->picid}}.jpg" width="100%" height="auto" style="border-radius: 0.5rem;"></td>
                                             <td><b>{{$data->name}}</b></td>
+                                            <td>
+                                            @foreach($categories as $key => $category)
+                                                @if($category->id == $data->category)
+                                                   {{ $category->category }}
+                                                @endif
+                                            @endforeach</td>
                                             <td>{{number_format($data->price, 0)}} Ft</td>
                                             @php
                                                 $p1 = $data->saleprice - $data->makeprice;

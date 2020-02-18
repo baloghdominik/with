@@ -15,8 +15,8 @@ class CreateDrinkToMealTable extends Migration
     {
         Schema::create('drink_to_meal', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('mealid');
-            $table->integer('drinkid');
+            $table->bigInteger('mealid');
+            $table->bigInteger('drinkid');
             $table->timestamps();
         });
     }

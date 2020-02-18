@@ -28,10 +28,12 @@ Route::get('/edit-meal/{id}', 'MealController@editMeal');
 Route::get('/edit-side/{id}', 'SideController@editSide');
 Route::get('/edit-drink/{id}', 'DrinkController@editDrink');
 
-Route::get('/menu-settings', 'MenuController@listMenu');
-Route::get('/edit-menu/{id}', 'MenuController@editMenu');
-Route::get('/edit-category', 'MenuController@editCategory');
+Route::get('/category-settings', 'CategoryController@listCategory');
+Route::post('/add-category', 'CategoryController@addCategory');
+Route::post('/delete-category', 'CategoryController@deleteCategory');
 
+
+Route::get('/edit-menu/{id}', 'MenuController@editMenu');
 Route::post('/add-side-to-menu', 'MenuController@addSideToMeal');
 Route::post('/remove-side-from-menu', 'MenuController@removeSidefromMeal');
 
