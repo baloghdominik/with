@@ -1,36 +1,36 @@
 {"menu": [
-  {"url":"dashboard-analytics", "name":"Irányítópult", "slug":"dashboard", "badge":"2" , "badgeClass": "badge badge-primary badge-pill float-right", "icon":"feather icon-home"},
+  {"url":"home", "name":"Irányítópult", "slug":"dashboard", "badge":"2" , "badgeClass": "badge badge-primary badge-pill float-right", "icon":"feather icon-home"},
   {"url":"","navheader":"Értékesítés","icon":""},
-  {"url":"orders", "name":"Rendelések", "icon":"feather icon-file-text", "i18n":"nav.raise_support"},
-  {"url":"reservations", "name":"Foglalások", "icon":"feather icon-calendar", "i18n":"nav.raise_support"},
+  {"url":"orders", "name":"Rendelések", "icon":"feather icon-file-text"},
+  {"url":"reservations", "name":"Foglalások", "icon":"feather icon-calendar"},
   {"url":"","navheader":"Kezelés","icon":""},
   {"url":"", "name":"Gyors Szerkesztés", "icon":"feather icon-zap",
       "submenu": [
-          {"url":"fast-list-food", "name":"Ételek", "i18n":"nav.sk_layout_2_columns"},
-          {"url":"fast-list-drink", "name":"Italok", "i18n":"nav.sk_layout_fixed_navbar"},
-          {"url":"fast-edit-opening", "name":"Nyitvatartás", "i18n":"nav.sk_layout_floating_navbar"}
+          {"url":"fast-list-food", "name":"Ételek"},
+          {"url":"fast-list-drink", "name":"Italok"},
+          {"url":"fast-edit-opening", "name":"Nyitvatartás"}
       ]
   },
   {"url":"", "name":"Menü", "icon":"feather icon-menu",
     "submenu": [
-        {"url":"add-meal", "name":"Új étel felvétele", "i18n":"nav.sk_layout_2_columns"},
-        {"url":"list-meal", "name":"Ételek", "i18n":"nav.sk_layout_2_columns"},
-        {"url":"add-side", "name":"Új Köret felvétele", "i18n":"nav.sk_layout_2_columns"},
-        {"url":"list-side", "name":"Köretek", "i18n":"nav.sk_layout_2_columns"},
-        {"url":"add-drink", "name":"Új ital felvétele", "i18n":"nav.sk_layout_2_columns"},
-        {"url":"list-drink", "name":"Italok", "i18n":"nav.sk_layout_fixed_navbar"},
-        {"url":"menu-settings", "name":"Menü beállítások", "i18n":"nav.sk_layout_2_columns"}
+        {"url":"add-meal", "name":"Új étel felvétele"},
+        {"url":"list-meal", "name":"Ételek"},
+        {"url":"add-side", "name":"Új Köret felvétele"},
+        {"url":"list-side", "name":"Köretek"},
+        {"url":"add-drink", "name":"Új ital felvétele"},
+        {"url":"list-drink", "name":"Italok"},
+        {"url":"menu-settings", "name":"Menü beállítások"}
     ]
   },
   {"url":"", "name":"Beállítások", "icon":"feather icon-settings",
     "submenu": [
-        {"url":"opening", "name":"Nyitvatartás", "i18n":"nav.sk_layout_2_columns"},
-        {"url":"delivery", "name":"Kiszállítás", "i18n":"nav.sk_layout_fixed_navbar"},
-        {"url":"settings", "name":"Beállítások", "i18n":"nav.sk_layout_fixed_navbar"}
+        {"url":"opening", "name":"Nyitvatartás"},
+        {"url":"delivery", "name":"Kiszállítás"},
+        {"url":"settings", "name":"Beállítások"}
     ]
   },
   {"url":"","navheader":"Segítség","icon":""},
-    {"url":"support", "name":"Ügyfélszolgálat", "icon":"feather icon-life-buoy", "i18n":"nav.raise_support"}
+    {"url":"support", "name":"Ügyfélszolgálat", "icon":"feather icon-life-buoy"}
 
 ]}
 

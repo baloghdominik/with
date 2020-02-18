@@ -33,7 +33,7 @@
                     }
                   @endphp
                   <li class="nav-item {{ (request()->is($menu->url)) ? 'active' : '' }} {{ $custom_classes }}">
-                        <a href="{{ $menu->url }}">
+                        <a href="{{ url($menu->url) }}">
                             <i class="{{ $menu->icon }}"></i>
                             <span class="menu-title" data-i18n="{{ $translation }}">{{ $menu->name }}</span>
                             @if (isset($menu->badge))

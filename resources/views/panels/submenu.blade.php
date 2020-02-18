@@ -8,7 +8,7 @@
             }
         ?>
         <li class="{{ (request()->is($submenu->url)) ? 'active' : '' }}">
-            <a href="{{ $submenu->url }}">
+            <a href="{{ url($submenu->url) }}">
                 <i class="{{ isset($submenu->icon) ? $submenu->icon : "" }}"></i>
                 <span class="menu-title" data-i18n="{{ $submenuTranslation }}">{{ $submenu->name }}</span>
             </a>

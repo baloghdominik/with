@@ -21,8 +21,14 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index()
+    public function index() 
     {
-        return view('pages/home');
+        $pageConfigs = [
+            'pageHeader' => false
+        ];
+
+        return view('/pages/home', [
+            'pageConfigs' => $pageConfigs
+        ]);
     }
 }

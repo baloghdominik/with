@@ -15,8 +15,6 @@
 
 Route::get('/login', 'LoginController@index')->name('login');
 
-// Route Dashboards
-Route::get('/dashboard-analytics', 'DashboardController@dashboardAnalytics');
 
 Route::get('/add-meal', 'MealController@addMeal');
 Route::get('/add-side', 'SideController@addSide');

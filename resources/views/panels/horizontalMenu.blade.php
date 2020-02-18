@@ -31,10 +31,10 @@
                     @endphp
                     @if(isset($menu->dropdown))
                       <li class="dropdown nav-item {{ (request()->is($menu->url)) ? 'active' : '' }} {{ $custom_classes }}" data-menu="dropdown">
-                        <a href="{{ $menu->url }}" class="dropdown-toggle nav-link" data-toggle="dropdown">
+                        <a href="{{ url($menu->url) }}" class="dropdown-toggle nav-link" data-toggle="dropdown">
                     @else
                       <li class="nav-item {{ (request()->is($menu->url)) ? 'active' : '' }} {{ $custom_classes }}">
-                        <a href="{{ $menu->url }}" class="nav-link">
+                        <a href="{{ url($menu->url) }}" class="nav-link">
                     @endif
                             <i class="{{ $menu->icon }}"></i>
                             <span data-i18n="{{ $translation }}">{{ $menu->name }}</span>
