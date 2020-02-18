@@ -15,6 +15,7 @@
 
 @section('content')
 <section id="basic-horizontal-layouts">
+@if(sizeof($categories) !== 0)
     <div class="row">
         <div class="col-12">
         <a href="{{ url('list-drink') }}" class="btn btn-outline-primary mr-1 mb-1 waves-effect waves-light">Ital lista</a>
@@ -73,6 +74,20 @@
                                                             </div>
                                                             <div class="col-md-8">
                                                                 <input type="text" id="food-name" class="form-control" name="name" placeholder="Ital megnevezése">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-12">
+                                                        <div class="form-group row">
+                                                            <div class="col-md-4">
+                                                                <span>Kategória</span>
+                                                            </div>
+                                                            <div class="col-md-8">
+                                                                <select class="form-control" name="category" id="basicSelect">
+                                                                    @foreach($categories as $key => $data)
+                                                                        <option value="{{ $data->id }}">{{ $data->category }}</option>
+                                                                    @endforeach
+                                                                </select>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -456,7 +471,21 @@
                             </div>
                         </div>
                     </div>
-                </section>
+@else
+<div class="row match-height">
+    <div class="col-md-12 col-12">
+        <div class="alert alert-warning alert-block">
+        <button type="button" class="close" data-dismiss="alert">×</button>
+            <strong>Új ital feltöltése nem lehetséges, mert még hozott létre kategóriákat.</strong><br/>
+            Kérjük előbb hozzon létre új kategóriákat, melyek az éttermének menüpontjaiként fognak szolgálni, majd próbálja újra.
+        </div>
+    </div>
+    <div class="col-12">
+        <a href="{{ url('category-settings') }}" class="btn btn-outline-warning mr-1 mb-1 waves-effect waves-light">Kategória beállítások</a>
+    </div>
+</div>
+@endif
+</section>
 @endsection
 
 @section('vendor-script')

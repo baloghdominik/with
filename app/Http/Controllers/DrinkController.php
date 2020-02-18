@@ -20,8 +20,17 @@ class DrinkController extends Controller
             'pageHeader' => false
         ];
 
+        $restaurantID = Auth::user()->restaurantid;
+    
+        $categories = DB::table('category')
+            ->where('restaurantid', '=', $restaurantID)
+            ->get();
+        if ($categories === null) {
+            return redirect('/');
+        }
+
         return view('/pages/add-drink', [
-            'pageConfigs' => $pageConfigs
+            'pageConfigs' => $pageConfigs, 'categories' => $categories
         ]);
     }
 
@@ -32,6 +41,14 @@ class DrinkController extends Controller
         ];
 
         $restaurantID = Auth::user()->restaurantid;
+
+        $categories = DB::table('category')
+            ->where('restaurantid', '=', $restaurantID)
+            ->get();
+        if ($categories === null) {
+            return redirect('/');
+        }
+
         $drink = DB::table('drink')
             ->where('restaurantid', '=', $restaurantID)
             ->where('id', '=', $id)
@@ -39,10 +56,11 @@ class DrinkController extends Controller
         if ($drink === null) {
             return redirect('/');
         }
+
         $day = date('w', strtotime(date("Y-m-d")));
 
         return view('/pages/edit-drink', [
-            'pageConfigs' => $pageConfigs, 'id' => $id, 'drink' => $drink, 'day' => $day
+            'pageConfigs' => $pageConfigs, 'id' => $id, 'drink' => $drink, 'categories' => $categories, 'day' => $day
         ]);
     }
 
@@ -54,6 +72,7 @@ class DrinkController extends Controller
             'image' => ['image'],
             'picid' => ['required', 'string'],
             'name' => ['required', 'string','min:3'],
+            'category' => ['required', 'integer','min:0'],
             'price' => ['required', 'integer', 'gte:saleprice', 'gte:makeprice', 'min:0', 'max:100000'],
             'saleprice' => ['required', 'integer', 'lte:price', 'gte:makeprice', 'min:0','max:100000'],
             'sale' => ['boolean'],
@@ -77,6 +96,7 @@ class DrinkController extends Controller
         ]);
 
         $restaurantID = Auth::user()->restaurantid;
+
         $drink = DB::table('drink')
             ->where('restaurantid', '=', $restaurantID)
             ->where('id', '=', $id)
@@ -87,6 +107,7 @@ class DrinkController extends Controller
 
         $drink = Drink::where('id', $id)->where('restaurantid', '=', $restaurantID)->first();
         $drink->name = request('name');
+        $drink->category = request('category');
         $drink->picid = request('picid');
         $drink->price = request('price');
         $drink->saleprice = request('saleprice');
@@ -145,11 +166,20 @@ class DrinkController extends Controller
         ];
 
         $restaurantID = Auth::user()->restaurantid;
+
+        $categories = DB::table('category')
+            ->where('restaurantid', '=', $restaurantID)
+            ->get();
+        if ($categories === null) {
+            return redirect('/');
+        }
+
         $drink = DB::table('drink')->where('restaurantid', $restaurantID)->get();
+
         $day = date('w', strtotime(date("Y-m-d")));
 
         return view('/pages/list-drink', [
-            'pageConfigs' => $pageConfigs, 'drink' => $drink, 'day' => $day
+            'pageConfigs' => $pageConfigs, 'drink' => $drink, 'categories' => $categories, 'day' => $day
         ]);
     }
 
@@ -160,6 +190,7 @@ class DrinkController extends Controller
          $validatedData = request()->validate([
             'image' => ['required','image'],
             'name' => ['required', 'string','min:3'],
+            'category' => ['required', 'integer','min:0'],
             'price' => ['required', 'integer', 'gte:saleprice', 'gte:makeprice', 'min:0', 'max:100000'],
             'saleprice' => ['required', 'integer', 'lte:price', 'gte:makeprice', 'min:0','max:100000'],
             'sale' => ['boolean'],
@@ -199,6 +230,7 @@ class DrinkController extends Controller
 
         $drink = new Drink;
         $drink->name = request('name');
+        $drink->category = request('category');
         $drink->picid = $picID;
         $drink->restaurantid = $restaurantID;
         $drink->price = request('price');
