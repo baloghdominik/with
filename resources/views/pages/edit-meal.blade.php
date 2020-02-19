@@ -110,7 +110,7 @@
                                                                 <span>Étel fogyasztói ára</span>
                                                             </div>
                                                             <div class="col-md-8">
-                                                                <input type="text" id="" class="form-control" name="price" value="{{$meal->price}}" placeholder="Étel eladási ára">
+                                                                <input type="text" id="v0" onkeyup="calculate()" class="form-control" name="price" value="{{$meal->price}}" placeholder="Étel eladási ára">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -120,7 +120,7 @@
                                                                 <span>Étel akciós ára</span>
                                                             </div>
                                                             <div class="col-md-8">
-                                                                <input type="text" id="" class="form-control" name="saleprice" value="{{$meal->saleprice}}" placeholder="Étel kedvezményes ára">
+                                                                <input type="text" id="v2" onkeyup="calculate()" class="form-control" name="saleprice" value="{{$meal->saleprice}}" placeholder="Étel kedvezményes ára">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -155,7 +155,7 @@
                                                                 <span>Étel elkészítési ára</span>
                                                             </div>
                                                             <div class="col-md-8">
-                                                                <input type="text" id="" class="form-control" name="makeprice" value="{{$meal->makeprice}}" placeholder="Étel elkszítési költsége">
+                                                                <input type="text" id="v1" onkeyup="calculate()" class="form-control" name="makeprice" value="{{$meal->makeprice}}" placeholder="Étel elkszítési költsége">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -165,7 +165,7 @@
                                                                 <span>Étel árrése</span>
                                                             </div>
                                                             <div class="col-md-8">
-                                                                <p>~0 ft</p>
+                                                                <input type="text" id="result" class="form-control" placeholder="" disabled>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -842,4 +842,38 @@
 @section('page-script')
         <!-- Page js files -->
         <script src="{{ asset(mix('js/scripts/pages/dashboard-analytics.js')) }}"></script>
+        <script>
+            window.onload = function() {
+                calculate();
+            };
+            function calculate() {
+                var price = document.querySelector('#v0').value;
+                var make = document.querySelector('#v1').value;
+                var sale = document.querySelector('#v2').value;
+                if (price && make && sale) {
+                    document.querySelector('#result').value = (sale - make).toFixed(0) + '-' + (price - make).toFixed(0) + ' Ft';
+                    var profit = (price - make).toFixed(0);
+                    var saleprofit = (sale - make).toFixed(0);
+                    var salepricediff = (price - sale).toFixed(0);
+                    if (profit > 0 && saleprofit > 0 && salepricediff > 0) {
+                        if (profit >= 250 && saleprofit >= 150) {
+                            var el = document.querySelector('#result');
+
+                            el.style.backgroundColor = 'rgba(40, 199, 111, 0.2)';
+                            el.style.borderColor = '#28c76f';
+                        } else {
+                            var el = document.querySelector('#result');
+
+                            el.style.backgroundColor = 'rgba(255, 159, 67, 0.2)';
+                            el.style.borderColor = '#ff9f43';
+                        }
+                    } else {
+                        var el = document.querySelector('#result');
+                        
+                        el.style.backgroundColor = 'rgba(234, 84, 85, 0.2)';
+                        el.style.borderColor = '#ea5455';
+                    }
+                }
+            }
+        </script>
 @endsection
