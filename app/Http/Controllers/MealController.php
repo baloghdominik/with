@@ -11,6 +11,15 @@ use Illuminate\Support\Facades\Auth;
 
 class MealController extends Controller
 {
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
 
     // Add - Meal
     public function addMeal(){

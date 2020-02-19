@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 class StaterkitController extends Controller
 {
+    
 
     // 1 Column
     public function column_1(){
