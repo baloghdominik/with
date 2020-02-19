@@ -31,6 +31,13 @@
                         </div>
                         @endif
 
+                        @if ($message = Session::get('fail'))
+                        <div class="alert alert-danger alert-block">
+                            <button type="button" class="close" data-dismiss="alert">×</button>
+                                <strong>{{ $message }}</strong>
+                        </div>
+                        @endif
+
                         @if (count($errors) > 0)
                             <div class="alert alert-danger">
                                 <strong>Hoppá!</strong> Problémába ütköztünk!
@@ -772,6 +779,44 @@
                                 </div>
                             </div>
                         </div>
+
+                        <div class="col-md-8 col-sm-12">
+                            <div class="card">
+                                <div class="card-content">
+                                    <div class="card-body">
+                                        <h4 class="card-title">Étel törlése</h4>
+                                    </div>
+                                    <div class="card-body">
+                                        <form method="post" action="/withadmin/public/delete-meal">
+                                            <div class="col-12">
+                                                <div class="form-group row">
+                                                    <div class="col-md-4">
+                                                        <span>Biztosan törli véglegesen?</span>
+                                                    </div>
+                                                    <div class="col-md-8">
+                                                            @csrf
+                                                            <input type="hidden" name="id" value="{{ $meal->id }}">
+                                                            <div class="vs-checkbox-con vs-checkbox-danger">
+                                                                <input type="checkbox" name="verify" value="0">
+                                                                <span class="vs-checkbox">
+                                                                <span class="vs-checkbox--check">
+                                                                        <i class="vs-icon feather icon-check"></i>
+                                                                </span>
+                                                                </span>
+                                                                <span class="">Megerősítem, hogy ezt a terméket véglegesen törlni szeretném az étterem étlapjáról!</span>
+                                                            </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-8 offset-md-4">
+                                                <button type="submit" class="btn btn-danger mr-1 mb-1 waves-effect waves-light">Törlés</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
 @else
 <div class="row match-height">

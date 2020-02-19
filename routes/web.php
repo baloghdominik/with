@@ -28,6 +28,10 @@ Route::get('/edit-meal/{id}', 'MealController@editMeal');
 Route::get('/edit-side/{id}', 'SideController@editSide');
 Route::get('/edit-drink/{id}', 'DrinkController@editDrink');
 
+Route::post('/delete-drink', 'DrinkController@deleteDrink');
+Route::post('/delete-meal', 'MealController@deleteMeal');
+Route::post('/delete-side', 'SideController@deleteSide');
+
 Route::get('/category-settings', 'CategoryController@listCategory');
 Route::post('/add-category', 'CategoryController@addCategory');
 Route::post('/delete-category', 'CategoryController@deleteCategory');

@@ -289,4 +289,44 @@ class SideController extends Controller
             ->with('success','A köret sikeresen hozzá lett adva az étlaphoz!');
     }
 
+    //delete side from db
+    public function deleteSide(Request $request)
+    {
+        $validatedData = request()->validate([
+            'id' => ['required', 'integer', 'min:0'],
+            'verify' => ['boolean'],
+        ]);
+
+        $id = request('id');
+
+        $verify = $request->has('verify');
+        if (!$verify) {
+            return redirect()->action('SideController@editSide', ['id' => $id])
+            ->with('fail','A termék végleges törléshez kérjük erősítse meg törlési szándékát a négyzet bepipálásával!');
+        }
+
+        $restaurantID = Auth::user()->restaurantid;
+
+        $count = DB::table('side')
+            ->where('restaurantid', '=', $restaurantID)
+            ->where('id', '=', $id)
+            ->count();
+        if ($count !== 1) {
+            return redirect()->action('SideController@editSide', ['id' => $id])
+            ->with('fail','A keresett köret nem található!');
+        }
+
+        DB::table('side')
+            ->where('restaurantid', '=', $restaurantID)
+            ->where('id', '=', $id)
+            ->delete();
+
+        DB::table('side_to_meal')
+            ->where('sideid', '=', $id)
+            ->delete();
+   
+        return redirect()->action('SideController@listSide')
+            ->with('success','A köret sikeresen el lett távolítva az étlapról!');
+    }
+
 }

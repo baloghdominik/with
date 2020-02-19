@@ -31,7 +31,7 @@ class CategoryController extends Controller
         ]);
     }
 
-    //save new category to db
+    //delete category from db
     public function deleteCategory(Request $request)
     {
 
@@ -42,19 +42,12 @@ class CategoryController extends Controller
         $id = request('id');
         $restaurantID = Auth::user()->restaurantid;
 
-        $categories = DB::table('category')
-            ->where('restaurantid', '=', $restaurantID)
-            ->get();
-        if ($categories === null) {
-            return redirect('/');
-        }
-
         $count = DB::table('meal')
             ->where('restaurantid', '=', $restaurantID)
             ->where('category', '=', $id)
             ->count();
         if ($count > 0) {
-            return redirect()->action('CategoryController@listCategory', ['categories' => $categories])
+            return redirect()->action('CategoryController@listCategory')
             ->with('fail','Nem sikerült törölni a kategóriát, mert az adott kategória használatban van valamennyi feltöltött ételénél. A törléshez kérjük előbb változtassa meg az ételek kategóriáját.');
         }
 
@@ -77,18 +70,11 @@ class CategoryController extends Controller
 
         $restaurantID = Auth::user()->restaurantid;
 
-        $categories = DB::table('category')
-            ->where('restaurantid', '=', $restaurantID)
-            ->get();
-        if ($categories === null) {
-            return redirect('/');
-        }
-
         $count = DB::table('category')
             ->where('restaurantid', '=', $restaurantID)
             ->count();
         if ($count > 15) {
-            return redirect()->action('CategoryController@listCategory', ['categories' => $categories])
+            return redirect()->action('CategoryController@listCategory')
             ->with('fail','Maximum 15 kategóriát lehet létrehozni! Új kategória létrehozásához kérjük töröljön a meglévők közül.');
         }
 

@@ -213,9 +213,7 @@ class DrinkController extends Controller
             'available' => ['boolean'],
         ]);
 
-
         $restaurantID = Auth::user()->restaurantid;
-        
         
         $count = DB::table('drink')->count();
         if ($count == 0) {
@@ -279,6 +277,46 @@ class DrinkController extends Controller
    
         return back()
             ->with('success','Az ital sikeresen hozzá lett adva az étlaphoz!');
+    }
+
+    //delete drink from db
+    public function deleteDrink(Request $request)
+    {
+        $validatedData = request()->validate([
+            'id' => ['required', 'integer', 'min:0'],
+            'verify' => ['boolean'],
+        ]);
+
+        $id = request('id');
+
+        $verify = $request->has('verify');
+        if (!$verify) {
+            return redirect()->action('DrinkController@editDrink', ['id' => $id])
+            ->with('fail','A termék végleges törléshez kérjük erősítse meg törlési szándékát a négyzet bepipálásával!');
+        }
+
+        $restaurantID = Auth::user()->restaurantid;
+
+        $count = DB::table('drink')
+            ->where('restaurantid', '=', $restaurantID)
+            ->where('id', '=', $id)
+            ->count();
+        if ($count !== 1) {
+            return redirect()->action('DrinkController@editDrink', ['id' => $id])
+            ->with('fail','A keresett ital nem található!');
+        }
+
+        DB::table('drink')
+            ->where('restaurantid', '=', $restaurantID)
+            ->where('id', '=', $id)
+            ->delete();
+
+        DB::table('drink_to_meal')
+            ->where('drinkid', '=', $id)
+            ->delete();
+   
+        return redirect()->action('DrinkController@listDrink')
+            ->with('success','Az ital sikeresen el lett távolítva az étlapról!');
     }
 
 }

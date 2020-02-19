@@ -288,4 +288,48 @@ class MealController extends Controller
             ->with('success','Az étel sikeresen hozzá lett adva az étlaphoz!');
     }
 
+    //delete meal from db
+    public function deleteMeal(Request $request)
+    {
+        $validatedData = request()->validate([
+            'id' => ['required', 'integer', 'min:0'],
+            'verify' => ['boolean'],
+        ]);
+
+        $id = request('id');
+
+        $verify = $request->has('verify');
+        if (!$verify) {
+            return redirect()->action('MealController@editMeal', ['id' => $id])
+            ->with('fail','A termék végleges törléshez kérjük erősítse meg törlési szándékát a négyzet bepipálásával!');
+        }
+
+        $restaurantID = Auth::user()->restaurantid;
+
+        $count = DB::table('meal')
+            ->where('restaurantid', '=', $restaurantID)
+            ->where('id', '=', $id)
+            ->count();
+        if ($count !== 1) {
+            return redirect()->action('MealController@editMeal', ['id' => $id])
+            ->with('fail','A keresett étel nem található!');
+        }
+
+        DB::table('meal')
+            ->where('restaurantid', '=', $restaurantID)
+            ->where('id', '=', $id)
+            ->delete();
+
+        DB::table('side_to_meal')
+            ->where('mealid', '=', $id)
+            ->delete();
+
+        DB::table('drink_to_meal')
+            ->where('mealid', '=', $id)
+            ->delete();
+   
+        return redirect()->action('MealController@listMeal')
+            ->with('success','Az étel sikeresen el lett távolítva az étlapról!');
+    }
+
 }

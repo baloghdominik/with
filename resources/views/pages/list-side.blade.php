@@ -15,6 +15,32 @@
 
 @section('content')
 <section id="basic-horizontal-layouts">
+<div class="col-md-12 col-12">
+@if ($message = Session::get('success'))
+<div class="alert alert-success alert-block">
+    <button type="button" class="close" data-dismiss="alert">×</button>
+        <strong>{{ $message }}</strong>
+</div>
+@endif
+
+@if ($message = Session::get('fail'))
+<div class="alert alert-danger alert-block">
+    <button type="button" class="close" data-dismiss="alert">×</button>
+        <strong>{{ $message }}</strong>
+</div>
+@endif
+
+@if (count($errors) > 0)
+    <div class="alert alert-danger">
+        <strong>Hoppá!</strong> Problémába ütköztünk!
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
+</div>
     <div class="row">
         <div class="col-12">
         <a href="{{ url('add-side') }}" class="btn btn-outline-primary mr-1 mb-1 waves-effect waves-light">Új köret</a>
