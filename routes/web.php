@@ -36,10 +36,11 @@ Route::get('/category-settings', 'CategoryController@listCategory');
 Route::post('/add-category', 'CategoryController@addCategory');
 Route::post('/delete-category', 'CategoryController@deleteCategory');
 
-Route::get('/settings', 'SettingsController@showSettings');
-Route::post('/update-settings', 'SettingsController@updateSettings');
-Route::post('/upload-images', 'SettingsController@uploadImages');
+Route::get('/settings', 'RestaurantController@showSettings');
+Route::post('/update-settings', 'RestaurantController@updateSettings');
+Route::post('/upload-images', 'RestaurantController@uploadImages');
 
+Route::get('/help', 'HelpController@showHelp');
 
 Route::get('/edit-menu/{id}', 'MenuController@editMenu');
 Route::post('/add-side-to-menu', 'MenuController@addSideToMeal');
@@ -55,6 +56,13 @@ Route::post('/update-drink/{id}', 'DrinkController@updateDrink');
 Route::post('/add-side', 'SideController@insertSide');
 Route::post('/add-drink', 'DrinkController@insertDrink');
 Route::post('/add-meal', 'MealController@insertMeal');
+
+// API endpoints
+Route::get('api/restaurant/id/{id}', 'RestaurantController@getRestaurantById');
+Route::get('api/restaurant/lowercasename/{id}', 'RestaurantController@getRestaurantIdBylowercasename');
+Route::get('api/restaurantids/', 'RestaurantController@getAllRestaurantIds');
+Route::get('api/restaurants/', 'RestaurantController@getAllRestaurants');
+Route::get('api/restaurantlogo/{id}/', 'RestaurantController@getRestaurantLogoById');
 
 // Route Components
 Route::get('/sk-layout-2-columns', 'StaterkitController@columns_2');

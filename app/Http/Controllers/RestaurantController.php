@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
-class SettingsController extends Controller
+class RestaurantController extends Controller
 {
     /**
      * Create a new controller instance.
@@ -47,8 +47,8 @@ class SettingsController extends Controller
 
          $validatedData = request()->validate([
             'address' => ['required', 'string','min:10'],
-            'phone' => ['required', 'string', 'min:8', 'max:15'],
-            'email' => ['required', 'string', 'email'],
+            'phone' => ['required', 'string', 'min:8', 'max:20'],
+            'email' => ['required', 'string', 'email', 'max:60'],
             'description' => ['string', 'min:0', 'max:500'],
             'monday' => ['boolean'],
             'mondayopen' => ['required'],
@@ -239,6 +239,40 @@ class SettingsController extends Controller
    
         return back()
             ->with('success','A képek sikeresen frissültek!');
+    }
+
+    //API endpoints
+
+    public function getRestaurantById($id) {
+        $restaurant = Restaurant::where('id', $id)->first();
+
+        return $restaurant;
+    }
+
+    public function getRestaurantIdBylowercasename($lowercasename) {
+        $restaurant = Restaurant::where('lowercasename', $lowercasename)->select('id')->first();
+
+        return $restaurant;
+    }
+
+    public function getAllRestaurantIds() {
+        $restaurant = Restaurant::select('id')->get();
+
+        return $restaurant;
+    }
+
+    public function getAllRestaurants() {
+        $restaurant = Restaurant::select('*')->get();
+
+        return $restaurant;
+    }
+
+    public function getRestaurantLogoById($id) {
+        $restaurant = Restaurant::where('id', $id)->first();
+
+        $pic = getenv('APP_URL')."/public/images/logos/with.hu_".$restaurant->id."_".$restaurant->name."_logo.jpg";
+
+        return $pic;
     }
 
 }
