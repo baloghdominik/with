@@ -29,7 +29,7 @@
                     <div class="card-content">
                         <div class="card-body text-center">
                             <h4>Elsholtz Ábel</h4>
-                            <p class="">Fejlesztő</p>
+                            <p class="">Ügyintézés</p>
                             <div class="card-btns d-flex justify-content-between mt-3">
                                 <a href="tel:06303909135" class="btn btn-primary waves-effect waves-light"><i class="fa fa-phone"></i> Hívás</a>
                                 <a href="mailto:admin@with.hu" class="btn btn-outline-primary waves-effect waves-light"><i class="fa fa-envelope"></i> Üzenet</a>
@@ -49,7 +49,7 @@
                     <div class="card-content">
                         <div class="card-body text-center">
                             <h4>Balogh Dominik</h4>
-                            <p class="">Fejlesztő</p>
+                            <p class="">Hibaelhárítás</p>
                             <div class="card-btns d-flex justify-content-between mt-3">
                                 <a href="tel:06303909135" class="btn btn-primary waves-effect waves-light"><i class="fa fa-phone"></i> Hívás</a>
                                 <a href="mailto:admin@with.hu" class="btn btn-outline-primary waves-effect waves-light"><i class="fa fa-envelope"></i> Üzenet</a>

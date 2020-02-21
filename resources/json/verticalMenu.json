@@ -4,13 +4,7 @@
   {"url":"orders", "name":"Rendelések", "icon":"feather icon-file-text"},
   {"url":"reservations", "name":"Foglalások", "icon":"feather icon-calendar"},
   {"url":"","navheader":"Kezelés","icon":""},
-  {"url":"", "name":"Gyors Szerkesztés", "icon":"feather icon-zap",
-      "submenu": [
-          {"url":"fast-list-food", "name":"Ételek"},
-          {"url":"fast-list-drink", "name":"Italok"},
-          {"url":"fast-edit-opening", "name":"Nyitvatartás"}
-      ]
-  },
+
   {"url":"", "name":"Menü", "icon":"feather icon-menu",
     "submenu": [
         {"url":"add-meal", "name":"Új étel felvétele"},
