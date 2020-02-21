@@ -36,6 +36,10 @@ Route::get('/category-settings', 'CategoryController@listCategory');
 Route::post('/add-category', 'CategoryController@addCategory');
 Route::post('/delete-category', 'CategoryController@deleteCategory');
 
+Route::get('/settings', 'SettingsController@showSettings');
+Route::post('/update-settings', 'SettingsController@updateSettings');
+Route::post('/upload-images', 'SettingsController@uploadImages');
+
 
 Route::get('/edit-menu/{id}', 'MenuController@editMenu');
 Route::post('/add-side-to-menu', 'MenuController@addSideToMeal');
