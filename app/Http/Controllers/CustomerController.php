@@ -53,7 +53,7 @@ class CustomerController extends Controller {
     }
 
     /** 
-     * details api 
+     * details api  
      * 
      * @return \Illuminate\Http\Response 
      */ 
