@@ -57,6 +57,9 @@ Route::post('/add-side', 'SideController@insertSide');
 Route::post('/add-drink', 'DrinkController@insertDrink');
 Route::post('/add-meal', 'MealController@insertMeal');
 
+Route::post('/add-extra', 'MealController@addExtra');
+Route::post('/remove-extra', 'MealController@removeExtra');
+
 // API endpoints
 Route::get('api/restaurant/id/{id}', 'RestaurantController@getRestaurantById');
 Route::get('api/restaurant/lowercasename/{id}', 'RestaurantController@getRestaurantIdBylowercasename');

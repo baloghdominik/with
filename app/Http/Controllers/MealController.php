@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use File;
 use Image;
 use App\Meal;
+use App\Extra;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -63,11 +64,84 @@ class MealController extends Controller
         if ($meal === null) {
             return redirect('/');
         }
+
+        $extras = DB::table('extra')
+            ->where('mealid', '=', $meal->id)
+            ->where('restaurantid', '=', $restaurantID)
+            ->get();
+        if ($extras === null) {
+            return redirect('/');
+        }
+
         $day = date('w', strtotime(date("Y-m-d")));
 
         return view('/pages/edit-meal', [
-            'pageConfigs' => $pageConfigs, 'id' => $id, 'meal' => $meal, 'categories' => $categories, 'day' => $day
+            'pageConfigs' => $pageConfigs, 'id' => $id, 'meal' => $meal, 'extras' => $extras, 'categories' => $categories, 'day' => $day
         ]);
+    }
+
+    public function addExtra(Request $request) {
+        $validatedData = request()->validate([
+            'name' => ['required', 'string', 'min:3', 'max:25'],
+            'price' => ['required', 'integer', 'min:0', 'max:5000'],
+            'price' => ['required', 'integer', 'min:0', 'max:5000'],
+            'mealid' => ['required', 'integer','min:0'],
+        ]);
+
+        $restaurantID = Auth::user()->restaurantid;
+
+        $mealID = request('mealid');
+
+        $meal = DB::table('meal')
+            ->where('restaurantid', '=', $restaurantID)
+            ->where('id', '=', $mealID)
+            ->first();
+        if ($meal === null) {
+            return redirect('/');
+        }
+
+        $extra = new Extra;
+        $extra->name = request('name');
+        $extra->price = request('price');
+        $extra->makeprice = request('makeprice');
+        $extra->restaurantid = $restaurantID;
+        $extra->mealid = $mealID;
+        $extra->save();
+   
+        return redirect()->action('MealController@editMeal', ['id' => $mealID])
+            ->with('success','Az extra sikeresen hozzá lett adva az ételhez!');
+    }
+
+    //delete meal from db
+    public function removeExtra(Request $request)
+    {
+        $validatedData = request()->validate([
+            'mealid' => ['required', 'integer', 'min:0'],
+            'extraid' => ['required', 'integer', 'min:0'],
+        ]);
+
+        $extraID = request('extraid');
+        $mealID = request('mealid');
+        $restaurantID = Auth::user()->restaurantid;
+
+        $count = DB::table('extra')
+            ->where('restaurantid', '=', $restaurantID)
+            ->where('mealid', '=', $mealID)
+            ->where('id', '=', $extraID)
+            ->count();
+        if ($count !== 1) {
+            return redirect()->action('MealController@editMeal', ['id' => $mealID])
+            ->with('fail','A keresett extra nem található!');
+        }
+
+        DB::table('extra')
+            ->where('restaurantid', '=', $restaurantID)
+            ->where('mealid', '=', $mealID)
+            ->where('id', '=', $extraID)
+            ->delete();
+   
+        return redirect()->action('MealController@editMeal', ['id' => $mealID])
+            ->with('success','Az extra sikeresen el lett távolítva!');
     }
 
     //update meal in db
@@ -84,6 +158,7 @@ class MealController extends Controller
             'sale' => ['boolean'],
             'makeprice' => ['required', 'integer', 'lte:saleprice', 'min:0', 'max:100000'],
             'maketime' => ['required', 'integer', 'min:0','max:120'],
+            'extralimit' => ['required', 'integer','min:0', 'max:20'],
             'monday' => ['boolean'],
             'tuesday' => ['boolean'],
             'wednesday' => ['boolean'],
@@ -123,6 +198,7 @@ class MealController extends Controller
         $meal->sale = $request->has('sale');
         $meal->makeprice = request('makeprice');
         $meal->maketime = request('maketime');
+        $meal->extralimit = request('extralimit');
         $meal->monday = $request->has('monday');
         $meal->tuesday = $request->has('tuesday');
         $meal->wednesday = $request->has('wednesday');
@@ -208,6 +284,7 @@ class MealController extends Controller
             'sale' => ['boolean'],
             'makeprice' => ['required', 'integer', 'lte:saleprice', 'min:0', 'max:100000'],
             'maketime' => ['required', 'integer', 'min:0','max:120'],
+            'extralimit' => ['required', 'integer','min:0', 'max:20'],
             'monday' => ['boolean'],
             'tuesday' => ['boolean'],
             'wednesday' => ['boolean'],
@@ -251,6 +328,7 @@ class MealController extends Controller
         $meal->sale = $request->has('sale');
         $meal->makeprice = request('makeprice');
         $meal->maketime = request('maketime');
+        $meal->extralimit = request('extralimit');
         $meal->monday = $request->has('monday');
         $meal->tuesday = $request->has('tuesday');
         $meal->wednesday = $request->has('wednesday');
@@ -334,6 +412,11 @@ class MealController extends Controller
             ->delete();
 
         DB::table('drink_to_meal')
+            ->where('mealid', '=', $id)
+            ->delete();
+
+        DB::table('extra')
+            ->where('restaurantid', '=', $restaurantID)
             ->where('mealid', '=', $id)
             ->delete();
    

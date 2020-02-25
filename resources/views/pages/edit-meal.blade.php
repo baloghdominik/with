@@ -175,60 +175,68 @@
                                                                 <span>Étel elkészítési ideje</span>
                                                             </div>
                                                             <div class="col-md-8">
-                                                                <fieldset class="form-group">
-                                                                        <select class="form-control" name="maketime" id="basicSelect">
-                                                                                <option value="{{$meal->maketime}}" selected>{{$meal->maketime}} perc</option>
-                                                                                <option value="0">Nincs elkészítési idő</option>
-                                                                                <option value="1">1 perc</option>
-                                                                                <option value="2">2 perc</option>
-                                                                                <option value="3">3 perc</option>
-                                                                                <option value="4">4 perc</option>
-                                                                                <option value="5">5 perc</option>
-                                                                                <option value="6">6 perc</option>
-                                                                                <option value="7">7 perc</option>
-                                                                                <option value="8">8 perc</option>
-                                                                                <option value="9">9 perc</option>
-                                                                                <option value="10">10 perc</option>
-                                                                                <option value="11">11 perc</option>
-                                                                                <option value="12">12 perc</option>
-                                                                                <option value="13">13 perc</option>
-                                                                                <option value="14">14 perc</option>
-                                                                                <option value="15">15 perc</option>
-                                                                                <option value="16">16 perc</option>
-                                                                                <option value="17">17 perc</option>
-                                                                                <option value="18">18 perc</option>
-                                                                                <option value="19">19 perc</option>
-                                                                                <option value="20">20 perc</option>
-                                                                                <option value="21">21 perc</option>
-                                                                                <option value="22">22 perc</option>
-                                                                                <option value="23">23 perc</option>
-                                                                                <option value="24">24 perc</option>
-                                                                                <option value="25">25 perc</option>
-                                                                                <option value="26">26 perc</option>
-                                                                                <option value="27">27 perc</option>
-                                                                                <option value="28">28 perc</option>
-                                                                                <option value="29">29 perc</option>
-                                                                                <option value="30">30 perc</option>
-                                                                                <option value="35">35 perc</option>
-                                                                                <option value="40">40 perc</option>
-                                                                                <option value="35">45 perc</option>
-                                                                                <option value="50">50 perc</option>
-                                                                                <option value="55">55 perc</option>
-                                                                                <option value="60">60 perc (1 óra)</option>
-                                                                                <option value="65">65 perc</option>
-                                                                                <option value="70">70 perc</option>
-                                                                                <option value="75">75 perc</option>
-                                                                                <option value="80">80 perc</option>
-                                                                                <option value="85">85 perc</option>
-                                                                                <option value="90">90 perc</option>
-                                                                                <option value="95">95 perc</option>
-                                                                                <option value="100">100 perc</option>
-                                                                                <option value="105">105 perc</option>
-                                                                                <option value="110">110 perc</option>
-                                                                                <option value="115">115 perc</option>
-                                                                                <option value="120">120 perc (2 óra)</option>
-                                                                        </select>
-                                                                </fieldset>
+                                                                <select class="form-control" name="maketime" id="basicSelect">
+                                                                        <option value="{{$meal->maketime}}" selected>{{$meal->maketime}} perc</option>
+                                                                        <option value="0">Nincs elkészítési idő</option>
+                                                                        <option value="1">1 perc</option>
+                                                                        <option value="2">2 perc</option>
+                                                                        <option value="3">3 perc</option>
+                                                                        <option value="4">4 perc</option>
+                                                                        <option value="5">5 perc</option>
+                                                                        <option value="6">6 perc</option>
+                                                                        <option value="7">7 perc</option>
+                                                                        <option value="8">8 perc</option>
+                                                                        <option value="9">9 perc</option>
+                                                                        <option value="10">10 perc</option>
+                                                                        <option value="11">11 perc</option>
+                                                                        <option value="12">12 perc</option>
+                                                                        <option value="13">13 perc</option>
+                                                                        <option value="14">14 perc</option>
+                                                                        <option value="15">15 perc</option>
+                                                                        <option value="16">16 perc</option>
+                                                                        <option value="17">17 perc</option>
+                                                                        <option value="18">18 perc</option>
+                                                                        <option value="19">19 perc</option>
+                                                                        <option value="20">20 perc</option>
+                                                                        <option value="21">21 perc</option>
+                                                                        <option value="22">22 perc</option>
+                                                                        <option value="23">23 perc</option>
+                                                                        <option value="24">24 perc</option>
+                                                                        <option value="25">25 perc</option>
+                                                                        <option value="26">26 perc</option>
+                                                                        <option value="27">27 perc</option>
+                                                                        <option value="28">28 perc</option>
+                                                                        <option value="29">29 perc</option>
+                                                                        <option value="30">30 perc</option>
+                                                                        <option value="35">35 perc</option>
+                                                                        <option value="40">40 perc</option>
+                                                                        <option value="35">45 perc</option>
+                                                                        <option value="50">50 perc</option>
+                                                                        <option value="55">55 perc</option>
+                                                                        <option value="60">60 perc (1 óra)</option>
+                                                                        <option value="65">65 perc</option>
+                                                                        <option value="70">70 perc</option>
+                                                                        <option value="75">75 perc</option>
+                                                                        <option value="80">80 perc</option>
+                                                                        <option value="85">85 perc</option>
+                                                                        <option value="90">90 perc</option>
+                                                                        <option value="95">95 perc</option>
+                                                                        <option value="100">100 perc</option>
+                                                                        <option value="105">105 perc</option>
+                                                                        <option value="110">110 perc</option>
+                                                                        <option value="115">115 perc</option>
+                                                                        <option value="120">120 perc (2 óra)</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-12">
+                                                        <div class="form-group row">
+                                                            <div class="col-md-4">
+                                                                <span>Maximum extrák</span>
+                                                            </div>
+                                                            <div class="col-md-8">
+                                                                <input type="number" min="0" max="20" id="extralimit" class="form-control" name="extralimit" placeholder="Maximum opcionális extrák száma" value="{{ $meal->extralimit }}">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -771,6 +779,117 @@
                                                     </div>
                                                     <div class="col-md-8 offset-md-4">
                                                         <button type="submit" class="btn btn-primary mr-1 mb-1 waves-effect waves-light">Mentés</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="col-md-8 col-12">
+                            <div class="card" style="">
+                                <div class="card-header">
+                                    <h4 class="card-title">Extra opciók</h4>
+                                </div>
+                                <div class="card-content">
+                                    <div class="card-body">
+                                        <form class="form form-horizontal" method="post" action="/withadmin/public/add-category">
+                                            <div class="form-body">
+                                                <div class="row">
+                                                    @csrf
+                                                    <div class="col-12">
+                                                        <div class="form-group row">
+                                                            <div class="col-md-12">
+                                                            <div class="table-responsive">
+                                                            <table class="table table-hover-animation mb-0">
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <th scope="col">Név</th>
+                                                                            <th scope="col">fogyasztói ár</th>
+                                                                            <th scope="col">Árrés</th>
+                                                                            <th scope="col">Beszerzési ár</th>
+                                                                            <th scope="col">Törlés</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        @foreach($extras as $key => $data)
+                                                                            <tr>
+                                                                                <th scope="row"><b>{{$data->name}}</b></th>
+                                                                                <td>{{number_format($data->price, 0)}} Ft</td>
+                                                                                <td>{{number_format(($data->price - $data->makeprice), 0)}} Ft</td>
+                                                                                <td>{{number_format($data->makeprice, 0)}} Ft</td>
+                                                                                <td>
+                                                                                    <form method="post" action="/withadmin/public/remove-extra">
+                                                                                    @csrf
+                                                                                    <input type="hidden" name="extraid" value="{{$data->id}}">
+                                                                                    <input type="hidden" name="mealid" value="{{$meal->id}}">
+                                                                                    <button type="submit" class="btn btn-icon btn-danger waves-effect waves-light"><i class="feather icon-x"></i></button>
+                                                                                    </form>
+                                                                                </td>
+                                                                            </tr>
+                                                                        @endforeach
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="col-md-8 col-12">
+                            <div class="card" style="">
+                                <div class="card-header">
+                                    <h4 class="card-title">Extrák</h4>
+                                </div>
+                                <div class="card-content">
+                                    <div class="card-body">
+                                        <form class="form form-horizontal" method="post" action="/withadmin/public/add-extra">
+                                            <div class="form-body">
+                                                <div class="row">
+                                                    @csrf
+                                                    <input type="hidden" id="mealid" class="form-control" name="mealid" value="{{$meal->id}}">
+                                                    <div class="col-12">
+                                                        <div class="form-group row">
+                                                            <div class="col-md-4">
+                                                                <span>Opció neve</span>
+                                                            </div>
+                                                            <div class="col-md-8">
+                                                                <input type="text" id="name" class="form-control" name="name" placeholder="Opció megnevezése">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-12">
+                                                        <div class="form-group row">
+                                                            <div class="col-md-4">
+                                                                <span>Fogyasztói ár</span>
+                                                            </div>
+                                                            <div class="col-md-8">
+                                                                <input type="number" id="price" class="form-control" name="price" placeholder="Eladási ár">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-12">
+                                                        <div class="form-group row">
+                                                            <div class="col-md-4">
+                                                                <span>Beszerzési ár</span>
+                                                            </div>
+                                                            <div class="col-md-8">
+                                                                <input type="number" id="makeprice" class="form-control" name="makeprice" placeholder="Beszerzési ár">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-8 offset-md-4">
+                                                        <button type="submit" class="btn btn-primary mr-1 mb-1 waves-effect waves-light">Hozzáadás</button>
                                                     </div>
                                                 </div>
                                             </div>
