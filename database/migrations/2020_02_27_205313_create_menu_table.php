@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateSideToMealTable extends Migration
+class CreateMenuTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,15 @@ class CreateSideToMealTable extends Migration
      */
     public function up()
     {
-        Schema::create('side_to_meal', function (Blueprint $table) {
+        Schema::create('menu', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->bigInteger('mealid');
-            $table->bigInteger('sideid');
+            $table->bigInteger('restaurantid');
+            $table->longText('picid');
+            $table->string('name');
+            $table->integer('menusalepercent');
+            $table->integer('category');
+            $table->boolean('enable')->default(false);
             $table->timestamps();
         });
     }
@@ -28,6 +33,6 @@ class CreateSideToMealTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('side_to_meal');
+        Schema::dropIfExists('menu');
     }
 }

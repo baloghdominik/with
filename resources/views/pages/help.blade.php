@@ -34,6 +34,15 @@
                                 <a href="tel:06303909135" class="btn btn-primary waves-effect waves-light"><i class="fa fa-phone"></i> Hívás</a>
                                 <a href="mailto:admin@with.hu" class="btn btn-outline-primary waves-effect waves-light"><i class="fa fa-envelope"></i> Üzenet</a>
                             </div>
+                            <hr class="my-2">
+                            <div class="d-flex justify-content-between">
+                                <div class="float-left">
+                                    06-30-000-0000
+                                </div>
+                                <div class="float-right">
+                                    admin@with.hu
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -53,6 +62,15 @@
                             <div class="card-btns d-flex justify-content-between mt-3">
                                 <a href="tel:06303909135" class="btn btn-primary waves-effect waves-light"><i class="fa fa-phone"></i> Hívás</a>
                                 <a href="mailto:admin@with.hu" class="btn btn-outline-primary waves-effect waves-light"><i class="fa fa-envelope"></i> Üzenet</a>
+                            </div>
+                            <hr class="my-2">
+                            <div class="d-flex justify-content-between">
+                                <div class="float-left">
+                                    06-30-390-9135
+                                </div>
+                                <div class="float-right">
+                                    admin@with.hu
+                                </div>
                             </div>
                         </div>
                     </div>

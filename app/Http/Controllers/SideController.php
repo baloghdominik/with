@@ -316,13 +316,27 @@ class SideController extends Controller
 
         $restaurantID = Auth::user()->restaurantid;
 
+        $menus = DB::table('menu')->where('restaurantid', $restaurantID)->where('enable', 1)->get();
+        foreach($menus as $menu) {
+            $count = DB::table('side_to_menu')
+            ->where('menuid', '=', $menu->id)
+            ->count();
+            if ($count == 1) {
+                $m = DB::table('side_to_menu')->where('menuid', $menu->id)->first();
+                if ($m->sideid == $id) {
+                    return redirect()->action('SideController@editSide', ['id' => $id])
+                    ->with('fail','Ez a köret jelenleg használatban van egyetlen választható köretként egy menüben ("'.$menu->name.'")! A köret eltávolításához kérjük vegyen fel más köretet is az adott menübe, vagy kapcsolja ki a menüt. ');
+                }
+            }
+        }
+        
         $count = DB::table('side')
             ->where('restaurantid', '=', $restaurantID)
             ->where('id', '=', $id)
             ->count();
         if ($count !== 1) {
             return redirect()->action('SideController@editSide', ['id' => $id])
-            ->with('fail','A keresett köret nem található!');
+            ->with('fail','A keresett köret nem található! ('.$id.')');
         }
 
         DB::table('side')
@@ -330,7 +344,7 @@ class SideController extends Controller
             ->where('id', '=', $id)
             ->delete();
 
-        DB::table('side_to_meal')
+        DB::table('side_to_menu')
             ->where('sideid', '=', $id)
             ->delete();
    

@@ -4,11 +4,11 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class SideToMeal extends Model
+class DrinkToMenu extends Model
 {
-    public $table = "side_to_meal";
+    public $table = "drink_to_menu";
     protected $fillable = [
-        'mealid', 
+        'menuid', 
         'sideid'
     ];
 }

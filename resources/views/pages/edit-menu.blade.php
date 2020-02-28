@@ -58,14 +58,20 @@
                                     <div class="card-body">
                                             <div class="form-body">
                                                 <div class="row">
+                                                <form class="form form-horizontal" method="post" action="/withadmin/public/update-menu"  enctype="multipart/form-data">
                                                     @csrf 
+                                                    <input type="hidden" id="id" class="form-control" name="id" value="{{$menu->id}}">
                                                     <div class="col-12">
                                                         <div class="form-group row">
                                                             <div class="col-md-4">
                                                                 <span>Menü fotója</span>
                                                             </div>
                                                             <div class="col-md-8">
-                                                            <img src="{{ asset('images/meals/'.$meal->picid.'.jpg') }}" width="100%" height="auto" style="margin-bottom: 25px; border-radius: 1rem;">
+                                                            <img src="{{ asset('images/menus/'.$menu->picid.'.jpg') }}" width="100%" height="auto" style="margin-bottom: 25px; border-radius: 1rem;">
+                                                                <div class="custom-file">
+                                                                        <input type="file" name="image" class="custom-file-input" id="inputGroupFile01">
+                                                                        <label class="custom-file-label" for="inputGroupFile01">Válasszon fotót</label>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -75,10 +81,74 @@
                                                                 <span>Menü neve</span>
                                                             </div>
                                                             <div class="col-md-8">
-                                                                <input type="text" id="food-name" class="form-control" name="name" value="{{$meal->name}}" disabled>
+                                                                <input type="text" id="food-name" class="form-control" name="name" value="{{$menu->name}}">
                                                             </div>
                                                         </div>
                                                     </div>
+                                                    <div class="col-12">
+                                                        <div class="form-group row">
+                                                            <div class="col-md-4">
+                                                                <span>Kategória</span>
+                                                            </div>
+                                                            <div class="col-md-8">
+                                                                <select class="form-control" name="category" id="basicSelect">
+                                                                    @foreach($categories as $key => $data)
+                                                                        @if($data->id == $menu->category)
+                                                                            <option value="{{ $data->id }}" selected>{{ $data->category }}</option>
+                                                                        @else
+                                                                            <option value="{{ $data->id }}">{{ $data->category }}</option>
+                                                                        @endif
+                                                                    @endforeach
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-12">
+                                                        <div class="form-group row">
+                                                            <div class="col-md-4">
+                                                                <span>Menü kedvezmény</span>
+                                                            </div>
+                                                            <div class="col-md-8">
+                                                                <input min="0" max="90" type="number" id="menusalepercent" class="form-control" name="menusalepercent" value="{{$menu->menusalepercent}}">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-12">
+                                                        <div class="form-group row">
+                                                            <div class="col-md-4">
+                                                                <span>Menü bekapcsolása</span>
+                                                            </div>
+                                                            <div class="col-md-8">
+                                                            @if($menu->enable)
+                                                            <div class="custom-control custom-switch custom-control-inline">
+                                                                <input type="checkbox" name="enable" value="1" class="custom-control-input" id="customSwitch1" checked>
+                                                                <label class="custom-control-label" for="customSwitch1">
+                                                                </label>
+                                                                <span class="switch-label">Bekapcsolás</span>
+                                                                </div>
+                                                            </div>
+                                                            @else
+                                                            <div class="custom-control custom-switch custom-control-inline">
+                                                                <input type="checkbox" name="enable" value="0" class="custom-control-input" id="customSwitch1">
+                                                                <label class="custom-control-label" for="customSwitch1">
+                                                                </label>
+                                                                <span class="switch-label">bekapcsolás</span>
+                                                                </div>
+                                                            </div>
+                                                            @endif
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-12">
+                                                        <div class="form-group row">
+                                                            <div class="col-md-4">
+                                                            </div>
+                                                            <div class="col-md-8">
+                                                                <button type="submit" class="btn btn-primary mr-1 mb-1 waves-effect waves-light">Mentés</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    </form>
+
 
                                                     <div class="col-12">
                                                         <div class="form-group row">
@@ -146,6 +216,7 @@
                                                                                 @if($btn)
                                                                                 <form method="post" action="/withadmin/public/remove-side-from-menu">
                                                                                 @csrf
+                                                                                <input type="hidden" name="menuid" value="{{$menu->id}}">
                                                                                 <input type="hidden" name="mealid" value="{{$meal->id}}">
                                                                                 <input type="hidden" name="sideid" value="{{$data->id}}">
                                                                                 <button type="submit" class="btn btn-icon btn-danger waves-effect waves-light"><i class="feather icon-x"></i></button>
@@ -153,6 +224,7 @@
                                                                                 @else
                                                                                 <form method="post" action="/withadmin/public/add-side-to-menu">
                                                                                 @csrf
+                                                                                <input type="hidden" name="menuid" value="{{$menu->id}}">
                                                                                 <input type="hidden" name="mealid" value="{{$meal->id}}">
                                                                                 <input type="hidden" name="sideid" value="{{$data->id}}">
                                                                                 <button type="submit" class="btn btn-icon btn-primary waves-effect waves-light"><i class="feather icon-plus"></i></button>
@@ -235,6 +307,7 @@
                                                                                 <form method="post" action="/withadmin/public/remove-drink-from-menu">
                                                                                 @csrf
                                                                                 <input type="hidden" name="mealid" value="{{$meal->id}}">
+                                                                                <input type="hidden" name="menuid" value="{{$menu->id}}">
                                                                                 <input type="hidden" name="drinkid" value="{{$data->id}}">
                                                                                 <button type="submit" class="btn btn-icon btn-danger waves-effect waves-light"><i class="feather icon-x"></i></button>
                                                                                 </form>
@@ -242,6 +315,7 @@
                                                                                 <form method="post" action="/withadmin/public/add-drink-to-menu">
                                                                                 @csrf
                                                                                 <input type="hidden" name="mealid" value="{{$meal->id}}">
+                                                                                <input type="hidden" name="menuid" value="{{$menu->id}}">
                                                                                 <input type="hidden" name="drinkid" value="{{$data->id}}">
                                                                                 <button type="submit" class="btn btn-icon btn-primary waves-effect waves-light"><i class="feather icon-plus"></i></button>
                                                                                 </form>

@@ -43,11 +43,13 @@ Route::post('/upload-images', 'RestaurantController@uploadImages');
 Route::get('/help', 'HelpController@showHelp');
 
 Route::get('/edit-menu/{id}', 'MenuController@editMenu');
-Route::post('/add-side-to-menu', 'MenuController@addSideToMeal');
+Route::post('/update-menu', 'MenuController@updateMenu');
+
+Route::post('/add-side-to-menu', 'MenuController@addSideToMenu');
 Route::post('/remove-side-from-menu', 'MenuController@removeSidefromMeal');
 
-Route::post('/add-drink-to-menu', 'MenuController@addDrinkToMeal');
-Route::post('/remove-drink-from-menu', 'MenuController@removeDrinkfromMeal');
+Route::post('/add-drink-to-menu', 'MenuController@addDrinkToMenu');
+Route::post('/remove-drink-from-menu', 'MenuController@removeDrinkfromMenu');
 
 Route::post('/update-meal/{id}', 'MealController@updateMeal');
 Route::post('/update-side/{id}', 'SideController@updateSide');

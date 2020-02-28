@@ -306,6 +306,20 @@ class DrinkController extends Controller
 
         $restaurantID = Auth::user()->restaurantid;
 
+        $menus = DB::table('menu')->where('restaurantid', $restaurantID)->where('enable', 1)->get();
+        foreach($menus as $menu) {
+            $count = DB::table('drink_to_menu')
+            ->where('menuid', '=', $menu->id)
+            ->count();
+            if ($count == 1) {
+                $m = DB::table('drink_to_menu')->where('menuid', $menu->id)->first();
+                if ($m->drinkid == $id) {
+                    return redirect()->action('SideController@editSide', ['id' => $id])
+                    ->with('fail','Ez az ital jelenleg használatban van egyetlen választható italként egy menüben ("'.$menu->name.'")! Az ital eltávolításához kérjük vegyen fel más italt is az adott menübe, vagy kapcsolja ki a menüt. ');
+                }
+            }
+        }
+
         $count = DB::table('drink')
             ->where('restaurantid', '=', $restaurantID)
             ->where('id', '=', $id)

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateDrinkToMealTable extends Migration
+class CreateSideToMenuTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,10 @@ class CreateDrinkToMealTable extends Migration
      */
     public function up()
     {
-        Schema::create('drink_to_meal', function (Blueprint $table) {
+        Schema::create('side_to_menu', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->bigInteger('mealid');
-            $table->bigInteger('drinkid');
+            $table->bigInteger('menuid');
+            $table->bigInteger('sideid');
             $table->timestamps();
         });
     }
@@ -28,6 +28,6 @@ class CreateDrinkToMealTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('drink_to_meal');
+        Schema::dropIfExists('side_to_menu');
     }
 }

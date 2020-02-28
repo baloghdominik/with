@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use File;
 use Image;
 use App\Meal;
+use App\Menu;
 use App\Extra;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -315,7 +316,7 @@ class MealController extends Controller
             $mealID = $mealDB->id;
         }
         $mealID++;
-        $picID = 'with.hu_r'.$restaurantID.'_s'.$mealID;
+        $picID = 'with.hu_r'.$restaurantID.'_m'.$mealID;
         $picID = 'with.hu_'.md5($picID);
 
         $meal = new Meal;
@@ -349,10 +350,34 @@ class MealController extends Controller
         $meal->available = $request->has('available');
         $meal->save();
 
+
+        $meal = DB::table('meal')->latest('created_at')->first();
+        $restaurant = DB::table('restaurant')->where('id', $restaurantID)->first();
+        $count = DB::table('menu')->count();
+        if ($count == 0) {
+            $menuID = 0;
+        } else {
+            $menuDB = DB::table('menu')->select('id')->latest('created_at')->first();
+            $menuID = $menuDB->id;
+        }
+        $menuID++;
+        $picID2 = 'with.hu_r'.$restaurantID.'_m'.$menuID;
+        $picID2 = 'with.hu_'.md5($picID2);
+
+        $menu = new Menu;
+        $menu->mealid = $meal->id;
+        $menu->restaurantid = $restaurantID;
+        $menu->picid = $picID2;
+        $menu->name = $meal->name;
+        $menu->menusalepercent = $restaurant->menusalepercent;
+        $menu->category = $meal->category;
+        $menu->save();
+
         $this->validate($request, [
             'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:4096',
         ]);
   
+        // upload meal image
         $image = $request->file('image');
         $input['imagename'] = ''.$picID.'.'.$image->extension();
         $filename = $picID.'.jpg';
@@ -370,10 +395,30 @@ class MealController extends Controller
 
         $img = Image::make('images/meals/'.$filename)->crop(1080, 720)->save($destinationPath.'/'.$filename);
 
+
+        // upload menu image
+        $image = $request->file('image');
+        $input['imagename'] = ''.$picID2.'.'.$image->extension();
+        $filename = $picID2.'.jpg';
+
+        $destinationPath = public_path('images/menus');
+
+        if(File::exists($destinationPath.'/'.$filename)) {
+            File::delete($destinationPath.'/'.$filename);  // or unlink($filename);
+        }
+        $img = Image::make($image->path())->encode('jpg', 80)->save($destinationPath.'/'.$filename);
+
+        $img = Image::make('images/menus/'.$picID2.'.jpg')->resize(1080, null, function ($constraint) {
+            $constraint->aspectRatio();
+        })->save($destinationPath.'/'.$filename);
+
+        $img = Image::make('images/menus/'.$filename)->crop(1080, 720)->save($destinationPath.'/'.$filename);
+
    
         return back()
             ->with('success','Az étel sikeresen hozzá lett adva az étlaphoz!');
     }
+
 
     //delete meal from db
     public function deleteMeal(Request $request)
@@ -407,13 +452,28 @@ class MealController extends Controller
             ->where('id', '=', $id)
             ->delete();
 
-        DB::table('side_to_meal')
-            ->where('mealid', '=', $id)
-            ->delete();
+        $menu = DB::table('menu')->where('mealid', $id)->where('restaurantid', $restaurantID)->first();
 
-        DB::table('drink_to_meal')
+        $count = DB::table('menu')
+            ->where('restaurantid', '=', $restaurantID)
             ->where('mealid', '=', $id)
-            ->delete();
+            ->count();
+        if ($count > 0) {
+
+            DB::table('menu')
+                ->where('restaurantid', '=', $restaurantID)
+                ->where('mealid', '=', $id)
+                ->delete();
+
+            DB::table('side_to_menu')
+                ->where('menuid', '=', $menu->id)
+                ->delete();
+
+            DB::table('drink_to_menu')
+                ->where('menuid', '=', $menu->id)
+                ->delete();
+        
+        }
 
         DB::table('extra')
             ->where('restaurantid', '=', $restaurantID)
