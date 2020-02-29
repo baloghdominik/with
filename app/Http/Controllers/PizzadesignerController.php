@@ -8,6 +8,7 @@ use App\PizzadesignerSize;
 use App\PizzadesignerBase;
 use App\PizzadesignerTopping;
 use App\PizzadesignerSauce;
+use App\PizzadesignerDough;
 use App\Restaurant;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -109,6 +110,11 @@ class PizzadesignerController extends Controller
             ->delete();
 
         DB::table('pizzadesigner_sauce')
+            ->where('restaurantid', '=', $restaurantID)
+            ->where('sizeid', '=', $id)
+            ->delete();
+
+        DB::table('pizzadesigner_dough')
             ->where('restaurantid', '=', $restaurantID)
             ->where('sizeid', '=', $id)
             ->delete();
@@ -375,6 +381,91 @@ class PizzadesignerController extends Controller
        
             return back()
                 ->with('success','A szósz sikeresen el lett távolítva a pizzatervezőből!');
+        }
+
+
+
+
+        // show - pizzadesigner - dough
+        public function showDough(){
+            $pageConfigs = [
+                'pageHeader' => false
+            ];
+    
+            $restaurantID = Auth::user()->restaurantid;
+    
+            $pizzadesigner_sizes = DB::table('pizzadesigner_size')
+                ->where('restaurantid', '=', $restaurantID)
+                ->orderBy('size', 'asc')
+                ->get();
+            if ($pizzadesigner_sizes === null) {
+                return redirect('/');
+            }
+    
+            $pizzadesigner_dough = DB::table('pizzadesigner_dough')
+                ->where('restaurantid', '=', $restaurantID)
+                ->orderBy('price', 'asc')
+                ->get();
+            if ($pizzadesigner_dough === null) {
+                return redirect('/');
+            }
+    
+            return view('/pages/pizzadesigner-dough', [
+                'pageConfigs' => $pageConfigs, 
+                'pizzadesigner_sizes' => $pizzadesigner_sizes, 
+                'pizzadesigner_dough' => $pizzadesigner_dough
+            ]);
+        }
+    
+        //save new dough to pizzadesigner db
+        public function addDough(Request $request)
+        {
+    
+            $validatedData = request()->validate([
+                'sizeid' => ['required', 'integer', 'min:0'],
+                'name' => ['required', 'string', 'min:2', 'max:50'],
+                'price' => ['required', 'integer', 'min:0', 'max:10000'],
+            ]);
+    
+            $restaurantID = Auth::user()->restaurantid;
+    
+            $pizzadesignerdough = new PizzadesignerDough;
+            $pizzadesignerdough->sizeid = request('sizeid');
+            $pizzadesignerdough->restaurantid = $restaurantID;
+            $pizzadesignerdough->name = request('name');
+            $pizzadesignerdough->price = request('price');
+            $pizzadesignerdough->save();
+       
+            return back()
+                ->with('success','Az új tészta sikeresen hozzá lett adva a pizzatervezőhöz!');
+        }
+    
+        //delete dough from pizzadeisgner db
+        public function removeDough(Request $request)
+        {
+            $validatedData = request()->validate([
+                'id' => ['required', 'integer', 'min:0'],
+            ]);
+    
+            $id = request('id');
+            $restaurantID = Auth::user()->restaurantid;
+    
+            $count = DB::table('pizzadesigner_dough')
+                ->where('restaurantid', '=', $restaurantID)
+                ->where('id', '=', $id)
+                ->count();
+            if ($count !== 1) {
+                return back()
+                ->with('fail','A keresett tészta nem található!');
+            }
+    
+            DB::table('pizzadesigner_dough')
+                ->where('restaurantid', '=', $restaurantID)
+                ->where('id', '=', $id)
+                ->delete();
+       
+            return back()
+                ->with('success','A tészta sikeresen el lett távolítva a pizzatervezőből!');
         }
 
     

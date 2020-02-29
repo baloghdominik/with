@@ -59,6 +59,10 @@ Route::get('/pizzadesigner-sauce', 'PizzadesignerController@showSauce');
 Route::post('/pizzadesigner-add-sauce', 'PizzadesignerController@addSauce');
 Route::post('/pizzadesigner-remove-sauce', 'PizzadesignerController@removeSauce');
 
+Route::get('/pizzadesigner-dough', 'PizzadesignerController@showDough');
+Route::post('/pizzadesigner-add-dough', 'PizzadesignerController@addDough');
+Route::post('/pizzadesigner-remove-dough', 'PizzadesignerController@removeDough');
+
 Route::get('/edit-menu/{id}', 'MenuController@editMenu');
 Route::post('/update-menu', 'MenuController@updateMenu');
 

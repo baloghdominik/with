@@ -1,6 +1,6 @@
 @extends('layouts/contentLayoutMaster')
 
-@section('title', 'Pizza Designer - Sauces')
+@section('title', 'Pizza Designer - Dough')
 
 @section('vendor-style')
         <!-- vendor css files -->
@@ -47,7 +47,7 @@
         <div class="col-md-8 col-12">
             <div class="card" style="">
                 <div class="card-header">
-                    <h4 class="card-title">Pizza Szószok - {{ $data->size }} cm</h4>
+                    <h4 class="card-title">Pizza Tészta Fajták - {{ $data->size }} cm</h4>
                 </div>
                 <div class="card-content">
                     <div class="card-body">
@@ -58,26 +58,22 @@
                                         <thead>
                                             <tr>
                                                 <th scope="col">Név</th>
-                                                <th scope="col">Fogyasztói ár</th>
+                                                <th scope="col">Felár</th>
                                                 <th scope="col">Árrés</th>
-                                                <th scope="col">Beszerzési ár</th>
-                                                <th scope="col">Elkészítési idő</th>
                                                 <th scope="col">Törlés</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @foreach($pizzadesigner_sauces as $key => $sauce)
-                                                @if($data->id == $sauce->sizeid)
+                                            @foreach($pizzadesigner_dough as $key => $dough)
+                                                @if($data->id == $dough->sizeid)
                                                 <tr>
-                                                    <th scope="row"><b>{{$sauce->name}}</b></th>
-                                                    <td>{{number_format($sauce->price, 0)}} Ft</td>
-                                                    <td>{{number_format(($sauce->price - $sauce->makeprice), 0)}} Ft</td>
-                                                    <td>{{number_format($sauce->makeprice, 0)}} Ft</td>
-                                                    <td>{{number_format($sauce->maketime, 0)}} Perc</td>
+                                                    <th scope="row"><b>{{$dough->name}}</b></th>
+                                                    <td>{{number_format($dough->price, 0)}} Ft</td>
+                                                    <td>{{number_format($dough->price, 0)}} Ft</td>
                                                     <td>
-                                                        <form method="post" action="/withadmin/public/pizzadesigner-remove-sauce">
+                                                        <form method="post" action="/withadmin/public/pizzadesigner-remove-dough">
                                                         @csrf
-                                                        <input type="hidden" name="id" value="{{$sauce->id}}">
+                                                        <input type="hidden" name="id" value="{{$dough->id}}">
                                                         <button type="submit" class="btn btn-icon btn-danger waves-effect waves-light"><i class="feather icon-x"></i></button>
                                                         </form>
                                                     </td>
@@ -98,11 +94,11 @@
         <div class="col-md-8 col-12">
             <div class="card" style="">
                 <div class="card-header">
-                    <h4 class="card-title">Új Pizza Szósz</h4>
+                    <h4 class="card-title">Új Pizza Tészta</h4>
                 </div>
                 <div class="card-content">
                     <div class="card-body">
-                    <form class="form form-horizontal" method="post" action="/withadmin/public/pizzadesigner-add-sauce"  enctype="multipart/form-data">
+                    <form class="form form-horizontal" method="post" action="/withadmin/public/pizzadesigner-add-dough"  enctype="multipart/form-data">
                             <div class="form-body">
                                 <div class="row">
                                     @csrf
@@ -126,87 +122,17 @@
                                                 <span>Megnevezés</span>
                                             </div>
                                             <div class="col-md-8">
-                                                <input type="string" min="3" max="50" id="name" class="form-control" name="name" placeholder="A szósz neve">
+                                                <input type="string" min="2" max="50" id="name" class="form-control" name="name" placeholder="A tészta megnevezése">
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-12">
                                         <div class="form-group row">
                                             <div class="col-md-4">
-                                                <span>Fogyasztói ár</span>
+                                                <span>Felár</span>
                                             </div>
                                             <div class="col-md-8">
-                                                <input type="number" min="0" max="50000" class="form-control" name="price" placeholder="A szósz eladási ára">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-12">
-                                        <div class="form-group row">
-                                            <div class="col-md-4">
-                                                <span>Elkészítési ár</span>
-                                            </div>
-                                            <div class="col-md-8">
-                                                <input type="number" min="0" max="50000" class="form-control" name="makeprice" placeholder="A szósz elkészítési ára">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-12">
-                                        <div class="form-group row">
-                                            <div class="col-md-4">
-                                                <span>Elkészítési idő</span>
-                                            </div>
-                                            <div class="col-md-8">
-                                                <select class="form-control" name="maketime" id="basicSelect">
-                                                    <option value="0">Nincs elkészítési idő</option>
-                                                    <option value="1">1 perc</option>
-                                                    <option value="2">2 perc</option>
-                                                    <option value="3">3 perc</option>
-                                                    <option value="4">4 perc</option>
-                                                    <option value="5">5 perc</option>
-                                                    <option value="6">6 perc</option>
-                                                    <option value="7">7 perc</option>
-                                                    <option value="8">8 perc</option>
-                                                    <option value="9">9 perc</option>
-                                                    <option value="10">10 perc</option>
-                                                    <option value="11">11 perc</option>
-                                                    <option value="12">12 perc</option>
-                                                    <option value="13">13 perc</option>
-                                                    <option value="14">14 perc</option>
-                                                    <option value="15">15 perc</option>
-                                                    <option value="16">16 perc</option>
-                                                    <option value="17">17 perc</option>
-                                                    <option value="18">18 perc</option>
-                                                    <option value="19">19 perc</option>
-                                                    <option value="20">20 perc</option>
-                                                    <option value="21">21 perc</option>
-                                                    <option value="22">22 perc</option>
-                                                    <option value="23">23 perc</option>
-                                                    <option value="24">24 perc</option>
-                                                    <option value="25">25 perc</option>
-                                                    <option value="26">26 perc</option>
-                                                    <option value="27">27 perc</option>
-                                                    <option value="28">28 perc</option>
-                                                    <option value="29">29 perc</option>
-                                                    <option value="30">30 perc</option>
-                                                    <option value="35">35 perc</option>
-                                                    <option value="40">40 perc</option>
-                                                    <option value="35">45 perc</option>
-                                                    <option value="50">50 perc</option>
-                                                    <option value="55">55 perc</option>
-                                                    <option value="60">60 perc (1 óra)</option>
-                                                    <option value="65">65 perc</option>
-                                                    <option value="70">70 perc</option>
-                                                    <option value="75">75 perc</option>
-                                                    <option value="80">80 perc</option>
-                                                    <option value="85">85 perc</option>
-                                                    <option value="90">90 perc</option>
-                                                    <option value="95">95 perc</option>
-                                                    <option value="100">100 perc</option>
-                                                    <option value="105">105 perc</option>
-                                                    <option value="110">110 perc</option>
-                                                    <option value="115">115 perc</option>
-                                                    <option value="120">120 perc (2 óra)</option>
-                                                </select>
+                                                <input type="number" min="0" max="50000" class="form-control" name="price" placeholder="A tészta eladási ára">
                                             </div>
                                         </div>
                                     </div>

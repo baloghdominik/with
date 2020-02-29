@@ -20,7 +20,8 @@
         {"url":"pizzadesigner-size", "name":"Méretek"},
         {"url":"pizzadesigner-base", "name":"Alapok"},
         {"url":"pizzadesigner-topping", "name":"Feltétek"},
-        {"url":"pizzadesigner-sauce", "name":"Szószok"}
+        {"url":"pizzadesigner-sauce", "name":"Szószok"},
+        {"url":"pizzadesigner-dough", "name":"Tészták"}
     ]
   },
   {"url":"", "name":"Beállítások", "icon":"feather icon-settings",

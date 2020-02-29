@@ -1,6 +1,6 @@
 @extends('layouts/contentLayoutMaster')
 
-@section('title', 'Helpdesk')
+@section('title', 'Video Repository')
 
 @section('vendor-style')
         <!-- vendor css files -->

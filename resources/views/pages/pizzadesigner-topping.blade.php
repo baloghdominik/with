@@ -289,7 +289,7 @@
                                                 <span>Megnevezés</span>
                                             </div>
                                             <div class="col-md-8">
-                                                <input type="string" min="3" max="50" id="name" class="form-control" name="name" placeholder="Az alap neve">
+                                                <input type="string" min="3" max="50" id="name" class="form-control" name="name" placeholder="A feltét neve">
                                             </div>
                                         </div>
                                     </div>
@@ -315,7 +315,7 @@
                                                 <span>Fogyasztói ár</span>
                                             </div>
                                             <div class="col-md-8">
-                                                <input type="number" min="0" max="50000" class="form-control" name="price" placeholder="Az alap eladási ára">
+                                                <input type="number" min="0" max="50000" class="form-control" name="price" placeholder="A feltét eladási ára">
                                             </div>
                                         </div>
                                     </div>
@@ -325,7 +325,7 @@
                                                 <span>Elkészítési ár</span>
                                             </div>
                                             <div class="col-md-8">
-                                                <input type="number" min="0" max="50000" class="form-control" name="makeprice" placeholder="Az alap elkészítési ára">
+                                                <input type="number" min="0" max="50000" class="form-control" name="makeprice" placeholder="A feltét elkészítési ára">
                                             </div>
                                         </div>
                                     </div>
