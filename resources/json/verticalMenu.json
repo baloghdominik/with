@@ -15,6 +15,14 @@
         {"url":"list-drink", "name":"Italok"}
     ]
   },
+  {"url":"", "name":"Pizza tervező", "icon":"feather icon-menu",
+    "submenu": [
+        {"url":"pizzadesigner-size", "name":"Méretek"},
+        {"url":"pizzadesigner-base", "name":"Alapok"},
+        {"url":"pizzadesigner-topping", "name":"Feltétek"},
+        {"url":"pizzadesigner-sauce", "name":"Szószok"}
+    ]
+  },
   {"url":"", "name":"Beállítások", "icon":"feather icon-settings",
     "submenu": [
         {"url":"category-settings", "name":"Kategóriák"},

@@ -87,7 +87,8 @@ class RestaurantController extends Controller
             'menusalepercent' => ['required', 'integer', 'min:0', 'max:20'],
             'showspecifications' => ['boolean'],
             'showcalories' => ['boolean'],
-            'showdescription' => ['boolean']
+            'showdescription' => ['boolean'],
+            'pizzadesigner' => ['boolean']
         ]);
 
         $restaurantID = Auth::user()->restaurantid;
@@ -144,6 +145,7 @@ class RestaurantController extends Controller
         $restaurant->showspecifications = $request->has('showspecifications');
         $restaurant->showcalories = $request->has('showcalories');
         $restaurant->showdescription = $request->has('showdescription');
+        $restaurant->pizzadesigner = $request->has('pizzadesigner');
         $restaurant->save();
 
         return back()

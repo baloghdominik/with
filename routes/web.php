@@ -42,6 +42,22 @@ Route::post('/upload-images', 'RestaurantController@uploadImages');
 
 Route::get('/help', 'HelpController@showHelp');
 
+Route::get('/pizzadesigner-size', 'PizzadesignerController@showSize');
+Route::post('/pizzadesigner-add-size', 'PizzadesignerController@addSize');
+Route::post('/pizzadesigner-remove-size', 'PizzadesignerController@removeSize');
+
+Route::get('/pizzadesigner-base', 'PizzadesignerController@showBase');
+Route::post('/pizzadesigner-add-base', 'PizzadesignerController@addBase');
+Route::post('/pizzadesigner-remove-base', 'PizzadesignerController@removeBase');
+
+Route::get('/pizzadesigner-topping', 'PizzadesignerController@showTopping');
+Route::post('/pizzadesigner-add-topping', 'PizzadesignerController@addTopping');
+Route::post('/pizzadesigner-remove-topping', 'PizzadesignerController@removeTopping');
+
+Route::get('/pizzadesigner-sauce', 'PizzadesignerController@showSauce');
+Route::post('/pizzadesigner-add-sauce', 'PizzadesignerController@addSauce');
+Route::post('/pizzadesigner-remove-sauce', 'PizzadesignerController@removeSauce');
+
 Route::get('/edit-menu/{id}', 'MenuController@editMenu');
 Route::post('/update-menu', 'MenuController@updateMenu');
 

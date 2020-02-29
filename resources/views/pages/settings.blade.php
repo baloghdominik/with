@@ -235,6 +235,37 @@
 
                                 <div class="col-12">
                                     <div class="form-group row">
+                                        <div class="col-md-4">
+                                            <span>Pizza tervező bekapcsolása</span>
+                                        </div>
+                                        <div class="col-md-6">
+                                            @if($restaurant->pizzadesigner)
+                                                <div class="vs-checkbox-con vs-checkbox-primary">
+                                                    <input type="checkbox" name="pizzadesigner" value="1" checked>
+                                                    <span class="vs-checkbox">
+                                                    <span class="vs-checkbox--check">
+                                                            <i class="vs-icon feather icon-check"></i>
+                                                    </span>
+                                                    </span>
+                                                    <span class="">Bekapcsolás</span>
+                                                </div>
+                                            @else
+                                                <div class="vs-checkbox-con vs-checkbox-primary">
+                                                    <input type="checkbox" name="pizzadesigner" value="0">
+                                                    <span class="vs-checkbox">
+                                                    <span class="vs-checkbox--check">
+                                                            <i class="vs-icon feather icon-check"></i>
+                                                    </span>
+                                                    </span>
+                                                    <span class="">Bekapcsolás</span>
+                                                </div>
+                                            @endif
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-12">
+                                    <div class="form-group row">
                                         <div class="col-md-12 text-center mt-3">
                                             <h4>Nyitvatartás</h4>
                                         </div>
