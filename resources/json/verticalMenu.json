@@ -5,7 +5,7 @@
   {"url":"reservations", "name":"Foglalások", "icon":"feather icon-calendar"},
   {"url":"","navheader":"Kezelés","icon":""},
 
-  {"url":"", "name":"Menü", "icon":"feather icon-menu",
+  {"url":"", "name":"Menü", "icon":"feather icon-book",
     "submenu": [
         {"url":"add-meal", "name":"Új étel felvétele"},
         {"url":"list-meal", "name":"Ételek"},
@@ -15,7 +15,7 @@
         {"url":"list-drink", "name":"Italok"}
     ]
   },
-  {"url":"", "name":"Pizza tervező", "icon":"feather icon-menu",
+  {"url":"", "name":"Pizza tervező", "icon":"feather icon-pie-chart",
     "submenu": [
         {"url":"pizzadesigner-size", "name":"Méretek"},
         {"url":"pizzadesigner-base", "name":"Alapok"},
@@ -30,7 +30,8 @@
     ]
   },
   {"url":"","navheader":"Segítség","icon":""},
-    {"url":"help", "name":"Ügyfélszolgálat", "icon":"feather icon-life-buoy"}
+    {"url":"help", "name":"Ügyfélszolgálat", "icon":"feather icon-life-buoy"},
+    {"url":"videorepo", "name":"Videótár", "icon":"feather icon-play"}
 
 ]}
 

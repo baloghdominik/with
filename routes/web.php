@@ -41,6 +41,7 @@ Route::post('/update-settings', 'RestaurantController@updateSettings');
 Route::post('/upload-images', 'RestaurantController@uploadImages');
 
 Route::get('/help', 'HelpController@showHelp');
+Route::get('/videorepo', 'HelpController@showVideoRepository');
 
 Route::get('/pizzadesigner-size', 'PizzadesignerController@showSize');
 Route::post('/pizzadesigner-add-size', 'PizzadesignerController@addSize');

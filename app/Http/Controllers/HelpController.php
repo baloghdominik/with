@@ -82,4 +82,15 @@ class HelpController extends Controller
         ]);
     }
 
+    // show video repository page
+    public function showVideoRepository(){
+        $pageConfigs = [
+            'pageHeader' => false
+        ];
+
+        return view('/pages/videorepo', [
+            'pageConfigs' => $pageConfigs
+        ]);
+    }
+
 }
