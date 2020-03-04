@@ -41,6 +41,7 @@
     {{-- {!! Helper::applClasses() !!} --}}
     @php
     $configData = Helper::applClasses();
+    date_default_timezone_set('Europe/Budapest');
     @endphp
 
     <body class="vertical-layout vertical-menu-modern 1-column  navbar-floating footer-static bg-full-screen-image  blank-page blank-page" data-open="click" data-menu="vertical-menu-modern" data-col="1-column">

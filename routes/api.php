@@ -20,7 +20,11 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::post('login', 'CustomerController@login');
 Route::post('register', 'CustomerController@register');
 
+Route::post('login', 'CustomerController@login');
+
 Route::group(['middleware' => 'auth:api'], function(){
     Route::post('details', 'CustomerController@details');
     Route::post('logout', 'CustomerController@logout');
+
+    Route::post('reservate', 'ReservationController@addReservation');
 });

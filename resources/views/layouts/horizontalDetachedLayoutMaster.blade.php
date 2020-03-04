@@ -21,6 +21,7 @@
     {{-- {!! Helper::applClasses() !!} --}}
     @php
     $configData = Helper::applClasses();
+    date_default_timezone_set('Europe/Budapest');
     @endphp
 
     <body class="horizontal-layout horizontal-menu navbar-floating {{ $configData['blankPageClass'] }} {{ $configData['bodyClass'] }} {{($configData['theme'] === 'light') ? '' : $configData['theme'] }} {{ $configData['sidebarClass'] }} {{ $configData['navbarType'] }} {{ $configData['footerType'] }}  footer-light" data-menu="horizontal-menu" data-col="2-columns" data-open="hover">

@@ -2,6 +2,10 @@
     {!! Helper::updatePageConfig($pageConfigs) !!}
 @endisset
 
+@php 
+    date_default_timezone_set('Europe/Budapest');
+@endphp
+
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}" data-textdirection="{{ env('MIX_CONTENT_DIRECTION') === 'rtl' ? 'rtl' : 'ltr' }}">
     <head>

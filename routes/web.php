@@ -83,6 +83,10 @@ Route::post('/add-meal', 'MealController@insertMeal');
 Route::post('/add-extra', 'MealController@addExtra');
 Route::post('/remove-extra', 'MealController@removeExtra');
 
+Route::get('/reservations', 'ReservationController@showReservations');
+Route::post('/update-reservation', 'ReservationController@updateReservation');
+Route::post('/delete-reservation', 'ReservationController@deleteReservation');
+
 // API endpoints
 Route::get('api/restaurant/id/{id}', 'RestaurantController@getRestaurantById');
 Route::get('api/restaurant/lowercasename/{id}', 'RestaurantController@getRestaurantIdBylowercasename');

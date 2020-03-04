@@ -1,5 +1,8 @@
 @php
     $configData = Helper::applClasses();
+
+    date_default_timezone_set('Europe/Budapest');
+
 @endphp
     <body class="horizontal-layout horizontal-menu {{ $configData['blankPageClass'] }} {{ $configData['bodyClass'] }} {{($configData['theme'] === 'light') ? '' : $configData['theme'] }} {{ $configData['navbarType'] }} {{ $configData['sidebarClass'] }} {{ $configData['footerType'] }}  footer-light" data-menu="horizontal-menu" data-col="2-columns" data-open="hover">
 
