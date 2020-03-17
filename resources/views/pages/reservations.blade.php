@@ -17,6 +17,8 @@
             background-color: rgba(71, 178, 114, 0.9) !important;
         }
         </style>
+
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3/jquery.min.js"></script>
 @endsection
 
 @section('content')
@@ -42,10 +44,10 @@
                     $datenow = new DateTime(date("Y/m/d"));
                     $datenow = date_format($datenow, 'Y/m/d');
 
-                    $timenow = new DateTime(date("H:i"));
-                    $timenow = date_format($timenow, 'H:i');
+                    $timenow = new DateTime(date("H:i:s"));
+                    $timenow = date_format($timenow, 'H:i:s');
                     @endphp
-                    <h1 class="text-white">{{ $timenow }}</h1>
+                    <h1 class="text-white"><div id="txt"></div></h1>
                     <p class="card-text text-white">{{ $datenow }}</p>
                 </div>
             </div>
@@ -300,5 +302,23 @@
     });
 
 })(window, document, jQuery);
+</script>
+<script>
+startTime();
+function startTime() {
+  var today = new Date();
+  var h = today.getHours();
+  var m = today.getMinutes();
+  var s = today.getSeconds();
+  m = checkTime(m);
+  s = checkTime(s);
+  document.getElementById('txt').innerHTML =
+  h + ":" + m + ":" + s;
+  var t = setTimeout(startTime, 500);
+}
+function checkTime(i) {
+  if (i < 10) {i = "0" + i};  // add zero in front of numbers < 10
+  return i;
+}
 </script>
 @endsection

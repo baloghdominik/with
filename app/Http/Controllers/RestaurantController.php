@@ -41,6 +41,35 @@ class RestaurantController extends Controller
         ]);
     }
 
+    // show - settings
+    public function showUserSettings(){
+        $pageConfigs = [
+            'pageHeader' => false
+        ];
+
+        $restaurantID = Auth::user()->restaurantid;
+
+        $userID = Auth::user()->id;
+
+        $restaurant = DB::table('restaurant')
+            ->where('id', '=', $restaurantID)
+            ->first();
+        if ($restaurant === null) {
+            return redirect('/');
+        }
+
+        $user = DB::table('users')
+            ->where('id', '=', $userID)
+            ->first();
+        if ($user === null) {
+            return redirect('/');
+        }
+
+        return view('/pages/user-settings', [
+            'pageConfigs' => $pageConfigs, 'restaurant' => $restaurant, 'user' => $user
+        ]);
+    }
+
     //update settings in db
     public function updateSettings(Request $request)
     {

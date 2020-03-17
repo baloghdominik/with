@@ -25,6 +25,7 @@ class ReservationController extends Controller
             ->select('reservation.*', 'customer.firstname', 'customer.lastname', 'customer.email')
             ->where('reservation.restaurantid', '=', $restaurantID)
             ->where('reservation.confirmed', '=', 0)
+            ->where('reservation.date', '>', date("Y-m-d"))
             ->orderBy('reservation.date', 'ASC')
             ->orderBy('reservation.time', 'ASC')
             ->get();
@@ -37,6 +38,7 @@ class ReservationController extends Controller
             ->select('reservation.*', 'customer.firstname', 'customer.lastname', 'customer.email')
             ->where('reservation.restaurantid', '=', $restaurantID)
             ->where('reservation.confirmed', '=', 1)
+            ->where('reservation.date', '>', date("Y-m-d"))
             ->orderBy('reservation.date', 'ASC')
             ->orderBy('reservation.time', 'ASC')
             ->get();
