@@ -67,15 +67,6 @@ class ReservationController extends Controller
             return response()->json(['error'=>$validator->errors()], 401);            
         }
 
-        /*$validatedData = request()->validate([
-            'restaurantid' => ['required', 'integer','min:0'],
-            'customerid' => ['required', 'integer','min:0'],
-            'person' => ['required', 'integer', 'min:1', 'may:500'],
-            'date' => ['required'],
-            'time' => ['required'],
-            'comment' => ['string', 'max:1000'],
-        ]);*/
-
         $reservation = new Reservation;
         $reservation->restaurantid = request('restaurantid');
         $reservation->customerid = $customer->id;

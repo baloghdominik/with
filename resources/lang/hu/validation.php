@@ -172,6 +172,9 @@ return [
         'size'          => 'méret',
         'calorie'       => 'kalória tartalom',
         'available_separate' => 'külön rendelhető',
-        'available'     => 'elérhető',
+        'restaurantid'     => 'étterem-azonosító',
+        'person'     => 'személyek',
+        'date'     => 'dátum',
+        'time'     => 'idő',
     ],
 ];
