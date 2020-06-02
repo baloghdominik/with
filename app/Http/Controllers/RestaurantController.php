@@ -117,7 +117,10 @@ class RestaurantController extends Controller
             'showspecifications' => ['boolean'],
             'showcalories' => ['boolean'],
             'showdescription' => ['boolean'],
-            'pizzadesigner' => ['boolean']
+            'pizzadesigner' => ['boolean'],
+            'isreservation' => ['boolean'],
+            'maxreservationperson' => ['required', 'integer', 'min:9', 'max:501'],
+            'reservationtime' => ['required', 'integer', 'min:1', 'max:100']
         ]);
 
         $restaurantID = Auth::user()->restaurantid;
@@ -175,6 +178,9 @@ class RestaurantController extends Controller
         $restaurant->showcalories = $request->has('showcalories');
         $restaurant->showdescription = $request->has('showdescription');
         $restaurant->pizzadesigner = $request->has('pizzadesigner');
+        $restaurant->isreservation = $request->has('isreservation');
+        $restaurant->maxreservationperson = request('maxreservationperson');
+        $restaurant->reservationtime = request('reservationtime');
         $restaurant->save();
 
         return back()

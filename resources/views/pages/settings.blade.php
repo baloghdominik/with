@@ -715,6 +715,120 @@
                                 <div class="col-12">
                                     <div class="form-group row">
                                         <div class="col-md-12 text-center mt-3">
+                                            <h4>Asztalfoglalás</h4>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                
+
+                                <div class="col-12">
+                                    <div class="form-group row">
+                                        <div class="col-md-4">
+                                        Asztal foglalás
+                                        </div>
+                                        <div class="col-md-6">
+                                            @if($restaurant->isreservation)
+                                                <div class="vs-checkbox-con vs-checkbox-primary">
+                                                    <input type="checkbox" name="isreservation" value="1" checked>
+                                                    <span class="vs-checkbox">
+                                                    <span class="vs-checkbox--check">
+                                                            <i class="vs-icon feather icon-check"></i>
+                                                    </span>
+                                                    </span>
+                                                    <span class="">Elérhető</span>
+                                                </div>
+                                            @else
+                                                <div class="vs-checkbox-con vs-checkbox-primary">
+                                                    <input type="checkbox" name="isreservation" value="0">
+                                                    <span class="vs-checkbox">
+                                                    <span class="vs-checkbox--check">
+                                                            <i class="vs-icon feather icon-check"></i>
+                                                    </span>
+                                                    </span>
+                                                    <span class="">Elérhető</span>
+                                                </div>
+                                            @endif
+                                        </div>
+                                    </div>
+                                </div>
+
+                                
+
+                                <div class="col-12">
+                                    <div class="form-group row">
+                                        <div class="col-md-4">
+                                            <span>Maximum fő/foglalás</span>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <select class="form-control" name="maxreservationperson" id="basicSelect">
+                                                @if($restaurant->maxreservationperson > 0)
+                                                    <option value="{{$restaurant->maxreservationperson}}" selected>{{ $restaurant->maxreservationperson }} fő</option>
+                                                @endif
+                                                    <option value="10">10 fő</option>
+                                                    <option value="20">20 fő</option>
+                                                    <option value="30">30 fő</option>
+                                                    <option value="40">40 fő</option>
+                                                    <option value="50">50 fő</option>
+                                                    <option value="60">60 fő</option>
+                                                    <option value="70">70 fő</option>
+                                                    <option value="80">80 fő</option>
+                                                    <option value="90">90 fő</option>
+                                                    <option value="100">100 fő</option>
+                                                    <option value="150">150 fő</option>
+                                                    <option value="200">200 fő</option>
+                                                    <option value="250">250 fő</option>
+                                                    <option value="300">300 fő</option>
+                                                    <option value="400">400 fő</option>
+                                                    <option value="500">500 fő</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-12">
+                                    <div class="form-group row">
+                                        <div class="col-md-4">
+                                            <span>Foglalás időpontja</span>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <select class="form-control" name="reservationtime" id="basicSelect">
+                                                @if($restaurant->reservationtime > 0)
+                                                    <option value="{{$restaurant->reservationtime}}" selected>Minimum {{ $restaurant->reservationtime }} órával elötte</option>
+                                                @endif
+                                                    <option value="1">Minimum 1 órával elötte</option>
+                                                    <option value="2">Minimum 2 órával elötte</option>
+                                                    <option value="3">Minimum 3 órával elötte</option>
+                                                    <option value="4">Minimum 4 órával elötte</option>
+                                                    <option value="5">Minimum 5 órával elötte</option>
+                                                    <option value="6">Minimum 6 órával elötte</option>
+                                                    <option value="7">Minimum 7 órával elötte</option>
+                                                    <option value="8">Minimum 8 órával elötte</option>
+                                                    <option value="9">Minimum 9 órával elötte</option>
+                                                    <option value="10">Minimum 10 órával elötte</option>
+                                                    <option value="11">Minimum 11 órával elötte</option>
+                                                    <option value="12">Minimum 12 órával elötte</option>
+                                                    <option value="24">Minimum 24 órával elötte</option>
+                                                    <option value="48">Minimum 48 órával elötte</option>
+                                                    <option value="72">Minimum 72 órával elötte</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-12">
+                                    <div class="form-group row">
+                                        <div class="col-md-4">
+                                        </div>
+                                        <div class="col-md-8">
+                                            <p>A felhasználóknak lehetőséget ad asztalt foglalni, maximum a feljebb megadott főig. Időpontot az étterem nyitvatartása szerint nyitástól a zárás előtti óráig lehet foglalni minimum a feljebb beállított idővel előtte. Az asztalfoglalásokat a "Foglalások" menüpontban lehet felülbírálni.</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-12">
+                                    <div class="form-group row">
+                                        <div class="col-md-12 text-center mt-3">
                                             <h4>Házhozszállítás</h4>
                                         </div>
                                     </div>
