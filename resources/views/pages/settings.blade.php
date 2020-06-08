@@ -581,7 +581,7 @@
                                                 @elseif($restaurant->lastorder > 0)
                                                     <option value="{{$restaurant->lastorder}}" selected>Zárás után {{ abs($restaurant->lastorder) }} perccel</option>
                                                 @else
-                                                    <option value="{{$restaurant->lastorder}}" selected>Nyitás</option>
+                                                    <option value="{{$restaurant->lastorder}}" selected>Zárás</option>
                                                 @endif
                                                     <option value="-60">Zárás előtt 60 perccel</option>
                                                     <option value="-55">Zárás előtt 55 perccel</option>
@@ -1085,10 +1085,11 @@
                                         </div>
                                         <div class="col-md-8">
                                             <select class="form-control" name="menusalepercent" id="basicSelect">
+                                                    <option value="0" selected>Beállítás minden menühöz külön.</option>
                                                 @if($restaurant->menusalepercent > 0)
-                                                    <option value="{{$restaurant->menusalepercent}}" selected>{{ $restaurant->menusalepercent }}%</option>
+                                                    <!--<option value="{{$restaurant->menusalepercent}}" selected>{{ $restaurant->menusalepercent }}%</option>-->
                                                 @else
-                                                    <option value="{{$restaurant->menusalepercent}}" selected>Nincs</option>
+                                                    <!--<option value="{{$restaurant->menusalepercent}}" selected>Nincs</option>-->
                                                 @endif
                                                     <option value="0">Nincs</option>
                                                     <option value="3">3%</option>

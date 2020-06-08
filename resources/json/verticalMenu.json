@@ -1,8 +1,8 @@
 {"menu": [
-  {"url":"home", "name":"Irányítópult", "slug":"dashboard", "badge":"2" , "badgeClass": "badge badge-primary badge-pill float-right", "icon":"feather icon-home"},
+  {"url":"home", "name":"Irányítópult", "slug":"dashboard", "badge":"0" , "badgeID":"dashboard", "badgeClass": "badge badge-primary badge-pill float-right", "icon":"feather icon-home"},
   {"url":"","navheader":"Értékesítés","icon":""},
-  {"url":"orders", "name":"Rendelések", "icon":"feather icon-file-text"},
-  {"url":"reservations", "name":"Foglalások", "icon":"feather icon-calendar"},
+  {"url":"orders", "name":"Rendelések", "badge":"0" , "badgeID":"orders", "badgeClass": "badge badge-primary  badge-pill float-right", "icon":"feather icon-file-text"},
+  {"url":"reservations", "name":"Foglalások", "badge":"0" , "badgeID":"reservations", "badgeClass": "badge badge-primary  badge-pill float-right", "icon":"feather icon-calendar"},
   {"url":"","navheader":"Kezelés","icon":""},
 
   {"url":"", "name":"Menü", "icon":"feather icon-book",

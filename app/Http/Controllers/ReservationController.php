@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Validator;
 
+use App\Http\Services\RestaurantService;
 use App\Http\Services\ReservationService;
 
 class ReservationController extends Controller
@@ -54,7 +55,7 @@ class ReservationController extends Controller
     }
 
     //save new reservation to db
-    public function addReservation(Request $request, ReservationService $ReservationService)
+    public function addReservation(Request $request, ReservationService $ReservationService, RestaurantService $RestaurantService)
     {
         $validator = Validator::make($request->all(), [ 
             'restaurantid' => 'required|integer|min:0',
@@ -73,6 +74,10 @@ class ReservationController extends Controller
             return response()->json(['error'=>"Nem található étterem."], 401);   
         }
 
+        if (!$RestaurantService->isRestaurantReservationAvailable(request('restaurantid'))) {
+            return response()->json(['error'=>"A választott étterembe nincs lehetőség asztalfoglalásra."], 401); 
+        }
+
         if ($ReservationService->isValidCustomer($customer->id)) {
             return response()->json(['error'=>"A felhasználó nem foglalhat asztalt. Előfordulhat, hogy nincsen megadva a telefonszáma, nincs megerősítve az emailcíme, vagy tiltva van az oldalról."], 401);   
         }
@@ -85,7 +90,7 @@ class ReservationController extends Controller
             return response()->json(['error'=>"A választott időpont túl közeli."], 401);   
         }
 
-        if (!$ReservationService->isOpen(request('restaurantid'), request('date'), request('time'))) {
+        if (!$RestaurantService->isRestaurantReservationTime(request('restaurantid'), request('date'), request('time'))) {
             return response()->json(['error'=>"A választott időpontban az étterem zárva van."], 401); 
         }
 

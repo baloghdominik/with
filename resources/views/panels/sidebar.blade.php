@@ -32,13 +32,41 @@
                         $translation = $menu->i18n;
                     }
                   @endphp
+
+                  <script>
+                  var xmlhttp = new XMLHttpRequest();
+                    xmlhttp.onreadystatechange = function() {
+                    if (this.readyState == 4 && this.status == 200) {
+                        var myObj = JSON.parse(this.response);
+                        document.getElementById("reservations").innerHTML = myObj.reservation;
+                        document.getElementById("orders").innerHTML = myObj.order;
+                    }
+                    };
+                    xmlhttp.open("GET", 'http://localhost/withadmin/public/api/notification/{{ Auth::user()->restaurantid }}', false);
+                    xmlhttp.send();
+
+                  window.setInterval(function(){
+                    var xmlhttp = new XMLHttpRequest();
+                    xmlhttp.onreadystatechange = function() {
+                    if (this.readyState == 4 && this.status == 200) {
+                        var myObj = JSON.parse(this.response);
+                        document.getElementById("reservations").innerHTML = myObj.reservation;
+                        document.getElementById("orders").innerHTML = myObj.order;
+                    }
+                    };
+                    xmlhttp.open("GET", 'http://localhost/withadmin/public/api/notification/{{ Auth::user()->restaurantid }}', true);
+                    xmlhttp.send();
+                    }, 10000);
+
+                
+                  </script>
                   <li class="nav-item {{ (request()->is($menu->url)) ? 'active' : '' }} {{ $custom_classes }}">
                         <a href="{{ url($menu->url) }}">
                             <i class="{{ $menu->icon }}"></i>
                             <span class="menu-title" data-i18n="{{ $translation }}">{{ $menu->name }}</span>
                             @if (isset($menu->badge))
                                 <?php $badgeClasses = "badge badge-pill badge-primary float-right" ?>
-                                <span class="{{ isset($menu->badgeClass) ? $menu->badgeClass.' test' : $badgeClasses.' notTest' }} ">{{$menu->badge}}</span>
+                                <span id="{{$menu->badgeID}}" class="{{ isset($menu->badgeClass) ? $menu->badgeClass.' test' : $badgeClasses.' notTest' }} ">{{$menu->badge}}</span>
                             @endif
                         </a>
                         @if(isset($menu->submenu))

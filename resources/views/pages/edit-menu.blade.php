@@ -196,9 +196,9 @@
                                                                         @endif
                                                                                 <th scope="row"><b>{{$data->name}}</b></th>
                                                                                 @if($data->available_separately)
-                                                                                    <td><i class="fa fa-check"></i></td>
-                                                                                @else
                                                                                     <td><i class="fa fa-close"></i></td>
+                                                                                @else
+                                                                                    <td><i class="fa fa-check"></i></td>
                                                                                 @endif
                                                                                 <td>{{number_format($data->price, 0)}} Ft</td>
                                                                                 <td>{{number_format($data->saleprice, 0)}} Ft</td>
@@ -286,9 +286,9 @@
                                                                         @endif
                                                                                 <th scope="row"><b>{{$data->name}}</b></th>
                                                                                 @if($data->available_separately)
-                                                                                    <td><i class="fa fa-check"></i></td>
-                                                                                @else
                                                                                     <td><i class="fa fa-close"></i></td>
+                                                                                @else
+                                                                                    <td><i class="fa fa-check"></i></td>
                                                                                 @endif
                                                                                 <td>{{number_format($data->price, 0)}} Ft</td>
                                                                                 <td>{{number_format($data->saleprice, 0)}} Ft</td>

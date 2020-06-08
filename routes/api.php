@@ -22,9 +22,12 @@ Route::post('register', 'CustomerController@register');
 
 Route::post('login', 'CustomerController@login');
 
+Route::get('notification/{id}', 'NotificationController@update');
+
 Route::group(['middleware' => 'auth:api'], function(){
     Route::post('details', 'CustomerController@details');
     Route::post('logout', 'CustomerController@logout');
 
     Route::post('reservate', 'ReservationController@addReservation');
+    Route::post('addorder', 'OrderController@addOrder');
 });
