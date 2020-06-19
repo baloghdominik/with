@@ -13,4 +13,12 @@ class OrderSide extends Model
         'quantity', 
         'price'
     ];
+
+    public function order(){
+        return $this->belongsTo('App\Order','order_id','id');
+    }
+
+    public function side(){
+        return $this->hasOne('App\Side','id','side_id');
+    }
 }

@@ -13,4 +13,12 @@ class OrderDrink extends Model
         'quantity', 
         'price'
     ];
+
+    public function order(){
+        return $this->belongsTo('App\Order','order_id','id');
+    }
+
+    public function drink(){
+        return $this->hasOne('App\Drink','id','drink_id');
+    }
 }

@@ -2,6 +2,8 @@
 
 namespace App\Http\Services;
 
+use App\Restaurant;
+use App\RestaurantZipcode;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -21,6 +23,84 @@ class RestaurantService
         } else {
             return false;
         }
+    }
+
+    public function isRestaurantDelivery($restaurantid) {
+        $restaurant = Restaurant::where('id', '=', $restaurantid)->first();
+
+        if ($restaurant->delivery == 1) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function isRestaurantDeliveryPayingMethod($restaurantid, $method) {
+        $restaurant = Restaurant::where('id', '=', $restaurantid)->first();
+
+        if ($method == 1) {
+            if ($restaurant->deliverypayingmethod == 3 || $restaurant->deliverypayingmethod == 5 || $restaurant->deliverypayingmethod == 7) {
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            if ($restaurant->deliverypayingmethod == 1 || $restaurant->deliverypayingmethod == 2 || $restaurant->deliverypayingmethod == 4 || $restaurant->deliverypayingmethod == 5 || $restaurant->deliverypayingmethod == 6 || $restaurant->deliverypayingmethod == 7) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+    }
+
+    public function isRestaurantPickupPayingMethod($restaurantid, $method) {
+        $restaurant = Restaurant::where('id', '=', $restaurantid)->first();
+
+        if ($method == 1) {
+            if ($restaurant->pickuppayingmethod == 3 || $restaurant->pickuppayingmethod == 5 || $restaurant->pickuppayingmethod == 7) {
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            if ($restaurant->pickuppayingmethod == 1 || $restaurant->pickuppayingmethod == 2 || $restaurant->pickuppayingmethod == 4 || $restaurant->pickuppayingmethod == 5 || $restaurant->pickuppayingmethod == 6 || $restaurant->pickuppayingmethod == 7) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+    }
+
+    public function isRestaurantPickup($restaurantid) {
+        $restaurant = Restaurant::where('id', '=', $restaurantid)->first();
+
+        if ($restaurant->pickup == 1) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function getRestaurantMinimumOrderValue($restaurantid) {
+        $restaurant = Restaurant::where('id', '=', $restaurantid)->first();
+
+        return $restaurant->minimumordervalue;
+    }
+
+    public function isRestaurantZipcode($restaurantid, $zipcode) {
+        $restaurantzipcodes = RestaurantZipcode::where('restaurantid', '=', $restaurantid)->where('zipcode', '=', $zipcode)->count();
+
+        if ($restaurantzipcodes >= 1) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function getRestaurantDeliveryPrice($restaurantid) {
+        $restaurant = Restaurant::where('id', '=', $restaurantid)->first();
+
+        return $restaurant->deliveryprice;
     }
 
     public function isRestaurantOrderTime($restaurantid) {
@@ -182,101 +262,70 @@ class RestaurantService
             return false;
         }
 
-        if ($lastclose == "00:00:00" && $todayopen == "00:00:00") {
-            $DateTime = DateTime::createFromFormat('H:i:s', $todayopen);
-            $todayopen = $DateTime->format("H:i:s");
+        $continueopen = false;
+
+        if ($todayopen == "00:00:00" && $lastclose == "00:00:00") {
+            $continueopen = true;
         } else {
-            if ($todayopen == "00:00:00" || $todayopen > "23:00:00" || $todayopen < "01:00:00") {
+            if ($firstorder == 5) {
                 $DateTime = DateTime::createFromFormat('H:i:s', $todayopen);
+                $DateTime->modify('+5 minutes');
+                $todayopen = $DateTime->format("H:i:s");
+            } else if ($firstorder == 10) {
+                $DateTime = DateTime::createFromFormat('H:i:s', $todayopen);
+                $DateTime->modify('+10 minutes');
+                $todayopen = $DateTime->format("H:i:s");
+            } else if ($firstorder == 15) {
+                $DateTime = DateTime::createFromFormat('H:i:s', $todayopen);
+                $DateTime->modify('+15 minutes');
+                $todayopen = $DateTime->format("H:i:s");
+            } else if ($firstorder == 20) {
+                $DateTime = DateTime::createFromFormat('H:i:s', $todayopen);
+                $DateTime->modify('+20 minutes');
+                $todayopen = $DateTime->format("H:i:s");
+            } else if ($firstorder == 25) {
+                $DateTime = DateTime::createFromFormat('H:i:s', $todayopen);
+                $DateTime->modify('+25 minutes');
+                $todayopen = $DateTime->format("H:i:s");
+            } else if ($firstorder == 30) {
+                $DateTime = DateTime::createFromFormat('H:i:s', $todayopen);
+                $DateTime->modify('+30 minutes');
+                $todayopen = $DateTime->format("H:i:s");
+            } else if ($firstorder == 35) {
+                $DateTime = DateTime::createFromFormat('H:i:s', $todayopen);
+                $DateTime->modify('+35 minutes');
+                $todayopen = $DateTime->format("H:i:s");
+            } else if ($firstorder == 40) {
+                $DateTime = DateTime::createFromFormat('H:i:s', $todayopen);
+                $DateTime->modify('+40 minutes');
+                $todayopen = $DateTime->format("H:i:s");
+            } else if ($firstorder == 45) {
+                $DateTime = DateTime::createFromFormat('H:i:s', $todayopen);
+                $DateTime->modify('+45 minutes');
+                $todayopen = $DateTime->format("H:i:s");
+            } else if ($firstorder == 50) {
+                $DateTime = DateTime::createFromFormat('H:i:s', $todayopen);
+                $DateTime->modify('+50 minutes');
+                $todayopen = $DateTime->format("H:i:s");
+            } else if ($firstorder == 55) {
+                $DateTime = DateTime::createFromFormat('H:i:s', $todayopen);
+                $DateTime->modify('+55 minutes');
+                $todayopen = $DateTime->format("H:i:s");
+            } else if ($firstorder == 60) {
+                $DateTime = DateTime::createFromFormat('H:i:s', $todayopen);
+                $DateTime->modify('+60 minutes');
                 $todayopen = $DateTime->format("H:i:s");
             } else {
-                if ($firstorder == 0) {
-                    $DateTime = DateTime::createFromFormat('H:i:s', $todayopen);
-                    $todayopen = $DateTime->format("H:i:s");
-                } else if ($firstorder == "-5") {
-                    $DateTime = DateTime::createFromFormat('H:i:s', $todayopen);
-                    $DateTime->modify('-5 minutes');
-                    $todayopen = $DateTime->format("H:i:s");
-                } else if ($firstorder == "-10") {
-                    $DateTime = DateTime::createFromFormat('H:i:s', $todayopen);
-                    $DateTime->modify('-10 minutes');
-                    $todayopen = $DateTime->format("H:i:s");
-                } else if ($firstorder == "-15") {
-                    $DateTime = DateTime::createFromFormat('H:i:s', $todayopen);
-                    $DateTime->modify('-15 minutes');
-                    $todayopen = $DateTime->format("H:i:s");
-                } else if ($firstorder == "-20") {
-                    $DateTime = DateTime::createFromFormat('H:i:s', $todayopen);
-                    $DateTime->modify('-20 minutes');
-                    $todayopen = $DateTime->format("H:i:s");
-                } else if ($firstorder == "-25") {
-                    $DateTime = DateTime::createFromFormat('H:i:s', $todayopen);
-                    $DateTime->modify('-25 minutes');
-                    $todayopen = $DateTime->format("H:i:s");
-                } else if ($firstorder == "-30") {
-                    $DateTime = DateTime::createFromFormat('H:i:s', $todayopen);
-                    $DateTime->modify('-30 minutes');
-                    $todayopen = $DateTime->format("H:i:s");
-                } else if ($firstorder == 5) {
-                    $DateTime = DateTime::createFromFormat('H:i:s', $todayopen);
-                    $DateTime->modify('+5 minutes');
-                    $todayopen = $DateTime->format("H:i:s");
-                } else if ($firstorder == 10) {
-                    $DateTime = DateTime::createFromFormat('H:i:s', $todayopen);
-                    $DateTime->modify('+10 minutes');
-                    $todayopen = $DateTime->format("H:i:s");
-                } else if ($firstorder == 15) {
-                    $DateTime = DateTime::createFromFormat('H:i:s', $todayopen);
-                    $DateTime->modify('+15 minutes');
-                    $todayopen = $DateTime->format("H:i:s");
-                } else if ($firstorder == 20) {
-                    $DateTime = DateTime::createFromFormat('H:i:s', $todayopen);
-                    $DateTime->modify('+20 minutes');
-                    $todayopen = $DateTime->format("H:i:s");
-                } else if ($firstorder == 25) {
-                    $DateTime = DateTime::createFromFormat('H:i:s', $todayopen);
-                    $DateTime->modify('+25 minutes');
-                    $todayopen = $DateTime->format("H:i:s");
-                } else if ($firstorder == 30) {
-                    $DateTime = DateTime::createFromFormat('H:i:s', $todayopen);
-                    $DateTime->modify('+30 minutes');
-                    $todayopen = $DateTime->format("H:i:s");
-                } else if ($firstorder == 35) {
-                    $DateTime = DateTime::createFromFormat('H:i:s', $todayopen);
-                    $DateTime->modify('+35 minutes');
-                    $todayopen = $DateTime->format("H:i:s");
-                } else if ($firstorder == 40) {
-                    $DateTime = DateTime::createFromFormat('H:i:s', $todayopen);
-                    $DateTime->modify('+40 minutes');
-                    $todayopen = $DateTime->format("H:i:s");
-                } else if ($firstorder == 45) {
-                    $DateTime = DateTime::createFromFormat('H:i:s', $todayopen);
-                    $DateTime->modify('+45 minutes');
-                    $todayopen = $DateTime->format("H:i:s");
-                } else if ($firstorder == 50) {
-                    $DateTime = DateTime::createFromFormat('H:i:s', $todayopen);
-                    $DateTime->modify('+50 minutes');
-                    $todayopen = $DateTime->format("H:i:s");
-                } else if ($firstorder == 55) {
-                    $DateTime = DateTime::createFromFormat('H:i:s', $todayopen);
-                    $DateTime->modify('+55 minutes');
-                    $todayopen = $DateTime->format("H:i:s");
-                } else if ($firstorder == 60) {
-                    $DateTime = DateTime::createFromFormat('H:i:s', $todayopen);
-                    $DateTime->modify('+60 minutes');
-                    $todayopen = $DateTime->format("H:i:s");
-                }
+                $DateTime = DateTime::createFromFormat('H:i:s', $todayopen);
+                $todayopen = $DateTime->format("H:i:s");
             }
         }
 
-        if ($nextopen == "00:00:00" && $todayclose == "00:00:00") {
-            $DateTime = DateTime::createFromFormat('H:i:s', $todayclose);
-            $todayclose = $DateTime->format("H:i:s");
+
+        $continueclose = false;
+        if ($todayclose == "00:00:00" && $nextopen == "00:00:00") {
+            $continueclose == true;
         } else {
-            if ($todayclose == "00:00:00" || $todayclose > "23:00:00" || $todayclose < "01:00:00") {
-                $DateTime = DateTime::createFromFormat('H:i:s', $todayclose);
-                $todayclose = $DateTime->format("H:i:s");
-            } else {
                 if ($lastorder == 0) {
                     $DateTime = DateTime::createFromFormat('H:i:s', $todayclose);
                     $todayclose = $DateTime->format("H:i:s");
@@ -328,14 +377,39 @@ class RestaurantService
                     $DateTime = DateTime::createFromFormat('H:i:s', $todayclose);
                     $DateTime->modify('-60 minutes');
                     $todayclose = $DateTime->format("H:i:s");
+                } else {
+                    $DateTime = DateTime::createFromFormat('H:i:s', $todayclose);
+                    $todayclose = $DateTime->format("H:i:s");
                 }
-            }
         }
 
-        if ($time >= $todayopen && $time <= $todayclose) {
+
+        if ($todayclose == "00:00:00") {
+            $DateTime = DateTime::createFromFormat('H:i:s', "23:59:59");
+            $todayclose = $DateTime->format("H:i:s");
+        }
+
+
+        if ($continueclose && $continueopen) {
             return true;
+        } else if ($continueopen && !$continueclose) {
+            if ($time <= $todayclose) {
+                return true;
+            } else {
+                return false;
+            }
+        } else if (!$continueopen && $continueclose) {
+            if ($time >= $todayopen) {
+                return true;
+            } else {
+                return false;
+            }
         } else {
-            return false;
+            if ($time >= $todayopen && $time <= $todayclose) {
+                return true;
+            } else {
+                return false;
+            }
         }
 
     }
@@ -575,6 +649,16 @@ class RestaurantService
             ->count();
 
             return $restaurant + $restauranttoday;
+    }
+
+    public function getRestaurantOrderNotificationCount($restaurantid) {
+        $restaurant = DB::table('order')
+            ->where('restaurant_id', '=', $restaurantid)
+            ->where('is_accepted', '=', 0)
+            ->where('is_final_order', '=', 1)
+            ->count();
+
+            return $restaurant;
     }
 
 }

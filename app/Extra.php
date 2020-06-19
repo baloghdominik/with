@@ -14,4 +14,13 @@ class Extra extends Model
         'restaurantid', 
         'mealid'
     ];
+
+     /**
+     * The attributes that should be hidden for arrays.
+     *
+     * @var array
+     */
+    protected $hidden = [
+        'makeprice',
+    ];
 }

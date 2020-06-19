@@ -11,6 +11,7 @@
         <link rel="stylesheet" href="{{ asset(mix('css/pages/dashboard-analytics.css')) }}">
         <link rel="stylesheet" href="{{ asset(mix('css/pages/card-analytics.css')) }}">
         <link rel="stylesheet" href="{{ asset(mix('css/plugins/tour/tour.css')) }}">
+        <link rel="stylesheet" href="{{ asset(mix('css/select2.min.css')) }}">
 
         <div id="fb-root"></div>
         <script async defer crossorigin="anonymous" src="https://connect.facebook.net/hu_HU/sdk.js#xfbml=1&version=v6.0"></script>
@@ -867,6 +868,29 @@
 
                                 <div class="col-12">
                                     <div class="form-group row">
+                                        <div class="col-4">
+                                        Házhozszállítási terület
+                                        </div>
+                                        <div class="col-8">
+                                            <div class="form-group">
+                                                <select name="zipcodes[]" class="select2 form-control select2-hidden-accessible" multiple="multiple" aria-hidden="true">
+                                                    @foreach ($restaurantzipcodes as $rzc)   
+                                                        @foreach ($zipcodes as $zip)
+                                                            @if ($zip->zipcode == $rzc->zipcode)
+                                                            <option value="{{ $zip->zipcode }}" data-select2-id="{{ $zip->zipcode }}" selected="selected">{{ $zip->city }} - {{ $zip->zipcode }}</option>
+                                                            @else
+                                                            <option value="{{ $zip->zipcode }}" data-select2-id="{{ $zip->zipcode }}">{{ $zip->city }} - {{ $zip->zipcode }}</option>
+                                                            @endif
+                                                        @endforeach
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-12">
+                                    <div class="form-group row">
                                         <div class="col-md-4">
                                             <span>Minimum kosárérték</span>
                                         </div>
@@ -1248,4 +1272,6 @@
 @section('page-script')
         <!-- Page js files -->
         <script src="{{ asset(mix('js/scripts/pages/dashboard-analytics.js')) }}"></script>
+        <script src="{{ asset(mix('js/select2.full.min.js')) }}"></script>
+        <script src="{{ asset(mix('js/form-select2.js')) }}"></script>
 @endsection

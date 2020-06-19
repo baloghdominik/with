@@ -21,22 +21,6 @@ class OrderService
         }
     }
 
-    public function isValidCustomer($customerid)
-    {
-        $customer = DB::table('customer')
-            ->where('id', '=', $customerid)
-            ->where('email_verified_at', '!=', NULL)
-            ->where('phone', '!=', NULL)
-            ->where('isbanned', '=', 0)
-            ->count();
-        
-        if ($customer === 1) {
-            return false;
-        } else {
-            return true;
-        }
-    }
-
     //MEAL
     public function getOrderID($restaurantid, $customerid) {
         $order = DB::table('order')

@@ -12,4 +12,12 @@ class OrderMenuExtras extends Model
         'extra_id', 
         'price'
     ];
+
+    public function ordermenu(){
+        return $this->belongsTo('App\OrderMenu','order_menu_id','id');
+    }
+
+    public function extra(){
+        return $this->hasOne('App\Extra','id','extra_id');
+    }
 }

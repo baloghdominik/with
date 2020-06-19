@@ -27,7 +27,7 @@ class NotificationController extends Controller
         //ORDER
         $notificationdto = new NotificationDTO;
         $notificationdto->reservation = $RestaurantService->getRestaurantReservationNotificationCount($restaurantid);
-        $notificationdto->order = 0;
+        $notificationdto->order = $RestaurantService->getRestaurantOrderNotificationCount($restaurantid);
    
         return response()->json($notificationdto, 200); 
     }

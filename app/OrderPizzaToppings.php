@@ -12,4 +12,12 @@ class OrderPizzaToppings extends Model
         'pizzadesigner_topping_id',
         'price'
     ];
+
+    public function topping(){
+        return $this->hasOne('App\PizzadesignerTopping','id','pizzadesigner_topping_id');
+    }
+
+    public function orderpizza(){
+        return $this->belongsTo('App\OrderPizza','order_pizza_id','id');
+    }
 }

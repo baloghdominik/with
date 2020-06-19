@@ -10,4 +10,13 @@ class Side extends Model
     protected $fillable = [
         'name', 'price', 'saleprice', 'makeprice'
     ];
+
+     /**
+     * The attributes that should be hidden for arrays.
+     *
+     * @var array
+     */
+    protected $hidden = [
+        'makeprice',
+    ];
 }

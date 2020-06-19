@@ -89,6 +89,16 @@ Route::get('/reservations', 'ReservationController@showReservations');
 Route::post('/update-reservation', 'ReservationController@updateReservation');
 Route::post('/delete-reservation', 'ReservationController@deleteReservation');
 
+Route::get('/orders', 'OrderController@showOrders');
+Route::get('/accept-order/{id}', 'OrderController@acceptOrder');
+Route::get('/done-order/{id}', 'OrderController@doneOrder');
+Route::get('/outfordelivery-order/{id}', 'OrderController@outForDeliveryOrder');
+Route::get('/delivered-order/{id}', 'OrderController@deliveredOrder');
+Route::get('/finished-order/{id}', 'OrderController@finishedOrder');
+Route::get('/startrefund-order/{id}', 'OrderController@startRefundOrder');
+Route::get('/finishrefund-order/{id}', 'OrderController@finishRefundOrder');
+Route::get('/cancel-order/{id}', 'OrderController@cancelOrder');
+
 // API endpoints
 Route::get('api/restaurant/id/{id}', 'RestaurantController@getRestaurantById');
 Route::get('api/restaurant/lowercasename/{id}', 'RestaurantController@getRestaurantIdBylowercasename');

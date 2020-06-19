@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use File;
 use Image;
 use App\Restaurant;
+use App\Zipcode;
+use App\RestaurantZipcode;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -36,8 +38,12 @@ class RestaurantController extends Controller
             return redirect('/');
         }
 
+        $zipcodes = Zipcode::orderBy('zipcode', 'ASC')->get();
+
+        $restaurantzipcodes = RestaurantZipcode::where('restaurantid' , $restaurantID)->get();
+
         return view('/pages/settings', [
-            'pageConfigs' => $pageConfigs, 'restaurant' => $restaurant
+            'pageConfigs' => $pageConfigs, 'restaurant' => $restaurant, 'zipcodes' => $zipcodes, 'restaurantzipcodes' => $restaurantzipcodes
         ]);
     }
 
@@ -120,7 +126,8 @@ class RestaurantController extends Controller
             'pizzadesigner' => ['boolean'],
             'isreservation' => ['boolean'],
             'maxreservationperson' => ['required', 'integer', 'min:9', 'max:501'],
-            'reservationtime' => ['required', 'integer', 'min:1', 'max:100']
+            'reservationtime' => ['required', 'integer', 'min:1', 'max:100'],
+            'zipcodes.*' => ['integer', 'min:1', 'max:10000']
         ]);
 
         $restaurantID = Auth::user()->restaurantid;
@@ -182,6 +189,18 @@ class RestaurantController extends Controller
         $restaurant->maxreservationperson = request('maxreservationperson');
         $restaurant->reservationtime = request('reservationtime');
         $restaurant->save();
+
+        if (count(request('zipcodes')) > 0) {
+            $rzc = RestaurantZipcode::where('restaurantid' , $restaurantID)->delete();
+
+            for ($i = 0; $i < count(request('zipcodes')); $i++) {
+                $zipcode = new RestaurantZipcode;
+                $zipcode->restaurantid = $restaurantID;
+                $zipcode->zipcode = request('zipcodes')[$i];
+                $zipcode->save();
+            }
+
+        }
 
         return back()
             ->with('success','Az étterem beállításai sikeresen frissültek!');

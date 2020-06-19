@@ -15,24 +15,160 @@ use App\OrderPizzaToppings;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+
 use Validator;
+use DateTime;
+use DateTimeZone;
 
 use App\Http\Services\OrderService;
 use App\Http\Services\RestaurantService;
+use App\Http\Services\CustomerService;
 
 class OrderController extends Controller
 {
     public $successStatus = 200;
 
+    // show - orders
+    public function showOrders(){
+        $pageConfigs = [
+            'pageHeader' => false
+        ];
+
+        $restaurantID = Auth::user()->restaurantid;
+
+        $orders = Order::where('restaurant_id', '=', $restaurantID)
+        ->where('is_final_order', '=', 1)->orderBy('is_finished', 'ASC')->orderBy('is_refund', 'ASC')->orderBy('is_accepted', 'ASC')->orderBy('is_done', 'ASC')->orderBy('created_at', 'DESC')
+        ->with('customer.orders')
+        ->with('orderside.side')
+        ->with('orderdrink.drink')
+        ->with('ordermeal.meal')
+        ->with('ordermenu.meal')
+        ->with('ordermenu.side')
+        ->with('ordermenu.drink')
+        ->with('ordermenu.ordermenuextras')
+        ->with('ordermeal.ordermealextras.extra')->get();
+
+
+        return view('/pages/orders', [
+            'pageConfigs' => $pageConfigs, 'orders' => $orders
+        ]);
+    }
+
+    public function acceptOrder($id, Request $request) {
+        $restaurantid = Auth::user()->restaurantid;
+
+        $order = Order::where('id', '=', $id)->where('restaurant_id', '=', $restaurantid)->first();
+        $order->is_accepted = 1;
+        $order->save();
+
+        return back()
+                ->with('success','Sikeres rendelés felvétel!');
+    }
+
+    public function doneOrder($id, Request $request) {
+        $restaurantid = Auth::user()->restaurantid;
+
+        $dt = new DateTime("now", new DateTimeZone('Europe/Budapest'));
+        $datetime = $dt->format('Y-m-d H:i:s');
+
+        $order = Order::where('id', '=', $id)->where('restaurant_id', '=', $restaurantid)->first();
+        $order->is_done = 1;
+        $order->done_at = $datetime;
+        $order->save();
+
+        return back()
+                ->with('success','Sikeres állapot frissítés!');
+    }
+
+    public function outForDeliveryOrder($id, Request $request) {
+        $restaurantid = Auth::user()->restaurantid;
+
+        $dt = new DateTime("now", new DateTimeZone('Europe/Budapest'));
+        $datetime = $dt->format('Y-m-d H:i:s');
+
+        $order = Order::where('id', '=', $id)->where('restaurant_id', '=', $restaurantid)->first();
+        $order->is_out_for_delivery = 1;
+        $order->out_for_delivery_at = $datetime;
+        $order->save();
+
+        return back()
+                ->with('success','Sikeres állapot frissítés!');
+    }
+
+    public function deliveredOrder($id, Request $request) {
+        $restaurantid = Auth::user()->restaurantid;
+
+        $dt = new DateTime("now", new DateTimeZone('Europe/Budapest'));
+        $datetime = $dt->format('Y-m-d H:i:s');
+
+        $order = Order::where('id', '=', $id)->where('restaurant_id', '=', $restaurantid)->first();
+        $order->is_delivered = 1;
+        $order->delivered_at = $datetime;
+        $order->is_finished = 1;
+        $order->finished_at = $datetime;
+        $order->save();
+
+        return back()
+                ->with('success','Sikeres állapot frissítés!');
+    }
+
+    public function finishedOrder($id, Request $request) {
+        $restaurantid = Auth::user()->restaurantid;
+
+        $dt = new DateTime("now", new DateTimeZone('Europe/Budapest'));
+        $datetime = $dt->format('Y-m-d H:i:s');
+
+        $order = Order::where('id', '=', $id)->where('restaurant_id', '=', $restaurantid)->first();
+        $order->is_finished = 1;
+        $order->finished_at = $datetime;
+        $order->save();
+
+        return back()
+                ->with('success','A rendelés sikeresen teljesítve lett!');
+    }
+
+    public function startRefundOrder($id, Request $request) {
+        $restaurantid = Auth::user()->restaurantid;
+
+        $order = Order::where('id', '=', $id)->where('restaurant_id', '=', $restaurantid)->first();
+        $order->is_refund = 1;
+        $order->save();
+
+        return back()
+                ->with('success','A rendelés vissza lett utasítva!');
+    }
+
+    public function finishRefundOrder($id, Request $request) {
+        $restaurantid = Auth::user()->restaurantid;
+
+        $order = Order::where('id', '=', $id)->where('restaurant_id', '=', $restaurantid)->first();
+        $order->is_refund_finished = 1;
+        $order->save();
+
+        return back()
+                ->with('success','A rendelés állapota frissült!');
+    }
+
+    public function cancelOrder($id, Request $request) {
+        $restaurantid = Auth::user()->restaurantid;
+
+        $order = Order::where('id', '=', $id)->where('restaurant_id', '=', $restaurantid)->first();
+        $order->is_refund_finished = 1;
+        $order->is_refund = 1;
+        $order->save();
+
+        return back()
+                ->with('success','A rendelés vissza lett utasítva!');
+    }
 
     //save new reservation to db
-    public function addOrder(Request $request, OrderService $OrderService, RestaurantService $RestaurantService)
+    public function addOrder(Request $request, OrderService $OrderService, RestaurantService $RestaurantService, CustomerService $CustomerService)
     {
         $validator = Validator::make($request->all(), [ 
             'restaurant_id' => 'integer|min:0',
-            'is_delivery' => 'boolean',
+            'is_delivery' => 'integer|min:0|max:1|required',
             'coupon' => 'string',
-            'is_online_payment' => 'boolean',
+            'is_online_payment' => 'integer|min:0|max:1|required',
             'meal.*.meal_id' => 'integer|min:0',
             'meal.*.quantity' => 'integer|min:1',
             'meal.*.extras.*.extra_id' => 'integer',
@@ -62,15 +198,35 @@ class OrderController extends Controller
         //ORDER
         $order = new Order;
         $order->restaurant_id = request('restaurant_id');
+        $restaurantID = request('restaurant_id');
         $order->customer_id = $customer->id;
 
-        if(!$RestaurantService->isValidCustomer($order->customer_id)) {
+        if (!$RestaurantService->isValidCustomer($customer->id)) {
             return response()->json(['error'=>"Hibás felhasználó."], 400); 
         }
 
-        $order->is_delivery = $request->has('is_delivery');
+        $order->is_delivery = request('is_delivery');
+        $order->is_online_payment = request('is_online_payment');
+        
+        if ($order->is_delivery == 1) {
+            if(!$RestaurantService->isRestaurantDelivery($restaurantID)) {
+                return response()->json(['error'=>"A kiszállítás nem lehetséges ebből az étteremből."], 400); 
+            }
+
+            if(!$RestaurantService->isRestaurantDeliveryPayingMethod($restaurantID, $order->is_online_payment)) {
+                return response()->json(['error'=>"Ez a fizetési opció nem lehetséges."], 400); 
+            }
+        } else {
+            if(!$RestaurantService->isRestaurantPickup($restaurantID)) {
+                return response()->json(['error'=>"A helyszíni átvétel nem lehetséges ebben az étteremben."], 400); 
+            }
+
+            if(!$RestaurantService->isRestaurantPickupPayingMethod($restaurantID, $order->is_online_payment)) {
+                return response()->json(['error'=>"Ez a fizetési opció nem lehetséges."], 400); 
+            }
+        }
+
         $order->coupon = request('coupon');
-        $order->is_online_payment = $request->has('is_online_payment');
         $order->is_paid = 0;
         $order->coupon_sale = 0;
         $order->total_price = 0;
@@ -335,7 +491,7 @@ class OrderController extends Controller
 
             $orderpizza->save();
 
-            $OrderPizzaID = $OrderService->getOrderPizzaID($ordermenu->order_id);
+            $OrderPizzaID = $OrderService->getOrderPizzaID($OrderID);
 
             for ($x = 0; $x < count($request->get('pizza')[$i]['toppings']); $x++) {
                 $orderpizzatoppings = new OrderPizzaToppings;
@@ -373,8 +529,29 @@ class OrderController extends Controller
 
             $total_price = $total_price + $PizzaPrice;
         }
+
+        if ($order->is_delivery == 1) {
+
+            if ($total_price < $RestaurantService->getRestaurantMinimumOrderValue($restaurantID)) {
+                return response()->json(['error'=>"A végösszeg alacsonyabb a minimum kosárértéknél.."], 400); 
+            }
+
+            if (!$RestaurantService->isRestaurantZipcode($restaurantID, $CustomerService->getCustomerZip($customer->id)) ) {
+                return response()->json(['error'=>"Az ön címére ebből az étteremből a házhozszállítás nem megoldható."], 400);
+            }
+
+            $total_price = $total_price + $RestaurantService->getRestaurantDeliveryPrice($restaurantID);
+        }
+
+        $order2 = Order::where('id', '=', $OrderID)->where('restaurant_id', '=', $restaurantID)->where('customer_id', '=', $customer->id)->first();
+        $order2->total_price = $total_price;
+        $order2->is_final_order = 1;
+        if ($order->is_online_payment) {
+            $order2->is_paid = 1;
+        }
+        $order2->save();
    
-        return response()->json($total_price); 
+        return response()->json($total_price);
     }
 
 

@@ -27,4 +27,8 @@ protected $hidden = [
 public function AauthAcessToken(){
     return $this->hasMany('\App\OauthAccessToken');
 }
+
+public function orders(){
+    return $this->hasMany('App\Order','customer_id','id');
+}
 }

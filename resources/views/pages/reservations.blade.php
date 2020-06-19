@@ -126,9 +126,10 @@
                 <div class="card-content">
                     <div class="card-body mx-auto">
                         <div class="mb-3 mt-1">
-                            <h4>{{ $data->lastname}} {{ $data->firstname }}</h4>
-                            <p>{{ $data->email }}</p>
-                            <p class="mt-1">{{ $data->comment }}</p>
+                            <h4 style="margin: 0px !important;"><i class="fa fa-user"></i> {{ $data->lastname}} {{ $data->firstname }}</h4>
+                            <p style="margin: 0px !important;"><i class="fa fa-envelope"></i> {{ $data->email }}</p>
+                            <p style="margin: 0px !important;"><i class="fa fa-phone"></i> {{ $data->phone }}</p>
+                            <p style="margin: 0px !important;"><i class="fa fa-comment"></i> {{ $data->comment }}</p>
                         </div>
                         <div class="d-flex justify-content-between mt-2">
                             <div class="uploads">

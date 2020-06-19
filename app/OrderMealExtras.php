@@ -12,4 +12,12 @@ class OrderMealExtras extends Model
         'extra_id', 
         'price'
     ];
+
+    public function ordermeal(){
+        return $this->belongsTo('App\OrderMeal','order_meal_id','id');
+    }
+
+    public function extra(){
+        return $this->hasOne('App\Extra','id','extra_id');
+    }
 }

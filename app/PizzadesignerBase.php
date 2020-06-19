@@ -10,4 +10,13 @@ class PizzadesignerBase extends Model
     protected $fillable = [
         'sizeid', 'name', 'price', 'makeprice', 'maketime'
     ];
+
+     /**
+     * The attributes that should be hidden for arrays.
+     *
+     * @var array
+     */
+    protected $hidden = [
+        'makeprice',
+    ];
 }

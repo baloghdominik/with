@@ -56,7 +56,7 @@
                     };
                     xmlhttp.open("GET", 'http://localhost/withadmin/public/api/notification/{{ Auth::user()->restaurantid }}', true);
                     xmlhttp.send();
-                    }, 10000);
+                    }, 6000);
 
                 
                   </script>

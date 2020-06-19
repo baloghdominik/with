@@ -25,10 +25,10 @@ class ReservationController extends Controller
 
         $reservations = DB::table('reservation')
             ->join('customer', 'reservation.customerid', '=', 'customer.id')
-            ->select('reservation.*', 'customer.firstname', 'customer.lastname', 'customer.email')
+            ->select('reservation.*', 'customer.firstname', 'customer.lastname', 'customer.email', 'customer.phone')
             ->where('reservation.restaurantid', '=', $restaurantID)
             ->where('reservation.confirmed', '=', 0)
-            ->where('reservation.date', '>', date("Y-m-d"))
+            ->where('reservation.date', '>=', date("Y-m-d"))
             ->orderBy('reservation.date', 'ASC')
             ->orderBy('reservation.time', 'ASC')
             ->get();
@@ -38,10 +38,10 @@ class ReservationController extends Controller
 
         $confirmedreservations = DB::table('reservation')
             ->join('customer', 'reservation.customerid', '=', 'customer.id')
-            ->select('reservation.*', 'customer.firstname', 'customer.lastname', 'customer.email')
+            ->select('reservation.*', 'customer.firstname', 'customer.lastname', 'customer.email', 'customer.phone')
             ->where('reservation.restaurantid', '=', $restaurantID)
             ->where('reservation.confirmed', '=', 1)
-            ->where('reservation.date', '>', date("Y-m-d"))
+            ->where('reservation.date', '>=', date("Y-m-d"))
             ->orderBy('reservation.date', 'ASC')
             ->orderBy('reservation.time', 'ASC')
             ->get();
@@ -136,7 +136,7 @@ class ReservationController extends Controller
                 ->first();
             if ($reservation === null) {
                 return back()
-                ->with('success','Sikertelen művelet!');
+                ->with('error','Sikertelen művelet!');
             }
 
             DB::table('reservation')
@@ -167,7 +167,7 @@ class ReservationController extends Controller
                 ->first();
             if ($reservation === null) {
                 return back()
-                ->with('success','Sikertelen művelet!');
+                ->with('error','Sikertelen művelet!');
             }
 
             $reservation = Reservation::where('id', $id)->where('restaurantid', '=', $restaurantID)->first();
