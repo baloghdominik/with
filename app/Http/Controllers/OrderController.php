@@ -232,6 +232,8 @@ class OrderController extends Controller
         $order->total_price = 0;
         $order->save();
 
+        $margin = 0;
+
 
         if(!$RestaurantService->isRestaurant($order->restaurant_id)) {
             return response()->json(['error'=>"Az étterem nem található."], 400); 
@@ -265,6 +267,8 @@ class OrderController extends Controller
 
             $ordermeal->price = $OrderService->getMealPrice($ordermeal->meal_id, $order->restaurant_id);
 
+            $margin = $margin + $OrderService->getMealMargin($ordermeal->meal_id, $order->restaurant_id) * $ordermeal->quantity;
+
             $MealPrice = $ordermeal->price;
 
             $ordermeal->save();
@@ -282,6 +286,8 @@ class OrderController extends Controller
                 }
 
                 $ordermealextras->price = $OrderService->getExtraPrice($ordermealextras->extra_id, $order->restaurant_id);
+
+                $margin = $margin + $OrderService->getExtraMargin($ordermealextras->extra_id, $order->restaurant_id) * $ordermeal->quantity;
 
                 $ordermealextras->order_meal_id = $OrderService->getOrderMealID($ordermeal->order_id, $ordermeal->meal_id);
 
@@ -312,6 +318,8 @@ class OrderController extends Controller
 
             $orderside->price = $OrderService->getSidePrice($orderside->side_id, $order->restaurant_id);
 
+            $margin = $margin + $OrderService->getSideMargin($orderside->side_id, $order->restaurant_id) * $orderside->quantity;
+
             $SidePrice = $orderside->price * $orderside->quantity;
 
             $orderside->save();
@@ -336,6 +344,8 @@ class OrderController extends Controller
 
             $orderdrink->price = $OrderService->getDrinkPrice($orderdrink->drink_id, $order->restaurant_id);
 
+            $margin = $margin + $OrderService->getDrinkMargin($orderdrink->drink_id, $order->restaurant_id) * $orderdrink->quantity;
+
             $DrinkPrice = $orderdrink->price * $orderdrink->quantity;
 
             $orderdrink->save();
@@ -347,6 +357,8 @@ class OrderController extends Controller
         for ($i = 0; $i < count($request->get('menu')); $i++) {
             $ordermenu = new OrderMenu;
             $ordermenu->order_id = $OrderID;
+
+            $ordermenu->quantity = $request->get('menu')[$i]['quantity'];
 
             $MealID = $request->get('menu')[$i]['meal_id'];
 
@@ -365,6 +377,8 @@ class OrderController extends Controller
             }
 
             $MealPrice = $OrderService->getMealPrice($MealID, $order->restaurant_id);
+
+            $margin = $margin + $OrderService->getMealMargin($MealID, $order->restaurant_id) * $ordermenu->quantity;
             
             $ordermenu->side_id = $request->get('menu')[$i]['side_id'];
 
@@ -382,6 +396,8 @@ class OrderController extends Controller
 
             $SidePrice = $OrderService->getSidePrice($ordermenu->side_id, $order->restaurant_id);
 
+            $margin = $margin + $OrderService->getSideMargin($ordermenu->side_id, $order->restaurant_id) * $ordermenu->quantity;
+
             $ordermenu->drink_id = $request->get('menu')[$i]['drink_id'];
 
             if(!$OrderService->isDrink($ordermenu->drink_id, $order->restaurant_id)) {
@@ -398,7 +414,7 @@ class OrderController extends Controller
 
             $DrinkPrice = $OrderService->getDrinkPrice($ordermenu->drink_id, $order->restaurant_id);
 
-            $ordermenu->quantity = $request->get('menu')[$i]['quantity'];
+            $margin = $margin + $OrderService->getDrinkMargin($ordermenu->drink_id, $order->restaurant_id) * $ordermenu->quantity;
 
             if($OrderService->getMealMaxExtras($MealID, $order->restaurant_id) < count($request->get('menu')[$i]['extras'])) {
                 return response()->json(['error'=>"Túl sok extra."], 400); 
@@ -430,6 +446,8 @@ class OrderController extends Controller
                 }
 
                 $ordermenuextras->price = $OrderService->getExtraPrice($ordermenuextras->extra_id, $order->restaurant_id);
+
+                $margin = $margin + $OrderService->getExtraMargin($ordermenuextras->extra_id, $order->restaurant_id) * $ordermenu->quantity;
 
                 $ordermenuextras->order_menu_id = $OrderService->getOrderMenuID($ordermenu->order_id, $ordermenu->menu_id);
 
@@ -481,6 +499,10 @@ class OrderController extends Controller
 
             $orderpizza->quantity = $request->get('pizza')[$i]['quantity'];
 
+            $margin = $margin + $OrderService->getPizzadesignerBaseMargin($orderpizza->pizzadesigner_base_id, $order->restaurant_id) * $orderpizza->quantity;
+            $margin = $margin + $OrderService->getPizzadesignerDoughMargin($orderpizza->pizzadesigner_dough_id, $order->restaurant_id) * $orderpizza->quantity;
+            $margin = $margin + $OrderService->getPizzadesignerSizeMargin($orderpizza->pizzadesigner_size_id, $order->restaurant_id) * $orderpizza->quantity;
+
             if($OrderService->getPizzadesignerSizeToppingslimit($orderpizza->pizzadesigner_size_id, $order->restaurant_id) < count($request->get('pizza')[$i]['toppings'])) {
                 return response()->json(['error'=>"Túl sok pizza feltét."], 400); 
             }
@@ -504,6 +526,8 @@ class OrderController extends Controller
 
                 $orderpizzatoppings->price = $OrderService->getPizzadesignerToppingPrice($orderpizzatoppings->pizzadesigner_topping_id, $order->restaurant_id);
 
+                $margin = $margin + $OrderService->getPizzadesignerToppingMargin($orderpizzatoppings->pizzadesigner_topping_id, $order->restaurant_id) * $orderpizza->quantity;
+
                 $orderpizzatoppings->save();
 
                 $PizzaPrice = $PizzaPrice + $orderpizzatoppings->price;
@@ -519,6 +543,8 @@ class OrderController extends Controller
                 }
 
                 $orderpizzasauces->price = $OrderService->getPizzadesignerSaucePrice($orderpizzasauces->pizzadesigner_sauce_id, $order->restaurant_id);
+
+                $margin = $margin + $OrderService->getPizzadesignerSauceMargin($orderpizzasauces->pizzadesigner_sauce_id, $order->restaurant_id) * $orderpizza->quantity;
 
                 $orderpizzasauces->save();
 
@@ -545,6 +571,7 @@ class OrderController extends Controller
 
         $order2 = Order::where('id', '=', $OrderID)->where('restaurant_id', '=', $restaurantID)->where('customer_id', '=', $customer->id)->first();
         $order2->total_price = $total_price;
+        $order2->margin = $margin;
         $order2->is_final_order = 1;
         if ($order->is_online_payment) {
             $order2->is_paid = 1;

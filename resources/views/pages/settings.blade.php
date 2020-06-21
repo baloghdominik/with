@@ -874,14 +874,24 @@
                                         <div class="col-8">
                                             <div class="form-group">
                                                 <select name="zipcodes[]" class="select2 form-control select2-hidden-accessible" multiple="multiple" aria-hidden="true">
-                                                    @foreach ($restaurantzipcodes as $rzc)   
-                                                        @foreach ($zipcodes as $zip)
+                                                    @foreach ($zipcodes as $zip)
+                                                        @php 
+                                                        $selected = false;
+                                                        @endphp
+                                                        @foreach ($restaurantzipcodes as $rzc)
                                                             @if ($zip->zipcode == $rzc->zipcode)
-                                                            <option value="{{ $zip->zipcode }}" data-select2-id="{{ $zip->zipcode }}" selected="selected">{{ $zip->city }} - {{ $zip->zipcode }}</option>
-                                                            @else
-                                                            <option value="{{ $zip->zipcode }}" data-select2-id="{{ $zip->zipcode }}">{{ $zip->city }} - {{ $zip->zipcode }}</option>
+                                                                @php
+                                                                $selected = true;
+                                                                @endphp
                                                             @endif
                                                         @endforeach
+                                                        
+                                                        @if ($selected)
+                                                        <option value="{{ $zip->zipcode }}" data-select2-id="{{ $zip->zipcode }}" selected="selected">{{ $zip->city }} - {{ $zip->zipcode }}</option>
+                                                        @else
+                                                        <option value="{{ $zip->zipcode }}" data-select2-id="{{ $zip->zipcode }}">{{ $zip->city }} - {{ $zip->zipcode }}</option>
+                                                        @endif
+                                                        
                                                     @endforeach
                                                 </select>
                                             </div>

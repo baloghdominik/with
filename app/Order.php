@@ -27,7 +27,8 @@ class Order extends Model
         'finished_at',
         'is_cancelled',
         'is_refund',
-        'is_refiund_finished'
+        'is_refiund_finished',
+        'margin'
     ];
 
     public function ordermeal(){
