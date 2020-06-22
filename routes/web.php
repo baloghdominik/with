@@ -91,6 +91,7 @@ Route::post('/delete-reservation', 'ReservationController@deleteReservation');
 
 Route::get('/orders', 'OrderController@showOrders');
 Route::get('/accept-order/{id}', 'OrderController@acceptOrder');
+Route::post('/accept-pickup-order', 'OrderController@acceptPickupOrder');
 Route::get('/done-order/{id}', 'OrderController@doneOrder');
 Route::get('/outfordelivery-order/{id}', 'OrderController@outForDeliveryOrder');
 Route::get('/delivered-order/{id}', 'OrderController@deliveredOrder');

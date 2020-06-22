@@ -37,6 +37,14 @@
         <meta name="msapplication-TileImage" content="{{ asset('images/logo/favicon-144.png') }}">
         <meta name="msapplication-config" content="{{ asset('images/logo/browserconfig.xml') }}">
 
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+        <style>
+        .modal {
+            background-color: rgba(71, 178, 114, 0.9) !important;
+        }
+        </style>
+
         {{-- Include core + vendor Styles --}}
         @include('panels/styles')
 

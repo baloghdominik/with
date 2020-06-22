@@ -28,6 +28,15 @@ class Order extends Model
         'is_cancelled',
         'is_refund',
         'is_refiund_finished',
+        'pickuptime'
+    ];
+
+     /**
+     * The attributes that should be hidden for arrays.
+     *
+     * @var array
+     */
+    protected $hidden = [
         'margin'
     ];
 

@@ -656,6 +656,7 @@ class RestaurantService
             ->where('restaurant_id', '=', $restaurantid)
             ->where('is_accepted', '=', 0)
             ->where('is_final_order', '=', 1)
+            ->where('is_refund', '=', 0)
             ->count();
 
             return $restaurant;

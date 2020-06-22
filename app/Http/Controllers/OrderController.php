@@ -37,7 +37,43 @@ class OrderController extends Controller
         $restaurantID = Auth::user()->restaurantid;
 
         $orders = Order::where('restaurant_id', '=', $restaurantID)
-        ->where('is_final_order', '=', 1)->orderBy('is_finished', 'ASC')->orderBy('is_refund', 'ASC')->orderBy('is_accepted', 'ASC')->orderBy('is_done', 'ASC')->orderBy('created_at', 'DESC')
+        ->where('order.is_final_order', '=', 1)
+        ->where('order.is_accepted', '=', 0)
+        ->where('order.is_refund_finished', '=', 0)
+        ->where('order.is_finished', '=', 0)
+        ->orderBy('order.id', 'DESC')
+        ->with('customer.orders')
+        ->with('orderside.side')
+        ->with('orderdrink.drink')
+        ->with('ordermeal.meal')
+        ->with('ordermenu.meal')
+        ->with('ordermenu.side')
+        ->with('ordermenu.drink')
+        ->with('ordermenu.ordermenuextras')
+        ->with('ordermeal.ordermealextras.extra')->get();
+
+        $acceptedorders = Order::where('restaurant_id', '=', $restaurantID)
+        ->where('order.is_final_order', '=', 1)
+        ->where('order.is_accepted', '=', 1)
+        ->where('order.is_refund_finished', '=', 0)
+        ->where('order.is_finished', '=', 0)
+        ->orderBy('order.id', 'DESC')
+        ->with('customer.orders')
+        ->with('orderside.side')
+        ->with('orderdrink.drink')
+        ->with('ordermeal.meal')
+        ->with('ordermenu.meal')
+        ->with('ordermenu.side')
+        ->with('ordermenu.drink')
+        ->with('ordermenu.ordermenuextras')
+        ->with('ordermeal.ordermealextras.extra')->get();
+
+        $finishedorders = Order::where('restaurant_id', '=', $restaurantID)
+        ->where('order.is_final_order', '=', 1)
+        ->where('order.is_finished', '=', 1)
+        ->orWhere('order.is_refund_finished', '=', 1)
+        ->where('order.is_final_order', '=', 1)
+        ->orderBy('order.id', 'DESC')
         ->with('customer.orders')
         ->with('orderside.side')
         ->with('orderdrink.drink')
@@ -50,7 +86,7 @@ class OrderController extends Controller
 
 
         return view('/pages/orders', [
-            'pageConfigs' => $pageConfigs, 'orders' => $orders
+            'pageConfigs' => $pageConfigs, 'orders' => $orders, 'acceptedorders' => $acceptedorders, 'finishedorders' => $finishedorders
         ]);
     }
 
@@ -63,6 +99,32 @@ class OrderController extends Controller
 
         return back()
                 ->with('success','Sikeres rendelés felvétel!');
+    }
+
+    public function acceptPickupOrder(Request $request) {
+        $restaurantid = Auth::user()->restaurantid;
+
+        $validatedData = request()->validate([
+            'order_id' => ['required', 'integer', 'min:0'],
+            'pickuptime' => ['required', 'integer','min:5','max:200']
+        ]);
+
+        $modify = "+".request('pickuptime')." minutes";
+
+        $currentTime = new DateTime("now", new DateTimeZone('Europe/Budapest'));
+        $currentTime = $currentTime->format('Y-m-d H:i:s');
+
+        $DateTime = DateTime::createFromFormat('Y-m-d H:i:s', $currentTime);
+        $DateTime->modify($modify);
+        $pickupTime = $DateTime->format("Y-m-d H:i");
+
+        $order = Order::where('id', '=', request('order_id'))->where('restaurant_id', '=', $restaurantid)->first();
+        $order->is_accepted = 1;
+        $order->pickuptime = $pickupTime;
+        $order->save();
+
+        return back()
+                ->with('success','Sikeres rendelés felvétel! Várható átvétel: '.$pickupTime);
     }
 
     public function doneOrder($id, Request $request) {
@@ -577,8 +639,21 @@ class OrderController extends Controller
             $order2->is_paid = 1;
         }
         $order2->save();
+
+        $order3 = Order::where('id', '=', $OrderID)
+            ->where('restaurant_id', '=', $restaurantID)
+            ->where('customer_id', '=', $customer->id)
+            ->where('is_final_order', '=', 1)
+            ->with('customer')
+            ->with('orderside')
+            ->with('orderdrink')
+            ->with('ordermeal')
+            ->with('ordermeal.ordermealextras')
+            ->with('ordermenu')
+            ->with('ordermenu.ordermenuextras')
+            ->with('orderpizza')->first();
    
-        return response()->json($total_price);
+        return response()->json($order3);
     }
 
 
