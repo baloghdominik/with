@@ -24,35 +24,34 @@
 @section('content')
 <section id="basic-horizontal-layouts">
 
-<audio id="notification">
-  <source src="{{ asset('sounds/notification15.ogg') }}" type="audio/ogg">
-  <source src="{{ asset('sounds/notification15.mp3') }}" type="audio/mpeg">
-  A bőngésződ nem támogatja a hangos értesítést!
-</audio><br>
-
-    <!-- Modal -->
-    <div class="modal fade text-left" id="onshow" tabindex="-1" role="dialog" aria-labelledby="myModalLabel21" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title" id="myModalLabel21">Értesítés</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body text-center">
-                    <h1><i class="fa fa-check" style="color: #47b272 !important;"></i></h1>
-                    <h4 style="color: #47b272 !important;">Új foglalás!</h4>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-dismiss="modal">Megtekintés</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <div class="row match-height">
        
+    <div class="col-md-12 col-12">
+    @if ($message = Session::get('success'))
+    <div class="alert alert-success alert-block">
+        <button type="button" class="close" data-dismiss="alert">×</button>
+            <strong>{{ $message }}</strong>
+    </div>
+    @endif
+
+    @if ($message = Session::get('fail'))
+    <div class="alert alert-danger alert-block">
+        <button type="button" class="close" data-dismiss="alert">×</button>
+            <strong>{{ $message }}</strong>
+    </div>
+    @endif
+
+    @if (count($errors) > 0)
+        <div class="alert alert-danger">
+            <strong>Hoppá!</strong> Problémába ütköztünk!
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+    </div>
 
     <section class="users-edit">
                     <div class="card">
@@ -69,7 +68,7 @@
                                             <i class="feather icon-lock mr-25"></i><span class="d-none d-sm-block">Jelszó</span>
                                         </a>
                                     </li>
-                                    <li class="nav-item">
+                                    <!--<li class="nav-item">
                                         <a class="nav-link d-flex align-items-center" id="email-tab" data-toggle="tab" href="#email" aria-controls="email" role="tab" aria-selected="false">
                                             <i class="feather icon-mail mr-25"></i><span class="d-none d-sm-block">Email</span>
                                         </a>
@@ -78,7 +77,7 @@
                                         <a class="nav-link d-flex align-items-center" id="profil-tab" data-toggle="tab" href="#profil" aria-controls="profil" role="tab" aria-selected="false">
                                             <i class="feather icon-image mr-25"></i><span class="d-none d-sm-block">Profilkép</span>
                                         </a>
-                                    </li>
+                                    </li>-->
                                 </ul>
                                 <div class="tab-content">
                                     <div class="tab-pane active" id="account" aria-labelledby="account-tab" role="tabpanel">
@@ -129,24 +128,25 @@
                                     </div>
 
                                     <div class="tab-pane" id="jelszo" aria-labelledby="jelszo-tab" role="tabpanel">
-                                        <form novalidate="">
+                                        <form method="post" action="/withadmin/public/change-password"  enctype="multipart/form-data">
+                                            @csrf
                                             <div class="row">
                                                 <div class="col-md-12 col-sm-12">
                                                     <div class="form-group">
                                                             <label>Jelenlegi jelszó</label>
-                                                            <input type="password" class="form-control" placeholder="Jelszó" required="">
+                                                            <input type="password" class="form-control" name="current_password" placeholder="Jelszó" required="">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-12 col-sm-12">
                                                     <div class="form-group">
                                                             <label>Új jelszó</label>
-                                                            <input type="password" class="form-control" placeholder="Jelszó" required="">
+                                                            <input type="password" class="form-control" name="new_password" minlength="8" placeholder="Jelszó" required="">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-12 col-sm-12">
                                                     <div class="form-group">
                                                             <label>Új jelszó megerősítése</label>
-                                                            <input type="password" class="form-control" placeholder="Jelszó" required="">
+                                                            <input type="password" class="form-control" name="new_password_conf" minlength="8" placeholder="Jelszó" required="">
                                                     </div>
                                                 </div>
                                                 
@@ -158,8 +158,9 @@
                                         </form>
                                     </div>
 
-                                    <div class="tab-pane" id="email" aria-labelledby="email-tab" role="tabpanel">
-                                        <form novalidate="">
+                                    <!--<div class="tab-pane" id="email" aria-labelledby="email-tab" role="tabpanel">
+                                        <form >
+                                            @csrf
                                             <div class="row">
                                                 <div class="col-md-12 col-sm-12">
                                                     <div class="form-group">
@@ -199,7 +200,7 @@
                                                 </div>
                                             </form>
                                         </div>
-                                    </div>
+                                    </div>-->
 
                                 </div>
                             </div>

@@ -44,6 +44,7 @@ Route::get('/help', 'HelpController@showHelp');
 Route::get('/videorepo', 'HelpController@showVideoRepository');
 
 Route::get('/user-settings', 'RestaurantController@showUserSettings');
+Route::post('/change-password', 'UserSettingsController@changePassword');
 
 Route::get('/pizzadesigner-size', 'PizzadesignerController@showSize');
 Route::post('/pizzadesigner-add-size', 'PizzadesignerController@addSize');

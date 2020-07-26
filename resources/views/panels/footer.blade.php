@@ -31,6 +31,7 @@
     </div>
 </div>
 
+@if(Auth::check())
 <audio id="notification" preload="auto">
   <source src="{{ asset('sounds/notification15.ogg') }}" type="audio/ogg">
   <source src="{{ asset('sounds/notification15.mp3') }}" type="audio/mpeg">
@@ -118,3 +119,4 @@ setTimeout(function() {
 
 
 </script>
+@endif
