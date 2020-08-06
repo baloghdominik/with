@@ -9,3 +9,4 @@ yarn-error.log
 /vuexy-shell-scripts
 /public/index.php
 public/index.php
+.env.example
