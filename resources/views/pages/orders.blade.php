@@ -82,7 +82,7 @@
             $n++;
             $s++;
             @endphp
-            <div class="col-12 order-{{ $n }}">
+            <div class="col-12 ">
                 <div class="card ecommerce-card">
                     <div class="card-body" style="padding: 0px;">
                         <div class="row" style="margin: 0px;">
@@ -94,7 +94,7 @@
                                     
                                     <thead>
                                         <tr>
-                                            <th scope="col">Típus</th>
+                                            <th scope="col">Típus 1</th>
                                             <th scope="col">Étel</th>
                                             <th scope="col">Darab</th>
                                             <th scope="col">Extrák</th>
@@ -347,6 +347,7 @@
                                     @endphp
                                     <p><i class="fa fa-hourglass" ></i> Rendeléstől - Teljesítésig eltelt idő: {{ $t }}</p>
                                 @endif
+                                <p><i class="fa fa-circle" ></i> Azonosító: #W{{ $order->id }}</p>
                                 <div id="warn{{ $n }}" style="display:none;">
                                     <div class="alert alert-danger" role="alert">
                                         <h4 class="alert-heading">Figyelem!</h4>
@@ -534,12 +535,16 @@
             </script>
             @endforeach
 
+        </div>
+
+        <div class="row">   
+
             @foreach ($acceptedorders as $order)
             @php
             $n++;
             $s++;
             @endphp
-            <div class="col-12 order-{{ $n }}">
+            <div class="col-12 ">
                 <div class="card ecommerce-card">
                     <div class="card-body" style="padding: 0px;">
                         <div class="row" style="margin: 0px;">
@@ -551,7 +556,7 @@
                                     
                                     <thead>
                                         <tr>
-                                            <th scope="col">Típus</th>
+                                            <th scope="col">Típus 2</th>
                                             <th scope="col">Étel</th>
                                             <th scope="col">Darab</th>
                                             <th scope="col">Extrák</th>
@@ -804,6 +809,7 @@
                                     @endphp
                                     <p><i class="fa fa-hourglass" ></i> Rendeléstől - Teljesítésig eltelt idő: {{ $t }}</p>
                                 @endif
+                                    <p><i class="fa fa-circle" ></i> Azonosító: #W{{ $order->id }}</p>
                                 <div id="warn{{ $n }}" style="display:none;">
                                     <div class="alert alert-danger" role="alert">
                                         <h4 class="alert-heading">Figyelem!</h4>
@@ -942,12 +948,16 @@
             </script>
             @endforeach
 
+        </div>
+
+        <div class="row">
+
             @foreach ($finishedorders as $order)
             @php
             $n++;
             $s++;
             @endphp
-            <div class="col-12 order-{{ $n }}">
+            <div class="col-12 ">
                 <div class="card ecommerce-card">
                     <div class="card-body" style="padding: 0px;">
                         <div class="row" style="margin: 0px;">
@@ -959,7 +969,7 @@
                                     
                                     <thead>
                                         <tr>
-                                            <th scope="col">Típus</th>
+                                            <th scope="col">Típus 3</th>
                                             <th scope="col">Étel</th>
                                             <th scope="col">Darab</th>
                                             <th scope="col">Extrák</th>
@@ -1212,6 +1222,7 @@
                                     @endphp
                                     <p><i class="fa fa-hourglass" ></i> Rendeléstől - Teljesítésig eltelt idő: {{ $t }}</p>
                                 @endif
+                                <p><i class="fa fa-circle" ></i> Azonosító: #W{{ $order->id }}</p>
                                 <div id="warn{{ $n }}" style="display:none;">
                                     <div class="alert alert-danger" role="alert">
                                         <h4 class="alert-heading">Figyelem!</h4>
