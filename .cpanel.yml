@@ -1,0 +1,5 @@
+---
+deployment:
+  tasks:
+    - export DEPLOYPATH=/home/actlwznc/public_html/with_public
+    - /bin/cp -R public $DEPLOYPATH
