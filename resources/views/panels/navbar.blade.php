@@ -2,7 +2,7 @@
   <nav class="header-navbar navbar-expand-lg navbar navbar-with-menu {{ $configData['navbarColor'] }} navbar-fixed">
       <div class="navbar-header d-xl-block d-none">
           <ul class="nav navbar-nav flex-row">
-              <li class="nav-item"><a class="navbar-brand" href="dashboard-analytics">
+              <li class="nav-item"><a class="navbar-brand" href="{{ url('home') }}">
                   <div class="brand-logo"></div></a></li>
           </ul>
       </div>
@@ -86,7 +86,7 @@
                             @endif
                             </span></div><span><img class="round" src="{{asset('images/portrait/small/avatar-s-11.jpg') }}" alt="avatar" height="40" width="40" /></span>
                         </a>
-                        <div class="dropdown-menu dropdown-menu-right"><a class="dropdown-item" href="javascript:void(0)"><i class="feather icon-user"></i> Profil</a><a class="dropdown-item" href="javascript:void(0)"><i class="feather icon-shopping-cart"></i> Étterem</a><a class="dropdown-item" href="javascript:void(0)"><i class="feather icon-pocket"></i> Előfizetésem</a>
+                        <div class="dropdown-menu dropdown-menu-right"><a class="dropdown-item" href="{{ url('user-settings') }}"><i class="feather icon-user"></i> Profil</a><a class="dropdown-item" href="javascript:void(0)"><i class="feather icon-shopping-cart"></i> Étterem</a>
                             <div class="dropdown-divider"></div><a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();"><i class="feather icon-power"></i> Kilépés</a>

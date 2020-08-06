@@ -164,7 +164,7 @@ html body p {
 }
 
 html body.bg-full-screen-image {
-  background: url(../images/vuexy-login-bg.jpg?eb4e894d949eb0ce8f21368b70f3dd3b) no-repeat center center;
+  background: url(../images/with-login-bg.jpg) no-repeat center center;
   background-size: cover;
 }
 

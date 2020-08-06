@@ -79,7 +79,7 @@
                                                         </div>
                                                         <div class="text-right"><a href="{{ route('password.request') }}" class="card-link">Elfelejtett jelszó?</a></div>
                                                     </div>
-                                                    <a href="#" class=".d-sm-none .d-md-block btn btn-outline-primary float-left btn-inline">Mi az a <span class="brand-text mb-0 with-logo" style="color: #47b272; font-weight: 600;
+                                                    <a href="#" class="d-none d-lg-block d-xl-block btn btn-outline-primary float-left btn-inline">Mi az a <span class="brand-text mb-0 with-logo" style="color: #47b272; font-weight: 600;
     letter-spacing: 0.10rem;">With</span>?</a>
                                                     <button type="submit" class="btn btn-primary float-right btn-inline">Bejelentkezés</button>
                                                 </form>
