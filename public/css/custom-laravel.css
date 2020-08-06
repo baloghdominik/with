@@ -1,0 +1,87 @@
+/*=========================================================================================
+    File Name: laravel-menu.scss
+    Description: laravel Specific menu styles
+    ----------------------------------------------------------------------------------------
+    Item name: Vuexy  - Vuejs, HTML & Laravel Admin Dashboard Template
+    Author: PIXINVENT
+    Author URL: http://www.themeforest.net/user/pixinvent
+==========================================================================================*/
+
+/*========================================================
+        DARK LAYOUT
+=========================================================*/
+
+body.vertical-layout.vertical-menu-modern .horizontal-menu-wrapper {
+  display: none;
+}
+
+footer.footer a:hover {
+  color: #2f8551;
+}
+
+.horizontal-menu > .main-menu {
+  display: none;
+}
+
+.horizontal-menu .fixed-top {
+  left: 0;
+}
+
+html body.navbar-static .app-content .header-navbar {
+  background: transparent;
+  box-shadow: none !important;
+}
+
+@font-face {
+  font-family: Youthome;
+  src: local("Youthome"),
+       local("Youthome"),
+       url(../fonts/Youthome.ttf);
+  font-weight: regular;
+}
+
+.with-logo {
+  font-family: 'Youthome', Fallback, sans-serif !important;
+}
+
+@media (max-width: 575.98px) {
+  body.vertical-layout:not(.horizontal-layout).navbar-floating .header-navbar {
+    margin-left: 1.2rem;
+    margin-right: 1.2rem;
+  }
+}
+
+.border-top-order {
+  border-top-color: rgb(218, 225, 231);
+  border-top-style: solid;
+  border-top-width: 1px;
+}
+
+.border-right-order {
+  border-right-color: rgb(218, 225, 231);
+  border-right-style: solid;
+  border-right-width: 1px;
+}
+
+.bg-with-warning {
+  background-color: #7EC99C !important;
+}
+
+.order-decline {
+ color: #626262 !important;
+}
+
+.order-decline:hover {
+  color: #ea5455 !important;
+}
+
+.badge-warning2 {
+  background-color: #C5C010;
+}
+
+@media (max-width: 768.98px) {
+  .noborder-sm {
+    border: 0 !important;
+  }
+}
+
