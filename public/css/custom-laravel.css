@@ -40,8 +40,23 @@ html body.navbar-static .app-content .header-navbar {
   font-weight: regular;
 }
 
+@font-face {
+  font-family: BarlowCondensed;
+  src: local("BarlowCondensed"),
+       local("BarlowCondensed"),
+       url(../fonts/BarlowCondensed-Light.ttf);
+  font-weight: regular;
+}
+
 .with-logo {
   font-family: 'Youthome', Fallback, sans-serif !important;
+}
+
+.with-logo span {
+  font-family: 'BarlowCondensed', sans-serif;
+  letter-spacing: 0em;
+  font-size: 1.2em;
+  color: #bdbdbd;
 }
 
 @media (max-width: 575.98px) {
