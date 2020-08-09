@@ -23,15 +23,6 @@
 
 @section('content')
 <section id="basic-horizontal-layouts">
-
-<audio id="notification">
-  <source src="{{ asset('sounds/notification15.ogg') }}" type="audio/ogg">
-  <source src="{{ asset('sounds/notification15.mp3') }}" type="audio/mpeg">
-  A bőngésződ nem támogatja a hangos értesítést!
-</audio><br>
-
-
-
 <div class="row">
     <div class="col-lg-3 col-md-5 col-sm-12">
         <div class="card">
