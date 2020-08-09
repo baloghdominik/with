@@ -51,7 +51,7 @@
                 </div>
                 <div class="card-content">
                     <div class="card-body">
-                        <form class="form form-horizontal" method="post" action="/withadmin/public/add-category">
+                        <form class="form form-horizontal" method="post" action="{{ url('add-category') }}">
                             <div class="form-body">
                                 <div class="row">
                                     @csrf
@@ -85,7 +85,7 @@
                 </div>
                 <div class="card-content">
                     <div class="card-body">
-                        <form class="form form-horizontal" method="post" action="/withadmin/public/delete-category">
+                        <form class="form form-horizontal" method="post" action="{{ url('delete-category') }}">
                             <div class="form-body">
                                 <div class="row">
                                     @csrf

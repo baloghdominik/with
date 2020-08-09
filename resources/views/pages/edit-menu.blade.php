@@ -58,7 +58,7 @@
                                     <div class="card-body">
                                             <div class="form-body">
                                                 <div class="row">
-                                                <form class="form form-horizontal" method="post" action="/withadmin/public/update-menu"  enctype="multipart/form-data">
+                                                <form class="form form-horizontal" method="post" action="{{ url('update-menu') }}"  enctype="multipart/form-data">
                                                     @csrf 
                                                     <input type="hidden" id="id" class="form-control" name="id" value="{{$menu->id}}">
                                                     <div class="col-12">
@@ -214,7 +214,7 @@
                                                                                     @endif
                                                                                 @endforeach
                                                                                 @if($btn)
-                                                                                <form method="post" action="/withadmin/public/remove-side-from-menu">
+                                                                                <form method="post" action="{{ url('remove-side-from-menu') }}">
                                                                                 @csrf
                                                                                 <input type="hidden" name="menuid" value="{{$menu->id}}">
                                                                                 <input type="hidden" name="mealid" value="{{$meal->id}}">
@@ -222,7 +222,7 @@
                                                                                 <button type="submit" class="btn btn-icon btn-danger waves-effect waves-light"><i class="feather icon-x"></i></button>
                                                                                 </form>
                                                                                 @else
-                                                                                <form method="post" action="/withadmin/public/add-side-to-menu">
+                                                                                <form method="post" action="{{ url('add-side-to-menu') }}">
                                                                                 @csrf
                                                                                 <input type="hidden" name="menuid" value="{{$menu->id}}">
                                                                                 <input type="hidden" name="mealid" value="{{$meal->id}}">
@@ -304,7 +304,7 @@
                                                                                     @endif
                                                                                 @endforeach
                                                                                 @if($btn)
-                                                                                <form method="post" action="/withadmin/public/remove-drink-from-menu">
+                                                                                <form method="post" action="{{ url('remove-drink-from-menu') }}">
                                                                                 @csrf
                                                                                 <input type="hidden" name="mealid" value="{{$meal->id}}">
                                                                                 <input type="hidden" name="menuid" value="{{$menu->id}}">
@@ -312,7 +312,7 @@
                                                                                 <button type="submit" class="btn btn-icon btn-danger waves-effect waves-light"><i class="feather icon-x"></i></button>
                                                                                 </form>
                                                                                 @else
-                                                                                <form method="post" action="/withadmin/public/add-drink-to-menu">
+                                                                                <form method="post" action="{{ url('add-drink-to-menu') }}">
                                                                                 @csrf
                                                                                 <input type="hidden" name="mealid" value="{{$meal->id}}">
                                                                                 <input type="hidden" name="menuid" value="{{$menu->id}}">

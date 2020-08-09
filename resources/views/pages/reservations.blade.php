@@ -153,7 +153,7 @@
                                 <span class="">Időpont</span>
                             </div>
                         </div>
-                        <form method="post" action="/withadmin/public/update-reservation">
+                        <form method="post" action="{{ url('update-reservation') }}">
                         @csrf 
                         <div class="form-group mt-2">
                             <input type="hidden" name="id" value="{{ $data->id }}">
@@ -241,7 +241,7 @@
                                 <span class="">Időpont</span>
                             </div>
                         </div> 
-                        <form method="post" action="/withadmin/public/delete-reservation">
+                        <form method="post" action="{{ url('delete-reservation') }}">
                             @csrf
                             <input type="hidden" name="id" value="{{ $data->id }}">
                             <button type="submit" class="btn btn-danger btn-block mt-2 waves-effect waves-light">Sztornó</button>

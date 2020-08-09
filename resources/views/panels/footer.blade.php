@@ -81,7 +81,7 @@ if (this.readyState == 4 && this.status == 200) {
     }
 }
 };
-xmlhttp.open("GET", 'http://localhost/withadmin/public/api/notification/{{ Auth::user()->restaurantid }}', false);
+xmlhttp.open("GET", 'https://admin.with.hu/api/notification/{{ Auth::user()->restaurantid }}', false);
 xmlhttp.send();
 
 window.setInterval(function(){
@@ -93,7 +93,7 @@ if (this.readyState == 4 && this.status == 200) {
     document.getElementById("orders").innerHTML = myObj.order;
 }
 };
-xmlhttp.open("GET", 'http://localhost/withadmin/public/api/notification/{{ Auth::user()->restaurantid }}', true);
+xmlhttp.open("GET", 'https://admin.with.hu/api/notification/{{ Auth::user()->restaurantid }}', true);
 xmlhttp.send();
 }, 15000);
 
@@ -109,7 +109,7 @@ if (this.readyState == 4 && this.status == 200) {
     }
 }
 };
-xmlhttp.open("GET", 'http://localhost/withadmin/public/api/notification/{{ Auth::user()->restaurantid }}', true);
+xmlhttp.open("GET", 'https://admin.with.hu/api/notification/{{ Auth::user()->restaurantid }}', true);
 xmlhttp.send();
 }, 60000);
 

@@ -57,7 +57,7 @@
                                 </div>
                                 <div class="card-content">
                                     <div class="card-body">
-                                        <form class="form form-horizontal" method="post" action="/withadmin/public/add-drink"  enctype="multipart/form-data">
+                                        <form class="form form-horizontal" method="post" action="{{ url('add-drink') }}"  enctype="multipart/form-data">
                                             <div class="form-body">
                                                 <div class="row">
                                                     @csrf 

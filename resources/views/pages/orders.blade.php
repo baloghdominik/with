@@ -406,7 +406,7 @@
                                         @endphp
                                         <a href="{{ url($url) }}" class="btn btn-block btn-primary waves-effect waves-light" style="margin-top: 0px;">Rendelés felvétel</a>
                                     @else
-                                        <form method="post" action="/withadmin/public/accept-pickup-order"  enctype="multipart/form-data">
+                                        <form method="post" action="{{ url('accept-pickup-order') }}"  enctype="multipart/form-data">
                                         @csrf
                                         <input name="order_id" value="{{ $order->id}}" hidden />
                                         <fieldset class="form-group">

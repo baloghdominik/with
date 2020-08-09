@@ -71,7 +71,7 @@
                                                     <td>{{number_format($dough->price, 0)}} Ft</td>
                                                     <td>{{number_format($dough->price, 0)}} Ft</td>
                                                     <td>
-                                                        <form method="post" action="/withadmin/public/pizzadesigner-remove-dough">
+                                                        <form method="post" action="{{ url('pizzadesigner-remove-dough') }}">
                                                         @csrf
                                                         <input type="hidden" name="id" value="{{$dough->id}}">
                                                         <button type="submit" class="btn btn-icon btn-danger waves-effect waves-light"><i class="feather icon-x"></i></button>
@@ -98,7 +98,7 @@
                 </div>
                 <div class="card-content">
                     <div class="card-body">
-                    <form class="form form-horizontal" method="post" action="/withadmin/public/pizzadesigner-add-dough"  enctype="multipart/form-data">
+                    <form class="form form-horizontal" method="post" action="{{ url('pizzadesigner-add-dough') }}"  enctype="multipart/form-data">
                             <div class="form-body">
                                 <div class="row">
                                     @csrf

@@ -75,7 +75,7 @@
                                                     <td>{{number_format($size->maketime, 0)}} Perc</td>
                                                     <td>{{number_format($size->toppingslimit, 0)}} db</td>
                                                     <td>
-                                                        <form method="post" action="/withadmin/public/pizzadesigner-remove-size">
+                                                        <form method="post" action="{{ url('pizzadesigner-remove-size') }}">
                                                         @csrf
                                                         <input type="hidden" name="id" value="{{$size->id}}">
                                                         <button type="submit" class="btn btn-icon btn-danger waves-effect waves-light"><i class="feather icon-x"></i></button>
@@ -100,7 +100,7 @@
                 </div>
                 <div class="card-content">
                     <div class="card-body">
-                    <form class="form form-horizontal" method="post" action="/withadmin/public/pizzadesigner-add-size"  enctype="multipart/form-data">
+                    <form class="form form-horizontal" method="post" action="{{ url('pizzadesigner-add-size') }}"  enctype="multipart/form-data">
                             <div class="form-body">
                                 <div class="row">
                                     @csrf

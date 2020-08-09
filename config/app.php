@@ -52,7 +52,7 @@ return [
     |
     */
 
-    'url' => env('APP_URL', 'http://localhost/withadmin/public'),
+    'url' => env('APP_URL', 'https://admin.with.hu'),
 
     'asset_url' => env('ASSET_URL', null),
 

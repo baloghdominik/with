@@ -57,7 +57,7 @@
                                 </div>
                                 <div class="card-content">
                                     <div class="card-body">
-                                    <form class="form form-horizontal" method="post" action="/withadmin/public/update-side/{{$side->id}}"  enctype="multipart/form-data">
+                                    <form class="form form-horizontal" method="post" action="{{ url('update-side/'.$side->id) }}"  enctype="multipart/form-data">
                                             <div class="form-body">
                                                 <div class="row">
                                                     @csrf 
@@ -787,7 +787,7 @@
                                         <h4 class="card-title">Köret törlése</h4>
                                     </div>
                                     <div class="card-body">
-                                        <form method="post" action="/withadmin/public/delete-side">
+                                        <form method="post" action="{{ url('delete-side') }}">
                                             <div class="col-12">
                                                 <div class="form-group row">
                                                     <div class="col-md-4">

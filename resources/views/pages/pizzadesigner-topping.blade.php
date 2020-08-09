@@ -78,7 +78,7 @@
                                                     <td>{{number_format($topping->makeprice, 0)}} Ft</td>
                                                     <td>{{number_format($topping->maketime, 0)}} Perc</td>
                                                     <td>
-                                                        <form method="post" action="/withadmin/public/pizzadesigner-remove-topping">
+                                                        <form method="post" action="{{ url('pizzadesigner-remove-topping') }}">
                                                         @csrf
                                                         <input type="hidden" name="id" value="{{$topping->id}}">
                                                         <button type="submit" class="btn btn-icon btn-danger waves-effect waves-light"><i class="feather icon-x"></i></button>
@@ -118,7 +118,7 @@
                                                     <td>{{number_format($topping->makeprice, 0)}} Ft</td>
                                                     <td>{{number_format($topping->maketime, 0)}} Perc</td>
                                                     <td>
-                                                        <form method="post" action="/withadmin/public/pizzadesigner-remove-topping">
+                                                        <form method="post" action="{{ url('pizzadesigner-remove-topping') }}">
                                                         @csrf
                                                         <input type="hidden" name="id" value="{{$topping->id}}">
                                                         <button type="submit" class="btn btn-icon btn-danger waves-effect waves-light"><i class="feather icon-x"></i></button>
@@ -158,7 +158,7 @@
                                                     <td>{{number_format($topping->makeprice, 0)}} Ft</td>
                                                     <td>{{number_format($topping->maketime, 0)}} Perc</td>
                                                     <td>
-                                                        <form method="post" action="/withadmin/public/pizzadesigner-remove-topping">
+                                                        <form method="post" action="{{ url('pizzadesigner-remove-topping') }}">
                                                         @csrf
                                                         <input type="hidden" name="id" value="{{$topping->id}}">
                                                         <button type="submit" class="btn btn-icon btn-danger waves-effect waves-light"><i class="feather icon-x"></i></button>
@@ -198,7 +198,7 @@
                                                     <td>{{number_format($topping->makeprice, 0)}} Ft</td>
                                                     <td>{{number_format($topping->maketime, 0)}} Perc</td>
                                                     <td>
-                                                        <form method="post" action="/withadmin/public/pizzadesigner-remove-topping">
+                                                        <form method="post" action="{{ url('pizzadesigner-remove-topping') }}">
                                                         @csrf
                                                         <input type="hidden" name="id" value="{{$topping->id}}">
                                                         <button type="submit" class="btn btn-icon btn-danger waves-effect waves-light"><i class="feather icon-x"></i></button>
@@ -238,7 +238,7 @@
                                                     <td>{{number_format($topping->makeprice, 0)}} Ft</td>
                                                     <td>{{number_format($topping->maketime, 0)}} Perc</td>
                                                     <td>
-                                                        <form method="post" action="/withadmin/public/pizzadesigner-remove-topping">
+                                                        <form method="post" action="{{ url('pizzadesigner-remove-topping') }}">
                                                         @csrf
                                                         <input type="hidden" name="id" value="{{$topping->id}}">
                                                         <button type="submit" class="btn btn-icon btn-danger waves-effect waves-light"><i class="feather icon-x"></i></button>
@@ -265,7 +265,7 @@
                 </div>
                 <div class="card-content">
                     <div class="card-body">
-                    <form class="form form-horizontal" method="post" action="/withadmin/public/pizzadesigner-add-topping"  enctype="multipart/form-data">
+                    <form class="form form-horizontal" method="post" action="{{ url('pizzadesigner-add-topping') }}"  enctype="multipart/form-data">
                             <div class="form-body">
                                 <div class="row">
                                     @csrf

@@ -57,7 +57,7 @@
                                 </div>
                                 <div class="card-content">
                                     <div class="card-body">
-                                    <form class="form form-horizontal" method="post" action="/withadmin/public/update-meal/{{$meal->id}}"  enctype="multipart/form-data">
+                                    <form class="form form-horizontal" method="post" action="{{ url('update-meal/'.$meal->id) }}"  enctype="multipart/form-data">
                                             <div class="form-body">
                                                 <div class="row">
                                                     @csrf 
@@ -796,7 +796,7 @@
                                 </div>
                                 <div class="card-content">
                                     <div class="card-body">
-                                        <form class="form form-horizontal" method="post" action="/withadmin/public/add-category">
+                                        <form class="form form-horizontal" method="post" action="{{ url('add-category') }}">
                                             <div class="form-body">
                                                 <div class="row">
                                                     @csrf
@@ -822,7 +822,7 @@
                                                                                 <td>{{number_format(($data->price - $data->makeprice), 0)}} Ft</td>
                                                                                 <td>{{number_format($data->makeprice, 0)}} Ft</td>
                                                                                 <td>
-                                                                                    <form method="post" action="/withadmin/public/remove-extra">
+                                                                                    <form method="post" action="{{ url('remove-extra') }}">
                                                                                     @csrf
                                                                                     <input type="hidden" name="extraid" value="{{$data->id}}">
                                                                                     <input type="hidden" name="mealid" value="{{$meal->id}}">
@@ -853,7 +853,7 @@
                                 </div>
                                 <div class="card-content">
                                     <div class="card-body">
-                                        <form class="form form-horizontal" method="post" action="/withadmin/public/add-extra">
+                                        <form class="form form-horizontal" method="post" action="{{ url('add-extra') }}">
                                             <div class="form-body">
                                                 <div class="row">
                                                     @csrf
@@ -906,7 +906,7 @@
                                         <h4 class="card-title">Étel törlése</h4>
                                     </div>
                                     <div class="card-body">
-                                        <form method="post" action="/withadmin/public/delete-meal">
+                                        <form method="post" action="{{ url('delete-meal') }}">
                                             <div class="col-12">
                                                 <div class="form-group row">
                                                     <div class="col-md-4">

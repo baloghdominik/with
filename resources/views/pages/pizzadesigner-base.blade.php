@@ -75,7 +75,7 @@
                                                     <td>{{number_format($base->makeprice, 0)}} Ft</td>
                                                     <td>{{number_format($base->maketime, 0)}} Perc</td>
                                                     <td>
-                                                        <form method="post" action="/withadmin/public/pizzadesigner-remove-base">
+                                                        <form method="post" action="{{ url('pizzadesigner-remove-base') }}">
                                                         @csrf
                                                         <input type="hidden" name="id" value="{{$base->id}}">
                                                         <button type="submit" class="btn btn-icon btn-danger waves-effect waves-light"><i class="feather icon-x"></i></button>
@@ -102,7 +102,7 @@
                 </div>
                 <div class="card-content">
                     <div class="card-body">
-                    <form class="form form-horizontal" method="post" action="/withadmin/public/pizzadesigner-add-base"  enctype="multipart/form-data">
+                    <form class="form form-horizontal" method="post" action="{{ url('pizzadesigner-add-base') }}"  enctype="multipart/form-data">
                             <div class="form-body">
                                 <div class="row">
                                     @csrf

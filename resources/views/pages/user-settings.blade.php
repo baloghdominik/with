@@ -128,7 +128,7 @@
                                     </div>
 
                                     <div class="tab-pane" id="jelszo" aria-labelledby="jelszo-tab" role="tabpanel">
-                                        <form method="post" action="/withadmin/public/change-password"  enctype="multipart/form-data">
+                                        <form method="post" action="{{ url('change-password') }}"  enctype="multipart/form-data">
                                             @csrf
                                             <div class="row">
                                                 <div class="col-md-12 col-sm-12">
