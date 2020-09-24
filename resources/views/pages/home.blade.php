@@ -116,7 +116,7 @@
                                   <p class="text-bold-500 mb-75">Rendelés</p>
                                   <h5 class="font-medium-2">
                                       <span class="text-success"></span>
-                                      <span>Az elmúlt 30 nap adatai. {{ $distance }}</span>
+                                      <span>Az elmúlt 30 nap adatai.</span>
                                   </h5>
                               </div>
                               <!--<a href="#" class="btn btn-primary shadow">Statisztika <i class="feather icon-chevrons-right"></i></a>-->
