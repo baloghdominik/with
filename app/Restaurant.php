@@ -10,4 +10,8 @@ class Restaurant extends Model
     protected $fillable = [
         'name', 'lowercasename', 'address', 'phone', 'email', 'facebook', 'description'
     ];
+
+    public function zipcodes(){
+        return $this->hasMany('App\RestaurantZipcode','restaurantid','id');
+    }
 }

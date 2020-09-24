@@ -12,4 +12,8 @@ class RestaurantZipcode extends Model
     ];
 
     public $timestamps = false;
+
+    public function restaurant(){
+        return $this->belongsTo('App\Restaurant','restaurantid','id');
+    }
 }

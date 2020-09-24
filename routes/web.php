@@ -101,13 +101,6 @@ Route::get('/startrefund-order/{id}', 'OrderController@startRefundOrder');
 Route::get('/finishrefund-order/{id}', 'OrderController@finishRefundOrder');
 Route::get('/cancel-order/{id}', 'OrderController@cancelOrder');
 
-// API endpoints
-Route::get('api/restaurant/id/{id}', 'RestaurantController@getRestaurantById');
-Route::get('api/restaurant/lowercasename/{id}', 'RestaurantController@getRestaurantIdBylowercasename');
-Route::get('api/restaurantids/', 'RestaurantController@getAllRestaurantIds');
-Route::get('api/restaurants/', 'RestaurantController@getAllRestaurants');
-Route::get('api/restaurantlogo/{id}/', 'RestaurantController@getRestaurantLogoById');
-
 // Route Components
 Route::get('/sk-layout-2-columns', 'StaterkitController@columns_2');
 Route::get('/sk-layout-fixed-navbar', 'StaterkitController@fixed_navbar');

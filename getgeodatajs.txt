@@ -1,0 +1,22 @@
+function haversineGreatCircleDistance(
+            $latitudeFrom, $longitudeFrom, $latitudeTo, $longitudeTo, $earthRadius = 6371000)
+          {
+            // convert from degrees to radians
+            $latFrom = deg2rad($latitudeFrom);
+            $lonFrom = deg2rad($longitudeFrom);
+            $latTo = deg2rad($latitudeTo);
+            $lonTo = deg2rad($longitudeTo);
+          
+            $latDelta = $latTo - $latFrom;
+            $lonDelta = $lonTo - $lonFrom;
+          
+            $angle = 2 * asin(sqrt(pow(sin($latDelta / 2), 2) +
+              cos($latFrom) * cos($latTo) * pow(sin($lonDelta / 2), 2)));
+
+            $distance = $angle * $earthRadius;
+            $distance = $distance / 1000;
+            $distance = round($distance, 1);
+            return $distance;
+          }
+
+        $distance = haversineGreatCircleDistance(47.688981, 19.084140, 47.6895058, 19.0761544);
