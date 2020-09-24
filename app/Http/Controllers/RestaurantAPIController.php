@@ -43,24 +43,26 @@ class RestaurantAPIController extends Controller
     }
 
     public function getAllRestaurantsNearByGEO($latitude, $longitude) {
-        function getLnt($latitude, $longitude) {
-            $url = "https://reverse.geocoder.ls.hereapi.com/6.2/reversegeocode.json?prox=".urlencode($latitude).urlencode(", ").urlencode($longitude)."&mode=retrieveAddresses&maxresults=1&additionaldata=IncludeShapeLevel%2CpostalCode&gen=9&apiKey=yY2DiJu_PkZHyO03MAi6GjJ6ORWRQ1J8HerJfp4IroA";
-            $result_string = file_get_contents($url);
+        $url = "https://reverse.geocoder.ls.hereapi.com/6.2/reversegeocode.json?prox=".urlencode($latitude).urlencode(", ").urlencode($longitude)."&mode=retrieveAddresses&maxresults=1&additionaldata=IncludeShapeLevel%2CpostalCode&gen=9&apiKey=yY2DiJu_PkZHyO03MAi6GjJ6ORWRQ1J8HerJfp4IroA";
+        $result_string = @file_get_contents($url);
+
+        if ($result_string !== FALSE) {
             $result = json_decode($result_string, true);
+            if (!isset($result["Response"]["View"][0]["Result"][0]['Location']['Address']['PostalCode'])){
+                $result = [];
+                return response()->json($result, 200);
+            }
+            $result=$result["Response"]["View"][0]["Result"][0]['Location']['Address']['PostalCode'];
 
-            $result[]=$result["Response"]["View"][0]["Result"][0]['Location']['Address']['PostalCode'];
+            $zipcode = $result;
 
-            return $result[0];
+            $restaurantZipcodes = RestaurantZipcode::with('restaurant')->where('zipcode', $zipcode)->select('*')->get();
+
+            return response()->json($restaurantZipcodes, 200); 
+        } else {
+            $result = [];
+            return response()->json($result, 400);
         }
-
-        $zipcode = getLnt($latitude, $longitude);
-
-        $restaurantZipcodes = RestaurantZipcode::with('restaurant')->where('zipcode', $zipcode)->select('*')->get();
-
-        $restaurant = new Restaurant;
-        $restaurant = $restaurantZipcodes;
-
-        return response()->json($restaurant, 200); 
     }
 
     public function getRestaurantLogoById($id) {
