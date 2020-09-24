@@ -30,7 +30,8 @@ class CustomerController extends Controller {
      * @return \Illuminate\Http\Response 
      */ 
     public function register(Request $request) 
-    { 
+    {
+
         $validator = Validator::make($request->all(), [ 
             'firstname' => 'required|string|min:3|max:20', 
             'lastname' => 'required|string|min:3|max:25', 
@@ -38,7 +39,7 @@ class CustomerController extends Controller {
             'city' => 'required|string|min:3|max:25', 
             'zipcode' => 'required|numeric|min:100|max:999999', 
             'address' => 'required|string|min:5|max:50', 
-            'email' => 'required|email|max:35', 
+            'email' => 'required|email|unique:customer,email|max:35|min:5', 
             'phone' => 'required|digits:11', 
             'password' => 'required|string|min:8|max:25', 
             'c_password' => 'required|same:password', 
