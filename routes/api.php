@@ -23,6 +23,7 @@ Route::post('register', 'CustomerController@register');
 Route::post('login', 'CustomerController@login');
 
 Route::get('notification/{id}', 'NotificationController@update');
+Route::get('/', 'NotificationController@getinfo');
 
 Route::get('restaurants/near/zip/{zipcode}', 'RestaurantAPIController@getAllRestaurantsNearByZipcode');
 Route::get('restaurants/near/geo/{latitude}/{longitude}', 'RestaurantAPIController@getAllRestaurantsNearByGEO');

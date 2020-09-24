@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Validator;
+use DateTime;
+use DateTimeZone;
 
 use App\Http\Services\RestaurantService;
 
@@ -30,6 +32,15 @@ class NotificationController extends Controller
         $notificationdto->order = $RestaurantService->getRestaurantOrderNotificationCount($restaurantid);
    
         return response()->json($notificationdto, 200); 
+    }
+
+    public function getinfo()
+    {
+        $currentTime = new DateTime("now", new DateTimeZone('Europe/Budapest'));
+        $currentTime = $currentTime->format('Y-m-d H:i:s');
+        $status = array('Status' => "Up and running!", 'Version' => "1.0", 'DateTime' => $currentTime);
+
+        return response()->json($status, 200); 
     }
 
 
