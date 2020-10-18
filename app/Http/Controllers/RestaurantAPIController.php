@@ -97,7 +97,7 @@ class RestaurantAPIController extends Controller
         return response()->json($restaurantList, 200); 
     }
 
-    public function getAllRestaurantsNearByGEO($latitude, $longitude) {
+    public function getAllRestaurantsNearByGEO($latitude, $longitude, RestaurantService $RestaurantService) {
         $url = "https://reverse.geocoder.ls.hereapi.com/6.2/reversegeocode.json?prox=".urlencode($latitude).urlencode(", ").urlencode($longitude)."&mode=retrieveAddresses&maxresults=1&additionaldata=IncludeShapeLevel%2CpostalCode&gen=9&apiKey=42UMNM8taZv6Ou2mukwM1svlc7qjJPkJCj16l46O0_M";
         $result_string = @file_get_contents($url);
 
