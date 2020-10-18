@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Restaurant;
+use App\RestaurantListDTO;
 use App\RestaurantZipcode;
+use App\Http\Services\RestaurantService;
 use Illuminate\Support\Facades\DB;
 
 class RestaurantAPIController extends Controller
@@ -33,13 +35,66 @@ class RestaurantAPIController extends Controller
         return response()->json($restaurant, 200); 
     }
 
-    public function getAllRestaurantsNearByZipcode($zipcode) {
+    public function getAllRestaurantsNearByZipcode($zipcode, RestaurantService $RestaurantService) {
         $restaurantZipcodes = RestaurantZipcode::with('restaurant')->where('zipcode', $zipcode)->select('*')->get();
 
         $restaurant = new Restaurant;
         $restaurant = $restaurantZipcodes;
 
-        return response()->json($restaurant, 200); 
+        $restaurantList = array();
+       
+        foreach ($restaurant as $res) {
+            $restaurantListDTO = new RestaurantListDTO;
+            $restaurantListDTO->name = $res->restaurant->name;
+            $id = $res->restaurant->id;
+            $name = $res->restaurant->name;
+            $restaurantListDTO->logo = "https://admin.with.hu/images/logos/with.hu_".$id."_".$name."_logo.jpg";
+            $restaurantListDTO->banner = "https://admin.with.hu/images/banners/with.hu_".$id."_".$name."_banner.jpg";
+            $restaurantListDTO->lowercasename = $res->restaurant->lowercasename;
+            $restaurantListDTO->isopen = $RestaurantService->isRestaurantOrderTime($id);
+            switch ($res->restaurant->deliverypayingmethod) {
+                case 1:
+                    $restaurantListDTO->description = "Készpénz";
+                    break;
+                case 2:
+                    $restaurantListDTO->description = "Bankkártya";
+                    break;
+                case 3:
+                    $restaurantListDTO->description = "SimplePay";
+                    break;
+                case 4:
+                    $restaurantListDTO->description = "Készpénz, Bankkártya";
+                    break;
+                case 5:
+                    $restaurantListDTO->description = "Készpénz, SimplePay";
+                    break;
+                case 6:
+                    $restaurantListDTO->description = "SimplePay, Bankkártya";
+                    break;
+                case 7:
+                    $restaurantListDTO->description = "SimplePay, Bankkártya, Készpénz";
+                    break;
+            }
+            if ($res->restaurant->delivery == 1 && $res->restaurant->pickup == 1) {
+                $restaurantListDTO->deliveryoptions = "Házhozszállítás, Helyszíni átvétel";
+            } else if ($res->restaurant->pickup == 1) {
+                $restaurantListDTO->deliveryoptions = "Helyszíni átvétel";
+            } else {
+                $restaurantListDTO->deliveryoptions = "Házhozszállítás";
+            }
+            $plustime = $res->restaurant->deliverytime + 10;
+            $restaurantListDTO->deliverytime = $res->restaurant->deliverytime ."-". $plustime." perc";
+            if ($res->restaurant->deliveryprice == 0) {
+                $restaurantListDTO->deliveryprice = "Ingyenes";
+            } else {
+                $restaurantListDTO->deliveryprice = number_format($res->restaurant->deliveryprice,0,",",".")."Ft";
+            }
+            $restaurantListDTO->minorddrvalue = number_format($res->restaurant->minimumordervalue,0,",",".")."Ft";
+
+            array_push($restaurantList, $restaurantListDTO);
+        }
+    
+        return response()->json($restaurantList, 200); 
     }
 
     public function getAllRestaurantsNearByGEO($latitude, $longitude) {
@@ -58,7 +113,63 @@ class RestaurantAPIController extends Controller
 
             $restaurantZipcodes = RestaurantZipcode::with('restaurant')->where('zipcode', $zipcode)->select('*')->get();
 
-            return response()->json($restaurantZipcodes, 200); 
+            $restaurant = new Restaurant;
+            $restaurant = $restaurantZipcodes;
+
+            $restaurantList = array();
+        
+            foreach ($restaurant as $res) {
+                $restaurantListDTO = new RestaurantListDTO;
+                $restaurantListDTO->name = $res->restaurant->name;
+                $id = $res->restaurant->id;
+                $name = $res->restaurant->name;
+                $restaurantListDTO->logo = "https://admin.with.hu/images/logos/with.hu_".$id."_".$name."_logo.jpg";
+                $restaurantListDTO->banner = "https://admin.with.hu/images/banners/with.hu_".$id."_".$name."_banner.jpg";
+                $restaurantListDTO->lowercasename = $res->restaurant->lowercasename;
+                $restaurantListDTO->isopen = $RestaurantService->isRestaurantOrderTime($id);
+                switch ($res->restaurant->deliverypayingmethod) {
+                    case 1:
+                        $restaurantListDTO->description = "Készpénz";
+                        break;
+                    case 2:
+                        $restaurantListDTO->description = "Bankkártya";
+                        break;
+                    case 3:
+                        $restaurantListDTO->description = "SimplePay";
+                        break;
+                    case 4:
+                        $restaurantListDTO->description = "Készpénz, Bankkártya";
+                        break;
+                    case 5:
+                        $restaurantListDTO->description = "Készpénz, SimplePay";
+                        break;
+                    case 6:
+                        $restaurantListDTO->description = "SimplePay, Bankkártya";
+                        break;
+                    case 7:
+                        $restaurantListDTO->description = "SimplePay, Bankkártya, Készpénz";
+                        break;
+                }
+                if ($res->restaurant->delivery == 1 && $res->restaurant->pickup == 1) {
+                    $restaurantListDTO->deliveryoptions = "Házhozszállítás, Helyszíni átvétel";
+                } else if ($res->restaurant->pickup == 1) {
+                    $restaurantListDTO->deliveryoptions = "Helyszíni átvétel";
+                } else {
+                    $restaurantListDTO->deliveryoptions = "Házhozszállítás";
+                }
+                $plustime = $res->restaurant->deliverytime + 10;
+                $restaurantListDTO->deliverytime = $res->restaurant->deliverytime ."-". $plustime." perc";
+                if ($res->restaurant->deliveryprice == 0) {
+                    $restaurantListDTO->deliveryprice = "Ingyenes";
+                } else {
+                    $restaurantListDTO->deliveryprice = number_format($res->restaurant->deliveryprice,0,",",".")."Ft";
+                }
+                $restaurantListDTO->minorddrvalue = number_format($res->restaurant->minimumordervalue,0,",",".")."Ft";
+
+                array_push($restaurantList, $restaurantListDTO);
+            }
+
+            return response()->json($restaurantList, 200); 
         } else {
             $result = [];
             return response()->json($result, 400);
