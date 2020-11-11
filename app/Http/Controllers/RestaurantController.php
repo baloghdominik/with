@@ -38,12 +38,14 @@ class RestaurantController extends Controller
             return redirect('/');
         }
 
+        $iframe = rawurlencode($restaurant->address);
+
         $zipcodes = Zipcode::orderBy('zipcode', 'ASC')->get();
 
         $restaurantzipcodes = RestaurantZipcode::where('restaurantid' , $restaurantID)->get();
 
         return view('/pages/settings', [
-            'pageConfigs' => $pageConfigs, 'restaurant' => $restaurant, 'zipcodes' => $zipcodes, 'restaurantzipcodes' => $restaurantzipcodes
+            'pageConfigs' => $pageConfigs, 'restaurant' => $restaurant, 'zipcodes' => $zipcodes, 'restaurantzipcodes' => $restaurantzipcodes, 'iframe' => $iframe
         ]);
     }
 

@@ -4,14 +4,13 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Category extends Model
+class CategoryDTO extends Model
 {
-    public $table = "category";
     protected $fillable = [
         'category', 'restaurantid'
     ];
 
     public function restaurant(){
-        return $this->belongsTo('App\Restaurant','restaurantid','id');
+        return $this->belongsTo('App\RestaurantDTO','restaurantid','id');
     }
 }

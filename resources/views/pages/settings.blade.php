@@ -85,6 +85,9 @@
                                         </div>
                                         <div class="col-md-8">
                                             <input type="text" class="form-control" name="address" placeholder="Étterem címe" value="{{$restaurant->address}}">
+                                            @if($restaurant->address != NULL && strlen($restaurant->address) > 5)
+                                            <iframe width="100%" height="120" src="https://maps.google.com/maps?q={{$iframe}}&t=&z=13&ie=UTF8&iwloc=&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" style="margin-top: 20px;"></iframe>
+                                            @endif
                                         </div>
                                     </div>
                                 </div>

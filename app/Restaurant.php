@@ -14,4 +14,8 @@ class Restaurant extends Model
     public function zipcodes(){
         return $this->hasMany('App\RestaurantZipcode','restaurantid','id');
     }
+
+    public function categories(){
+        return $this->hasMany('App\Category','restaurantid','id');
+    }
 }

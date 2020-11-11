@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Restaurant;
 use App\RestaurantListDTO;
 use App\RestaurantZipcode;
+use App\RestaurantDTO;
+use App\CategoryDTO;
+use App\RestaurantZipcodeDTO;
 use App\Http\Services\RestaurantService;
 use Illuminate\Support\Facades\DB;
 
@@ -182,6 +185,129 @@ class RestaurantAPIController extends Controller
         $pic = getenv('APP_URL')."/public/images/logos/with.hu_".$restaurant->id."_".$restaurant->name."_logo.jpg";
 
         return response()->json($pic, 200);
+    }
+
+    public function getRestaurantAlldataById($id, RestaurantService $RestaurantService) {
+        $restaurant = Restaurant::with('zipcodes')->with('categories')->where('id', $id)->first();
+
+        $restaurantDTO = new RestaurantDTO;
+        $restaurantDTO->restaurantid = $restaurant->id;
+        $restaurantDTO->restaurantname = $restaurant->name;
+        $restaurantDTO->lowercasename = $restaurant->lowercasename;
+        $restaurantDTO->restaurantname = $restaurant->name;
+        $restaurantDTO->restaurantaddress = $restaurant->address;
+        if ($restaurant->address != NULL && strlen($restaurant->address) > 10) {
+            $restaurantDTO->mapembed = "https://maps.google.com/maps?q=". rawurlencode($restaurant->address) ."&t=&z=13&ie=UTF8&iwloc=&output=embed";
+        } else {
+            $restaurantDTO->mapembed = NULL;
+        }
+        $restaurantDTO->restaurantphone = $restaurant->phone;
+        $restaurantDTO->restaurantemail = $restaurant->email;
+        $restaurantDTO->restaurantfacebook = $restaurant->facebook;
+        if ($restaurant->facebook != NULL && strlen($restaurant->facebook) > 20) {
+            $restaurantDTO->facebookembed = $restaurant->facebook;
+        } else {
+            $restaurantDTO->facebookembed = NULL;
+        }
+        $restaurantDTO->restaurantdescription = $restaurant->description;
+        if ($restaurant->monday) {
+            $restaurantDTO->monday = date('H:i', strtotime($restaurant->mondayopen))." - ".date('H:i', strtotime($restaurant->mondayclose));
+        } else {
+            $restaurantDTO->monday = "Zárva";
+        }
+        if ($restaurant->tuesday) {
+            $restaurantDTO->tuesday = date('H:i', strtotime($restaurant->tuesdayopen))." - ".date('H:i', strtotime($restaurant->tuesdayclose));
+        } else {
+            $restaurantDTO->tuesday = "Zárva";
+        }
+        if ($restaurant->wednesday) {
+            $restaurantDTO->wednesday = date('H:i', strtotime($restaurant->wednesdayopen))." - ".date('H:i', strtotime($restaurant->wednesdayclose));
+        } else {
+            $restaurantDTO->wednesday = "Zárva";
+        }
+        if ($restaurant->thursday) {
+            $restaurantDTO->thursday = date('H:i', strtotime($restaurant->thursdayopen))." - ".date('H:i', strtotime($restaurant->thursdayclose));
+        } else {
+            $restaurantDTO->thursday = "Zárva";
+        }
+        if ($restaurant->friday) {
+            $restaurantDTO->friday = date('H:i', strtotime($restaurant->fridayopen))." - ".date('H:i', strtotime($restaurant->fridayclose));
+        } else {
+            $restaurantDTO->friday = "Zárva";
+        }
+        if ($restaurant->saturday) {
+            $restaurantDTO->saturday = date('H:i', strtotime($restaurant->saturdayopen))." - ".date('H:i', strtotime($restaurant->saturdayclose));
+        } else {
+            $restaurantDTO->saturday = "Zárva";
+        }
+        if ($restaurant->sunday) {
+            $restaurantDTO->sunday = date('H:i', strtotime($restaurant->sundayopen))." - ".date('H:i', strtotime($restaurant->sundayclose));
+        } else {
+            $restaurantDTO->sunday = "Zárva";
+        }
+
+        if ($restaurant->delivery == 1) {
+            $restaurantDTO->isdeliveryavailable = true;
+        } else {
+            $restaurantDTO->isdeliveryavailable = false;
+        }
+
+        if ($restaurant->pickup == 1) {
+            $restaurantDTO->ispickupavailable = true;
+        } else {
+            $restaurantDTO->ispickupavailable = false;
+        }
+
+        $restaurantDTO->minimumordervalue = $restaurant->minimumordervalue;
+        $restaurantDTO->deliveryprice = $restaurant->deliveryprice;
+
+        $restaurantDTO->potentialdeliverytime = ($restaurant->deliverytime - 10). "-" .($restaurant->deliverytime + 10). " perc";
+
+        if ($restaurant->szepcard == 1) {
+            $restaurantDTO->isszepcard = true;
+        } else {
+            $restaurantDTO->isszepcard = false;
+        }
+
+        $restaurantDTO->isrestaurantopenfororders = $RestaurantService->isRestaurantOrderTime($id);
+
+        if ($restaurant->pizzadesigner == 1) {
+            $restaurantDTO->ispizzadesigneravailable = true;
+        } else {
+            $restaurantDTO->ispizzadesigneravailable = false;
+        }
+
+        if ($restaurant->isreservation == 1) {
+            $restaurantDTO->istablereservationavailable = true;
+        } else {
+            $restaurantDTO->istablereservationavailable = false;
+        }
+
+        $restaurantDTO->logo = getenv('APP_URL')."/public/images/logos/with.hu_".$restaurant->id."_".$restaurant->name."_logo.jpg";
+
+        $restaurantDTO->banner = getenv('APP_URL')."/public/images/banners/with.hu_".$restaurant->id."_".$restaurant->name."_banner.jpg";
+
+        $restaurantDTO->img1 = getenv('APP_URL')."/public/images/galleries/with.hu_".$restaurant->id."_".$restaurant->name."_pic1.jpg";
+        $restaurantDTO->img2 = getenv('APP_URL')."/public/images/galleries/with.hu_".$restaurant->id."_".$restaurant->name."_pic2.jpg";
+        $restaurantDTO->img3 = getenv('APP_URL')."/public/images/galleries/with.hu_".$restaurant->id."_".$restaurant->name."_pic3.jpg";
+        $restaurantDTO->img4 = getenv('APP_URL')."/public/images/galleries/with.hu_".$restaurant->id."_".$restaurant->name."_pic4.jpg";
+        $restaurantDTO->img5 = getenv('APP_URL')."/public/images/galleries/with.hu_".$restaurant->id."_".$restaurant->name."_pic5.jpg";
+        $restaurantDTO->img6 = getenv('APP_URL')."/public/images/galleries/with.hu_".$restaurant->id."_".$restaurant->name."_pic6.jpg";
+
+        foreach ($restaurant->zipcodes as $zip) {
+            $restaurantZipcodeDTO = new restaurantZipcodeDTO;
+            $restaurantZipcodeDTO->zipcode = $zip->zipcode;
+            $restaurantDTO->zipcodes[] = $restaurantZipcodeDTO;
+        }
+
+        foreach ($restaurant->categories as $cat) {
+            $categoryDTO = new CategoryDTO;
+            $categoryDTO->id = $cat->id;
+            $categoryDTO->category = $cat->category;
+            $restaurantDTO->categories[] = $categoryDTO;
+        }
+
+        return response()->json($restaurantDTO, 200);
     }
 
 }
