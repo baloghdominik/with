@@ -219,7 +219,7 @@ class RestaurantController extends Controller
             return redirect('/');
         }
 
-        $name = $restaurant->name;
+        $name = $restaurant->lowercasename;
 
         if ($request->hasFile('logo')) {
             $picID = "with.hu_".$restaurantID."_".$name."_logo";
@@ -248,7 +248,7 @@ class RestaurantController extends Controller
         if ($request->hasFile('banner')) {
             $picID = "with.hu_".$restaurantID."_".$name."_banner";
             $this->validate($request, [
-                'banner' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:4096',
+                'banner' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:8164',
             ]);
     
             $image = $request->file('banner');
@@ -269,7 +269,7 @@ class RestaurantController extends Controller
             $img = Image::make('images/banners/'.$filename)->crop(1920, 540)->save($destinationPath.'/'.$filename);
         }
 
-        for ($i = 1; $i <= 8; $i++) {
+        for ($i = 1; $i <= 6; $i++) {
             if ($request->hasFile('pic'.$i)) {
                 $picID = "with.hu_".$restaurantID."_".$name."_pic".$i;
                 $this->validate($request, [
