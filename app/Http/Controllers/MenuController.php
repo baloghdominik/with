@@ -395,7 +395,7 @@ class MenuController extends Controller
             $input['imagename'] = ''.$picID.'.'.$image->extension();
             $filename = $picID.'.jpg';
 
-            $destinationPath = public_path('images/menus');
+            $destinationPath = 'images/menus';
 
             if(File::exists($destinationPath.'/'.$filename)) {
                 File::delete($destinationPath.'/'.$filename);  // or unlink($filename);
