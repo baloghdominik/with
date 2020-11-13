@@ -159,7 +159,7 @@ class SideController extends Controller
             if(File::exists($destinationPath.'/'.$filename)) {
                 File::delete($destinationPath.'/'.$filename);  // or unlink($filename);
             }
-            $img = Image::make($request->file('image')->getRealPath())->encode('jpg', 80)->save($destinationPath.'/'.$filename);
+            $img = Image::make($image->path())->encode('jpg', 80)->save($destinationPath.'/'.$filename);
 
             $img = Image::make('images/sides/'.$picID.'.jpg')->resize(1080, null, function ($constraint) {
                 $constraint->aspectRatio();
@@ -285,7 +285,7 @@ class SideController extends Controller
         if(File::exists($destinationPath.'/'.$filename)) {
             File::delete($destinationPath.'/'.$filename);  // or unlink($filename);
         }
-        $img = Image::make($request->file('image')->getRealPath())->encode('jpg', 80)->save($destinationPath.'/'.$filename);
+        $img = Image::make($image->path())->encode('jpg', 80)->save($destinationPath.'/'.$filename);
 
         $img = Image::make('images/sides/'.$picID.'.jpg')->resize(1080, null, function ($constraint) {
             $constraint->aspectRatio();
