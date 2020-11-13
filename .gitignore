@@ -8,3 +8,6 @@ npm-debug.log
 yarn-error.log
 /vuexy-shell-scripts
 .env.example
+/public/images/galleries
+/public/images/logos
+/public/images/banners
