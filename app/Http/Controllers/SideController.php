@@ -154,7 +154,7 @@ class SideController extends Controller
             $input['imagename'] = ''.$picID.'.'.$image->extension();
             $filename = $picID.'.jpg';
 
-            $destinationPath = public_path('images/sides');
+            $destinationPath = public_path('/images/sides');
 
             if(File::exists($destinationPath.'/'.$filename)) {
                 File::delete($destinationPath.'/'.$filename);  // or unlink($filename);
@@ -280,7 +280,7 @@ class SideController extends Controller
         $input['imagename'] = ''.$picID.'.'.$image->extension();
         $filename = $picID.'.jpg';
 
-        $destinationPath = public_path('images/sides');
+        $destinationPath = public_path('/images/sides');
 
         if(File::exists($destinationPath.'/'.$filename)) {
             File::delete($destinationPath.'/'.$filename);  // or unlink($filename);
