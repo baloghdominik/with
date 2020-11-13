@@ -30,6 +30,7 @@ Route::get('restaurants/near/geo/{latitude}/{longitude}', 'RestaurantAPIControll
 Route::get('restaurant/alldata/{id}', 'RestaurantAPIController@getRestaurantAlldataById');
 Route::get('restaurant/lowercasename/{lowercasename}', 'RestaurantAPIController@getRestaurantIdBylowercasename');
 
+
 Route::get('restaurant/id/{id}', 'RestaurantAPIController@getRestaurantById');
 Route::get('restaurants/', 'RestaurantAPIController@getAllRestaurants');
 Route::get('restaurantids/', 'RestaurantAPIController@getAllRestaurantIds');
