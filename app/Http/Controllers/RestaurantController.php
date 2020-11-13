@@ -231,7 +231,7 @@ class RestaurantController extends Controller
             $input['imagename'] = ''.$picID.'.'.$image->extension();
             $filename = $picID.'.jpg';
 
-            $destinationPath = public_path('images/logos');
+            $destinationPath = 'images/logos';
 
             if(File::exists($destinationPath.'/'.$filename)) {
                 File::delete($destinationPath.'/'.$filename);  // or unlink($filename);
@@ -255,7 +255,7 @@ class RestaurantController extends Controller
             $input['imagename'] = ''.$picID.'.'.$image->extension();
             $filename = $picID.'.jpg';
 
-            $destinationPath = public_path('images/banners');
+            $destinationPath = 'images/banners';
 
             if(File::exists($destinationPath.'/'.$filename)) {
                 File::delete($destinationPath.'/'.$filename);  // or unlink($filename);
@@ -280,7 +280,7 @@ class RestaurantController extends Controller
                 $input['imagename'] = ''.$picID.'.'.$image->extension();
                 $filename = $picID.'.jpg';
 
-                $destinationPath = public_path('images/galleries');
+                $destinationPath = 'images/galleries';
 
                 if(File::exists($destinationPath.'/'.$filename)) {
                     File::delete($destinationPath.'/'.$filename);  // or unlink($filename);
