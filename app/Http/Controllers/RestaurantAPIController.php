@@ -17,17 +17,31 @@ class RestaurantAPIController extends Controller
     public function getRestaurantById($id) {
         $restaurant = Restaurant::where('id', $id)->first();
 
+        if ($restaurant === null) {
+            return response()->json("Not found", 404);
+        }
+
         return response()->json($restaurant, 200);
     }
 
     public function getRestaurantIdBylowercasename($lowercasename) {
         $restaurant = Restaurant::where('lowercasename', $lowercasename)->select('id')->first();
 
-        return response()->json($restaurant, 200);
+        if ($restaurant === null) {
+            return response()->json("Not found", 404);
+        }
+
+        $id = $restaurant->id;
+
+        return response()->json($id, 200);
     }
 
     public function getAllRestaurantIds() {
         $restaurant = Restaurant::select('id')->get();
+
+        if ($restaurant === null) {
+            return response()->json("Not found", 404);
+        }
 
         return response()->json($restaurant, 200);
     }
@@ -35,11 +49,19 @@ class RestaurantAPIController extends Controller
     public function getAllRestaurants() {
         $restaurant = Restaurant::select('*')->get();
 
+        if ($restaurant === null) {
+            return response()->json("Not found", 404);
+        }
+
         return response()->json($restaurant, 200); 
     }
 
     public function getAllRestaurantsNearByZipcode($zipcode, RestaurantService $RestaurantService) {
         $restaurantZipcodes = RestaurantZipcode::with('restaurant')->where('zipcode', $zipcode)->select('*')->get();
+
+        if ($restaurantZipcodes === null) {
+            return response()->json("Not found", 404);
+        }
 
         $restaurant = new Restaurant;
         $restaurant = $restaurantZipcodes;
@@ -116,6 +138,10 @@ class RestaurantAPIController extends Controller
 
             $restaurantZipcodes = RestaurantZipcode::with('restaurant')->where('zipcode', $zipcode)->select('*')->get();
 
+            if ($restaurantZipcodes === null) {
+                return response()->json("Not found", 404);
+            }
+
             $restaurant = new Restaurant;
             $restaurant = $restaurantZipcodes;
 
@@ -182,6 +208,10 @@ class RestaurantAPIController extends Controller
     public function getRestaurantLogoById($id) {
         $restaurant = Restaurant::where('id', $id)->first();
 
+        if ($restaurant === null) {
+            return response()->json("Not found", 404);
+        }
+
         $pic = getenv('APP_URL')."/public/images/logos/with.hu_".$restaurant->id."_".$restaurant->name."_logo.jpg";
 
         return response()->json($pic, 200);
@@ -189,6 +219,10 @@ class RestaurantAPIController extends Controller
 
     public function getRestaurantAlldataById($id, RestaurantService $RestaurantService) {
         $restaurant = Restaurant::with('zipcodes')->with('categories')->where('id', $id)->first();
+
+        if ($restaurant === null) {
+            return response()->json("Not found", 404);
+        }
 
         $restaurantDTO = new RestaurantDTO;
         $restaurantDTO->restaurantid = $restaurant->id;
@@ -283,16 +317,16 @@ class RestaurantAPIController extends Controller
             $restaurantDTO->istablereservationavailable = false;
         }
 
-        $restaurantDTO->logo = getenv('APP_URL')."/public/images/logos/with.hu_".$restaurant->id."_".$restaurant->name."_logo.jpg";
+        $restaurantDTO->logo = getenv('APP_URL')."/public/images/logos/with.hu_".$restaurant->id."_".$restaurant->lowercasename."_logo.jpg";
 
-        $restaurantDTO->banner = getenv('APP_URL')."/public/images/banners/with.hu_".$restaurant->id."_".$restaurant->name."_banner.jpg";
+        $restaurantDTO->banner = getenv('APP_URL')."/public/images/banners/with.hu_".$restaurant->id."_".$restaurant->lowercasename."_banner.jpg";
 
-        $restaurantDTO->img1 = getenv('APP_URL')."/public/images/galleries/with.hu_".$restaurant->id."_".$restaurant->name."_pic1.jpg";
-        $restaurantDTO->img2 = getenv('APP_URL')."/public/images/galleries/with.hu_".$restaurant->id."_".$restaurant->name."_pic2.jpg";
-        $restaurantDTO->img3 = getenv('APP_URL')."/public/images/galleries/with.hu_".$restaurant->id."_".$restaurant->name."_pic3.jpg";
-        $restaurantDTO->img4 = getenv('APP_URL')."/public/images/galleries/with.hu_".$restaurant->id."_".$restaurant->name."_pic4.jpg";
-        $restaurantDTO->img5 = getenv('APP_URL')."/public/images/galleries/with.hu_".$restaurant->id."_".$restaurant->name."_pic5.jpg";
-        $restaurantDTO->img6 = getenv('APP_URL')."/public/images/galleries/with.hu_".$restaurant->id."_".$restaurant->name."_pic6.jpg";
+        $restaurantDTO->img1 = getenv('APP_URL')."/public/images/galleries/with.hu_".$restaurant->id."_".$restaurant->lowercasename."_pic1.jpg";
+        $restaurantDTO->img2 = getenv('APP_URL')."/public/images/galleries/with.hu_".$restaurant->id."_".$restaurant->lowercasename."_pic2.jpg";
+        $restaurantDTO->img3 = getenv('APP_URL')."/public/images/galleries/with.hu_".$restaurant->id."_".$restaurant->lowercasename."_pic3.jpg";
+        $restaurantDTO->img4 = getenv('APP_URL')."/public/images/galleries/with.hu_".$restaurant->id."_".$restaurant->lowercasename."_pic4.jpg";
+        $restaurantDTO->img5 = getenv('APP_URL')."/public/images/galleries/with.hu_".$restaurant->id."_".$restaurant->lowercasename."_pic5.jpg";
+        $restaurantDTO->img6 = getenv('APP_URL')."/public/images/galleries/with.hu_".$restaurant->id."_".$restaurant->lowercasename."_pic6.jpg";
 
         foreach ($restaurant->zipcodes as $zip) {
             $restaurantZipcodeDTO = new restaurantZipcodeDTO;
