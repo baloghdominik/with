@@ -21,13 +21,14 @@
                         <div class="card bg-authentication rounded-0 mb-0">
                             <div class="row m-0">
                                 <div class="col-lg-6 d-lg-block d-none text-center align-self-center px-1 py-0">
-                                    <img src="images/pages/login.png" alt="branding logo">
+                                    <img src="images/pages/login2.png" style="display: none;">
+                                    <img src="images/pages/login.png" alt="With Admin">
                                 </div>
                                 <div class="col-lg-6 col-12 p-0">
                                     <div class="card rounded-0 mb-0 px-2">
                                         <div class="card-header pb-1">
                                             <div class="card-title">
-                                                <h1 class="brand-text mb-0 with-logo" style="color: #47b272; font-weight: 600; letter-spacing: 0.10rem;">With</h1>
+                                                <h1 class="brand-text mb-0 with-logo" style="color: #47b272; font-weight: 600; letter-spacing: 0.10rem; font-size: 40px; line-height: 40px;">With</h1>
                                             </div>
                                         </div>
                                         <p class="px-2">Üdvözöljük újra, kérjük jelentkezzen be!</p>
