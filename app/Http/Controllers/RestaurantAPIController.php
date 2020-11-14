@@ -74,15 +74,15 @@ class RestaurantAPIController extends Controller
             $id = $res->restaurant->id;
             $name = $res->restaurant->lowercasename;
             if (file_exists(public_path()."/images/logos/with.hu_".$id."_".$name."_logo.jpg")) {
-                $restaurantDTO->logo = getenv('APP_URL')."/images/logos/with.hu_".$id."_".$name."_logo.jpg";
+                $restaurantListDTO->logo = getenv('APP_URL')."/images/logos/with.hu_".$id."_".$name."_logo.jpg";
             } else {
-                $restaurantDTO->lgoo = getenv('APP_URL')."/images/notfound/logo_default.jpg";;
+                $restaurantListDTO->lgoo = getenv('APP_URL')."/images/notfound/logo_default.jpg";;
             }
     
             if (file_exists(public_path()."/images/banners/big/with.hu_".$id."_".$name."_banner.jpg")) {
-                $restaurantDTO->banner = getenv('APP_URL')."/images/banners/big/with.hu_".$id."_".$name."_banner.jpg";
+                $restaurantListDTO->banner = getenv('APP_URL')."/images/banners/big/with.hu_".$id."_".$name."_banner.jpg";
             } else {
-                $restaurantDTO->banner = getenv('APP_URL')."/images/notfound/cover_default.jpg";
+                $restaurantListDTO->banner = getenv('APP_URL')."/images/notfound/cover_default.jpg";
             }
             $restaurantListDTO->lowercasename = $res->restaurant->lowercasename;
             $restaurantListDTO->isopen = $RestaurantService->isRestaurantOrderTime($id);
@@ -162,15 +162,15 @@ class RestaurantAPIController extends Controller
                 $id = $res->restaurant->id;
                 $name = $res->restaurant->lowercasename;
                 if (file_exists(public_path()."/images/logos/with.hu_".$id."_".$name."_logo.jpg")) {
-                    $restaurantDTO->logo = getenv('APP_URL')."/images/logos/with.hu_".$id."_".$name."_logo.jpg";
+                    $restaurantListDTO->logo = getenv('APP_URL')."/images/logos/with.hu_".$id."_".$name."_logo.jpg";
                 } else {
-                    $restaurantDTO->lgoo = getenv('APP_URL')."/images/notfound/logo_default.jpg";;
+                    $restaurantListDTO->lgoo = getenv('APP_URL')."/images/notfound/logo_default.jpg";;
                 }
 
                 if (file_exists(public_path()."/images/banners/big/with.hu_".$id."_".$name."_banner.jpg")) {
-                    $restaurantDTO->banner = getenv('APP_URL')."/images/banners/big/with.hu_".$id."_".$name."_banner.jpg";
+                    $restaurantListDTO->banner = getenv('APP_URL')."/images/banners/big/with.hu_".$id."_".$name."_banner.jpg";
                 } else {
-                    $restaurantDTO->banner = getenv('APP_URL')."/images/notfound/cover_default.jpg";
+                    $restaurantListDTO->banner = getenv('APP_URL')."/images/notfound/cover_default.jpg";
                 }
                 $restaurantListDTO->lowercasename = $res->restaurant->lowercasename;
                 $restaurantListDTO->isopen = $RestaurantService->isRestaurantOrderTime($id);
