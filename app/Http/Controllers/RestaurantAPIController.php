@@ -317,16 +317,20 @@ class RestaurantAPIController extends Controller
             $restaurantDTO->istablereservationavailable = false;
         }
 
-        $restaurantDTO->logo = getenv('APP_URL')."/public/images/logos/with.hu_".$restaurant->id."_".$restaurant->lowercasename."_logo.jpg";
+        $restaurantDTO->logo = getenv('APP_URL')."/images/logos/with.hu_".$restaurant->id."_".$restaurant->lowercasename."_logo.jpg";
 
-        $restaurantDTO->banner = getenv('APP_URL')."/public/images/banners/with.hu_".$restaurant->id."_".$restaurant->lowercasename."_banner.jpg";
+        $restaurantDTO->banner = getenv('APP_URL')."/images/banners/with.hu_".$restaurant->id."_".$restaurant->lowercasename."_banner.jpg";
 
-        $restaurantDTO->img1 = getenv('APP_URL')."/public/images/galleries/with.hu_".$restaurant->id."_".$restaurant->lowercasename."_pic1.jpg";
-        $restaurantDTO->img2 = getenv('APP_URL')."/public/images/galleries/with.hu_".$restaurant->id."_".$restaurant->lowercasename."_pic2.jpg";
-        $restaurantDTO->img3 = getenv('APP_URL')."/public/images/galleries/with.hu_".$restaurant->id."_".$restaurant->lowercasename."_pic3.jpg";
-        $restaurantDTO->img4 = getenv('APP_URL')."/public/images/galleries/with.hu_".$restaurant->id."_".$restaurant->lowercasename."_pic4.jpg";
-        $restaurantDTO->img5 = getenv('APP_URL')."/public/images/galleries/with.hu_".$restaurant->id."_".$restaurant->lowercasename."_pic5.jpg";
-        $restaurantDTO->img6 = getenv('APP_URL')."/public/images/galleries/with.hu_".$restaurant->id."_".$restaurant->lowercasename."_pic6.jpg";
+        $restaurantDTO->img1 = getenv('APP_URL')."/images/galleries/with.hu_".$restaurant->id."_".$restaurant->lowercasename."_pic1.jpg";
+        $restaurantDTO->img2 = getenv('APP_URL')."/images/galleries/with.hu_".$restaurant->id."_".$restaurant->lowercasename."_pic2.jpg";
+        $restaurantDTO->img3 = getenv('APP_URL')."/images/galleries/with.hu_".$restaurant->id."_".$restaurant->lowercasename."_pic3.jpg";
+        $restaurantDTO->img4 = getenv('APP_URL')."/images/galleries/with.hu_".$restaurant->id."_".$restaurant->lowercasename."_pic4.jpg";
+        $restaurantDTO->img5 = getenv('APP_URL')."/images/galleries/with.hu_".$restaurant->id."_".$restaurant->lowercasename."_pic5.jpg";
+
+        $restaurantDTO->img6 = getenv('APP_URL')."/images/galleries/with.hu_".$restaurant->id."_".$restaurant->lowercasename."_pic6.jpg";
+        if (!file_exists($restaurantDTO->img6)) {
+            $restaurantDTO->img6 = getenv('APP_URL')."/images/notfound/gallery_default.jpg";
+        }
 
         foreach ($restaurant->zipcodes as $zip) {
             $restaurantZipcodeDTO = new restaurantZipcodeDTO;
