@@ -2,12 +2,13 @@
 deployment:
   tasks:
     - export DEPLOYPATH=/home/actlwznc/public_html/with_backend_public/
+    - export DEPLOYPATH2=/home/actlwznc/public_html/with_backend_public/images
     - /bin/cp -R public/css $DEPLOYPATH
     - /bin/cp -R public/data $DEPLOYPATH
     - /bin/cp -R public/fonts $DEPLOYPATH
     - /bin/cp -R public/js $DEPLOYPATH
-    - /bin/cp -R public/images/notfound $DEPLOYPATH
-    - /bin/cp -R public/images/pizzadesigner $DEPLOYPATH
+    - /bin/cp -R public/images/notfound $DEPLOYPATH2
+    - /bin/cp -R public/images/pizzadesigner $DEPLOYPATH2
     - /bin/cp -R public/php $DEPLOYPATH
     - /bin/cp -R public/sounds $DEPLOYPATH
     - /bin/cp -R public/vendors $DEPLOYPATH
