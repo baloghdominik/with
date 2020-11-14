@@ -327,13 +327,10 @@ class RestaurantAPIController extends Controller
         $restaurantDTO->img4 = getenv('APP_URL')."/images/galleries/with.hu_".$restaurant->id."_".$restaurant->lowercasename."_pic4.jpg";
         $restaurantDTO->img5 = getenv('APP_URL')."/images/galleries/with.hu_".$restaurant->id."_".$restaurant->lowercasename."_pic5.jpg";
 
-        $y = getenv('APP_URL')."/images/notfound/gallery_default.jpg";
-
-        
-        if (file_exists(getenv('APP_URL')."/images/galleries/with.hu_".$restaurant->id."_".$restaurant->lowercasename."_pic6.jpg")) {
+        if (file_exists(public_path()."/images/galleries/with.hu_".$restaurant->id."_".$restaurant->lowercasename."_pic6.jpg")) {
             $restaurantDTO->img6 = getenv('APP_URL')."/images/galleries/with.hu_".$restaurant->id."_".$restaurant->lowercasename."_pic6.jpg";
         } else {
-            $restaurantDTO->img6 = public_path() ."/images/galleries/with.hu_".$restaurant->id."_".$restaurant->lowercasename."_pic6.jpg";
+            $restaurantDTO->img6 = getenv('APP_URL')."/images/notfound/gallery_default.jpg";
         }
 
         foreach ($restaurant->zipcodes as $zip) {
