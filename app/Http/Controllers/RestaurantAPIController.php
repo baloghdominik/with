@@ -79,10 +79,10 @@ class RestaurantAPIController extends Controller
                 $restaurantDTO->lgoo = getenv('APP_URL')."/images/notfound/logo_default.jpg";;
             }
     
-            if (file_exists(public_path()."/images/banners/with.hu_".$id."_".$name."_banner.jpg")) {
-                $restaurantDTO->banner = getenv('APP_URL')."/images/banners/with.hu_".$id."_".$name."_banner.jpg";
+            if (file_exists(public_path()."/images/banners/big/with.hu_".$id."_".$name."_banner.jpg")) {
+                $restaurantDTO->banner = getenv('APP_URL')."/images/banners/big/with.hu_".$id."_".$name."_banner.jpg";
             } else {
-                $restaurantDTO->banner = getenv('APP_URL')."/images/notfound/banner_default.jpg";
+                $restaurantDTO->banner = getenv('APP_URL')."/images/notfound/cover_default.jpg";
             }
             $restaurantListDTO->lowercasename = $res->restaurant->lowercasename;
             $restaurantListDTO->isopen = $RestaurantService->isRestaurantOrderTime($id);
@@ -167,10 +167,10 @@ class RestaurantAPIController extends Controller
                     $restaurantDTO->lgoo = getenv('APP_URL')."/images/notfound/logo_default.jpg";;
                 }
 
-                if (file_exists(public_path()."/images/banners/with.hu_".$id."_".$name."_banner.jpg")) {
-                    $restaurantDTO->banner = getenv('APP_URL')."/images/banners/with.hu_".$id."_".$name."_banner.jpg";
+                if (file_exists(public_path()."/images/banners/big/with.hu_".$id."_".$name."_banner.jpg")) {
+                    $restaurantDTO->banner = getenv('APP_URL')."/images/banners/big/with.hu_".$id."_".$name."_banner.jpg";
                 } else {
-                    $restaurantDTO->banner = getenv('APP_URL')."/images/notfound/banner_default.jpg";
+                    $restaurantDTO->banner = getenv('APP_URL')."/images/notfound/cover_default.jpg";
                 }
                 $restaurantListDTO->lowercasename = $res->restaurant->lowercasename;
                 $restaurantListDTO->isopen = $RestaurantService->isRestaurantOrderTime($id);
