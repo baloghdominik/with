@@ -6,6 +6,8 @@ deployment:
     - /bin/cp -R public/data $DEPLOYPATH
     - /bin/cp -R public/fonts $DEPLOYPATH
     - /bin/cp -R public/js $DEPLOYPATH
+    - /bin/cp -R public/images/notfound $DEPLOYPATH
+    - /bin/cp -R public/images/pizzadesigner $DEPLOYPATH
     - /bin/cp -R public/php $DEPLOYPATH
     - /bin/cp -R public/sounds $DEPLOYPATH
     - /bin/cp -R public/vendors $DEPLOYPATH
