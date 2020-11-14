@@ -28,13 +28,12 @@ Route::get('/', 'NotificationController@getinfo');
 Route::get('restaurants/near/zip/{zipcode}', 'RestaurantAPIController@getAllRestaurantsNearByZipcode');
 Route::get('restaurants/near/geo/{latitude}/{longitude}', 'RestaurantAPIController@getAllRestaurantsNearByGEO');
 Route::get('restaurant/alldata/{id}', 'RestaurantAPIController@getRestaurantAlldataById');
+Route::get('restaurant/logo/{id}', 'RestaurantAPIController@getRestaurantLogoById');
 Route::get('restaurant/lowercasename/{lowercasename}', 'RestaurantAPIController@getRestaurantIdBylowercasename');
 
-
 Route::get('restaurant/id/{id}', 'RestaurantAPIController@getRestaurantById');
-Route::get('restaurants/', 'RestaurantAPIController@getAllRestaurants');
-Route::get('restaurantids/', 'RestaurantAPIController@getAllRestaurantIds');
-Route::get('restaurantlogo/{id}/', 'RestaurantAPIController@getRestaurantLogoById');
+Route::get('restaurants', 'RestaurantAPIController@getAllRestaurants');
+Route::get('restaurantids', 'RestaurantAPIController@getAllRestaurantIds');
 
 Route::group(['middleware' => 'auth:api'], function(){
     Route::post('details', 'CustomerController@details');

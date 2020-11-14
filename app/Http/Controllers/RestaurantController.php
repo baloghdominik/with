@@ -238,11 +238,11 @@ class RestaurantController extends Controller
             }
             $img = Image::make($image->path())->encode('jpg', 80)->save($destinationPath.'/'.$filename);
 
-            $img = Image::make('images/logos/'.$picID.'.jpg')->resize(480, null, function ($constraint) {
+            $img = Image::make('images/logos/'.$picID.'.jpg')->resize(264, null, function ($constraint) {
                 $constraint->aspectRatio();
             })->save($destinationPath.'/'.$filename);
 
-            $img = Image::make('images/logos/'.$filename)->crop(480, 480)->save($destinationPath.'/'.$filename);
+            $img = Image::make('images/logos/'.$filename)->crop(264, 264)->save($destinationPath.'/'.$filename);
         }
 
         if ($request->hasFile('banner')) {
@@ -266,7 +266,7 @@ class RestaurantController extends Controller
                 $constraint->aspectRatio();
             })->save($destinationPath.'/'.$filename);
 
-            $img = Image::make('images/banners/'.$filename)->crop(1920, 540)->save($destinationPath.'/'.$filename);
+            $img = Image::make('images/banners/'.$filename)->crop(1920, 270)->save($destinationPath.'/'.$filename);
         }
 
         for ($i = 1; $i <= 6; $i++) {

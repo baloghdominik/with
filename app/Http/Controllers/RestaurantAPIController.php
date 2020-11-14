@@ -72,9 +72,18 @@ class RestaurantAPIController extends Controller
             $restaurantListDTO = new RestaurantListDTO;
             $restaurantListDTO->name = $res->restaurant->name;
             $id = $res->restaurant->id;
-            $name = $res->restaurant->name;
-            $restaurantListDTO->logo = "https://admin.with.hu/images/logos/with.hu_".$id."_".$name."_logo.jpg";
-            $restaurantListDTO->banner = "https://admin.with.hu/images/banners/with.hu_".$id."_".$name."_banner.jpg";
+            $name = $res->restaurant->lowercasename;
+            if (file_exists(public_path()."/images/logos/with.hu_".$id."_".$name."_logo.jpg")) {
+                $restaurantDTO->logo = getenv('APP_URL')."/images/logos/with.hu_".$id."_".$name."_logo.jpg";
+            } else {
+                $restaurantDTO->lgoo = getenv('APP_URL')."/images/notfound/logo_default.jpg";;
+            }
+    
+            if (file_exists(public_path()."/images/banners/with.hu_".$id."_".$name."_banner.jpg")) {
+                $restaurantDTO->banner = getenv('APP_URL')."/images/banners/with.hu_".$id."_".$name."_banner.jpg";
+            } else {
+                $restaurantDTO->banner = getenv('APP_URL')."/images/notfound/banner_default.jpg";
+            }
             $restaurantListDTO->lowercasename = $res->restaurant->lowercasename;
             $restaurantListDTO->isopen = $RestaurantService->isRestaurantOrderTime($id);
             switch ($res->restaurant->deliverypayingmethod) {
@@ -151,9 +160,18 @@ class RestaurantAPIController extends Controller
                 $restaurantListDTO = new RestaurantListDTO;
                 $restaurantListDTO->name = $res->restaurant->name;
                 $id = $res->restaurant->id;
-                $name = $res->restaurant->name;
-                $restaurantListDTO->logo = "https://admin.with.hu/images/logos/with.hu_".$id."_".$name."_logo.jpg";
-                $restaurantListDTO->banner = "https://admin.with.hu/images/banners/with.hu_".$id."_".$name."_banner.jpg";
+                $name = $res->restaurant->lowercasename;
+                if (file_exists(public_path()."/images/logos/with.hu_".$id."_".$name."_logo.jpg")) {
+                    $restaurantDTO->logo = getenv('APP_URL')."/images/logos/with.hu_".$id."_".$name."_logo.jpg";
+                } else {
+                    $restaurantDTO->lgoo = getenv('APP_URL')."/images/notfound/logo_default.jpg";;
+                }
+
+                if (file_exists(public_path()."/images/banners/with.hu_".$id."_".$name."_banner.jpg")) {
+                    $restaurantDTO->banner = getenv('APP_URL')."/images/banners/with.hu_".$id."_".$name."_banner.jpg";
+                } else {
+                    $restaurantDTO->banner = getenv('APP_URL')."/images/notfound/banner_default.jpg";
+                }
                 $restaurantListDTO->lowercasename = $res->restaurant->lowercasename;
                 $restaurantListDTO->isopen = $RestaurantService->isRestaurantOrderTime($id);
                 switch ($res->restaurant->deliverypayingmethod) {
@@ -212,7 +230,11 @@ class RestaurantAPIController extends Controller
             return response()->json("Not found", 404);
         }
 
-        $pic = getenv('APP_URL')."/public/images/logos/with.hu_".$restaurant->id."_".$restaurant->name."_logo.jpg";
+        if (file_exists(public_path()."/images/logos/with.hu_".$restaurant->id."_".$restaurant->lowercasename."_logo.jpg")) {
+            $pic = getenv('APP_URL')."/images/logos/with.hu_".$restaurant->id."_".$restaurant->lowercasename."_logo.jpg";
+        } else {
+            $pic = getenv('APP_URL')."/images/notfound/logo_default.jpg";;
+        }
 
         return response()->json($pic, 200);
     }
@@ -317,22 +339,51 @@ class RestaurantAPIController extends Controller
             $restaurantDTO->istablereservationavailable = false;
         }
 
-        $restaurantDTO->logo = getenv('APP_URL')."/images/logos/with.hu_".$restaurant->id."_".$restaurant->lowercasename."_logo.jpg";
+        if (file_exists(public_path()."/images/logos/with.hu_".$restaurant->id."_".$restaurant->lowercasename."_logo.jpg")) {
+            $restaurantDTO->logo = getenv('APP_URL')."/images/logos/with.hu_".$restaurant->id."_".$restaurant->lowercasename."_logo.jpg";
+        } else {
+            $restaurantDTO->lgoo = getenv('APP_URL')."/images/notfound/logo_default.jpg";;
+        }
 
-        $restaurantDTO->banner = getenv('APP_URL')."/images/banners/with.hu_".$restaurant->id."_".$restaurant->lowercasename."_banner.jpg";
+        if (file_exists(public_path()."/images/banners/with.hu_".$restaurant->id."_".$restaurant->lowercasename."_banner.jpg")) {
+            $restaurantDTO->banner = getenv('APP_URL')."/images/banners/with.hu_".$restaurant->id."_".$restaurant->lowercasename."_banner.jpg";
+        } else {
+            $restaurantDTO->banner = getenv('APP_URL')."/images/notfound/banner_default.jpg";
+        }
 
-        $restaurantDTO->img1 = getenv('APP_URL')."/images/galleries/with.hu_".$restaurant->id."_".$restaurant->lowercasename."_pic1.jpg";
-        $restaurantDTO->img2 = getenv('APP_URL')."/images/galleries/with.hu_".$restaurant->id."_".$restaurant->lowercasename."_pic2.jpg";
-        $restaurantDTO->img3 = getenv('APP_URL')."/images/galleries/with.hu_".$restaurant->id."_".$restaurant->lowercasename."_pic3.jpg";
-        $restaurantDTO->img4 = getenv('APP_URL')."/images/galleries/with.hu_".$restaurant->id."_".$restaurant->lowercasename."_pic4.jpg";
-        $restaurantDTO->img5 = getenv('APP_URL')."/images/galleries/with.hu_".$restaurant->id."_".$restaurant->lowercasename."_pic5.jpg";
+        if (file_exists(public_path()."/images/galleries/with.hu_".$restaurant->id."_".$restaurant->lowercasename."_pic1.jpg")) {
+            $restaurantDTO->img1 = getenv('APP_URL')."/images/galleries/with.hu_".$restaurant->id."_".$restaurant->lowercasename."_pic1.jpg";
+        } else {
+            $restaurantDTO->img1 = getenv('APP_URL')."/images/notfound/gallery_default.jpg";
+        }
 
-        $f = getenv('APP_URL')."/images/notfound/gallery_default.jpg";
+        if (file_exists(public_path()."/images/galleries/with.hu_".$restaurant->id."_".$restaurant->lowercasename."_pic2.jpg")) {
+            $restaurantDTO->img2 = getenv('APP_URL')."/images/galleries/with.hu_".$restaurant->id."_".$restaurant->lowercasename."_pic2.jpg";
+        } else {
+            $restaurantDTO->img2 = getenv('APP_URL')."/images/notfound/gallery_default.jpg";
+        }
+
+        if (file_exists(public_path()."/images/galleries/with.hu_".$restaurant->id."_".$restaurant->lowercasename."_pic3.jpg")) {
+            $restaurantDTO->img3 = getenv('APP_URL')."/images/galleries/with.hu_".$restaurant->id."_".$restaurant->lowercasename."_pic3.jpg";
+        } else {
+            $restaurantDTO->img3 = getenv('APP_URL')."/images/notfound/gallery_default.jpg";
+        }
+        if (file_exists(public_path()."/images/galleries/with.hu_".$restaurant->id."_".$restaurant->lowercasename."_pic4.jpg")) {
+            $restaurantDTO->img4 = getenv('APP_URL')."/images/galleries/with.hu_".$restaurant->id."_".$restaurant->lowercasename."_pic4.jpg";
+        } else {
+            $restaurantDTO->img4 = getenv('APP_URL')."/images/notfound/gallery_default.jpg";
+        }
+
+        if (file_exists(public_path()."/images/galleries/with.hu_".$restaurant->id."_".$restaurant->lowercasename."_pic5.jpg")) {
+            $restaurantDTO->img5 = getenv('APP_URL')."/images/galleries/with.hu_".$restaurant->id."_".$restaurant->lowercasename."_pic5.jpg";
+        } else {
+            $restaurantDTO->img5 = getenv('APP_URL')."/images/notfound/gallery_default.jpg";
+        }
 
         if (file_exists(public_path()."/images/galleries/with.hu_".$restaurant->id."_".$restaurant->lowercasename."_pic6.jpg")) {
             $restaurantDTO->img6 = getenv('APP_URL')."/images/galleries/with.hu_".$restaurant->id."_".$restaurant->lowercasename."_pic6.jpg";
         } else {
-            $restaurantDTO->img6 = public_path()."/images/galleries/with.hu_".$restaurant->id."_".$restaurant->lowercasename."_pic6.jpg";
+            $restaurantDTO->img6 = getenv('APP_URL')."/images/notfound/gallery_default.jpg";
         }
 
         foreach ($restaurant->zipcodes as $zip) {
