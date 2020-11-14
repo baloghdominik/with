@@ -1211,6 +1211,21 @@
                                 <div class="col-12 mb-3">
                                     <div class="form-group row">
                                         <div class="col-md-4">
+                                            <span>Fő fotó</span>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <img style="max-height: 190px; width: auto;" class="card-img img-fluid mb-1" src="{{ asset('images/banners/big/with.hu_'.$restaurant->id.'_'.$restaurant->lowercasename.'_banner.jpg') }}" alt="">
+                                            <div class="custom-file">
+                                                    <input type="file" name="bigbanner" class="custom-file-input" id="inputGroupFile020">
+                                                    <label class="custom-file-label" for="inputGroupFile020">Válasszon fotót</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 mb-3">
+                                    <div class="form-group row">
+                                        <div class="col-md-4">
                                             <span>Galéria</span>
                                         </div>
                                         <div class="col-md-8">

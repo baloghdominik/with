@@ -269,6 +269,30 @@ class RestaurantController extends Controller
             $img = Image::make('images/banners/'.$filename)->crop(1920, 270)->save($destinationPath.'/'.$filename);
         }
 
+        if ($request->hasFile('bigbanner')) {
+            $picID = "with.hu_".$restaurantID."_".$name."_banner";
+            $this->validate($request, [
+                'bigbanner' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:8164',
+            ]);
+    
+            $image = $request->file('bigbanner');
+            $input['imagename'] = ''.$picID.'.'.$image->extension();
+            $filename = $picID.'.jpg';
+
+            $destinationPath = 'images/banners/big';
+
+            if(File::exists($destinationPath.'/'.$filename)) {
+                File::delete($destinationPath.'/'.$filename);  // or unlink($filename);
+            }
+            $img = Image::make($image->path())->encode('jpg', 90)->save($destinationPath.'/'.$filename);
+
+            $img = Image::make('images/banners/big/'.$picID.'.jpg')->resize(1920, null, function ($constraint) {
+                $constraint->aspectRatio();
+            })->save($destinationPath.'/'.$filename);
+
+            $img = Image::make('images/banners/big/'.$filename)->crop(1920, 1080)->save($destinationPath.'/'.$filename);
+        }
+
         for ($i = 1; $i <= 6; $i++) {
             if ($request->hasFile('pic'.$i)) {
                 $picID = "with.hu_".$restaurantID."_".$name."_pic".$i;
