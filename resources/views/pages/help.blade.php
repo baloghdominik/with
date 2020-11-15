@@ -77,6 +77,49 @@
                 </div>
             </div>
 
+            <div class="col-xl-4 col-md-6 col-sm-12 profile-card-1">
+                <div class="card">
+                    <div class="card-header mx-auto">
+                        <h4>Titkos ellenőrző kód</h4>
+                    </div>
+                    <div class="card-content">
+                        <div class="card-body text-center">
+                            <p class="">Kérjük az alábbi kódot a With.hu munkatársain kívül senkivel ne ossza meg!</p>
+                            <div class="form-group row">
+                                <div class="col-md-4" style="text-align: left;">
+                                    <span>Titkos azonosító</span>
+                                </div>
+                                <div class="col-md-8">
+                                    <input type="password" id="secretid" class="form-control" value="{{$secret}}">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-md-4" style="text-align: left;">
+                                    <span>Titkos jelszó</span>
+                                </div>
+                                <div class="col-md-8">
+                                    <input type="password" id="pass" class="form-control" value="{{$pass}}">
+                                </div>
+                            </div>
+                            <p style="text-align: left;">Ön is megbizonyosodhat arról, hogy ténylegesen egy kollégánkkal beszél, kérdezze munkatársunktól az alábbi kódot: <b><span id="verify">********</span></b></p>
+                            <div class="form-group">
+                                <fieldset>
+                                    <div class="vs-checkbox-con vs-checkbox-primary">
+                                        <input type="checkbox" onclick="showit()">
+                                        <span class="vs-checkbox">
+                                            <span class="vs-checkbox--check">
+                                                <i class="vs-icon feather icon-check"></i>
+                                            </span>
+                                        </span>
+                                        <span class="">Titkos kódok megjelenítése</span>
+                                    </div>
+                                </fieldset>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
 
@@ -227,4 +270,28 @@
 @section('page-script')
         <!-- Page js files -->
         <script src="{{ asset(mix('js/scripts/pages/dashboard-analytics.js')) }}"></script>
+        <script>
+            function showit() {
+                var x = document.getElementById("secretid");
+                if (x.type === "password") {
+                    x.type = "text";
+                } else {
+                    x.type = "password";
+                }
+
+                var y = document.getElementById("pass");
+                if (y.type === "password") {
+                    y.type = "text";
+                } else {
+                    y.type = "password";
+                }
+
+                var z = document.getElementById("verify");
+                if (z.innerHTML === "********") {
+                    z.innerHTML = "{{$verify}}";
+                } else {
+                    z.innerHTML = "********";
+                }
+            }
+        </script>
 @endsection
