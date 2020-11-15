@@ -32,7 +32,7 @@
                 <div class="text-center">
                   <h1 class="mb-2 text-white">Frissítés</h1>
                   <p class="m-auto w-75 font- font-medium-1">Frissült a <span class="font-medium-3 with-logo">With</span> ! Tájékozódjon a <strong>0.0.51</strong> frissítés újdonságairól!</p>
-                  <a href="#" class="mt-1 btn btn-sm btn-primary waves-effect waves-light">Újdonságok áttekintése</a>
+                  <a href="{{ url('updates') }}" class="mt-1 btn btn-sm btn-primary waves-effect waves-light">Újdonságok áttekintése</a>
                 </div>
               </div>
             </div>

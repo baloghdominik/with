@@ -32,7 +32,7 @@ class HelpController extends Controller
             $s1 = 0; 
         }
 
-        $url = "https://codelabs.hu";
+        $url = "https://cl04.awh.hu:2083/";
         $s2 = 0;
         $headers = @get_headers($url); 
         if($headers && strpos( $headers[0], '200')) { 
@@ -42,7 +42,7 @@ class HelpController extends Controller
             $s2 = 0; 
         }
 
-        $url = "https://codelabs.hu";
+        $url = "https://admin.with.hu";
         $s3 = 0;
         $headers = @get_headers($url); 
         if($headers && strpos( $headers[0], '200')) { 
@@ -89,6 +89,17 @@ class HelpController extends Controller
         ];
 
         return view('/pages/videorepo', [
+            'pageConfigs' => $pageConfigs
+        ]);
+    }
+
+    // show video repository page
+    public function showUpdates(){
+        $pageConfigs = [
+            'pageHeader' => false
+        ];
+
+        return view('/pages/updates', [
             'pageConfigs' => $pageConfigs
         ]);
     }

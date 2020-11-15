@@ -104,3 +104,54 @@ html body.navbar-static .app-content .header-navbar {
   }
 }
 
+.updates-info {
+  padding: 10px 10px 10px 10px;
+  border-top: 3px solid #47b272;
+  margin-bottom: 50px;
+}
+
+.updates-info ul {
+  padding: 0px 0px 0px 20px;
+  margin: 0px;
+}
+
+.updates-info ul li {
+  font-size: 14px;
+  line-height: 16px;
+  font-weight: 400;
+  color: #999999;
+  margin-bottom: 4px;
+}
+
+
+.updates-info p {
+  font-size: 16px;
+  line-height: 18px;
+  font-weight: 500;
+  color: #999999;
+}
+
+.updates-info h4 {
+  color: #999999;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 20px;
+  margin: 0px 0px 10px 0px;
+}
+
+.updates-info .date {
+  color: #999999;
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 20px;
+  float: right;
+}
+
+.updates-info h4 i {
+  color: #47b272;
+}
+
+.updates-info a {
+  font-weight: 700;
+}
+

@@ -42,6 +42,7 @@ Route::post('/upload-images', 'RestaurantController@uploadImages');
 
 Route::get('/help', 'HelpController@showHelp');
 Route::get('/videorepo', 'HelpController@showVideoRepository');
+Route::get('/updates', 'HelpController@showUpdates');
 
 Route::get('/user-settings', 'RestaurantController@showUserSettings');
 Route::post('/change-password', 'UserSettingsController@changePassword');
