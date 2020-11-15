@@ -64,7 +64,7 @@
                                                     <div class="col-12">
                                                         <div class="form-group row">
                                                             <div class="col-md-4">
-                                                                <span>Menü fotója</span>
+                                                                <span>Menü fotója*</span>
                                                             </div>
                                                             <div class="col-md-8">
                                                             <img src="{{ asset('images/menus/'.$menu->picid.'.jpg') }}" width="100%" height="auto" style="margin-bottom: 25px; border-radius: 1rem;">
@@ -78,20 +78,20 @@
                                                     <div class="col-12">
                                                         <div class="form-group row">
                                                             <div class="col-md-4">
-                                                                <span>Menü neve</span>
+                                                                <span>Menü neve*</span>
                                                             </div>
                                                             <div class="col-md-8">
-                                                                <input type="text" id="food-name" class="form-control" name="name" value="{{$menu->name}}">
+                                                                <input type="text" id="food-name" class="form-control" name="name" value="{{$menu->name}}" required>
                                                             </div>
                                                         </div>
                                                     </div>
                                                     <div class="col-12">
                                                         <div class="form-group row">
                                                             <div class="col-md-4">
-                                                                <span>Kategória</span>
+                                                                <span>Kategória*</span>
                                                             </div>
                                                             <div class="col-md-8">
-                                                                <select class="form-control" name="category" id="basicSelect">
+                                                                <select class="form-control" name="category" id="basicSelect" required>
                                                                     @foreach($categories as $key => $data)
                                                                         @if($data->id == $menu->category)
                                                                             <option value="{{ $data->id }}" selected>{{ $data->category }}</option>
@@ -106,10 +106,10 @@
                                                     <div class="col-12">
                                                         <div class="form-group row">
                                                             <div class="col-md-4">
-                                                                <span>Menü kedvezmény</span>
+                                                                <span data-toggle="popover" data-content="A menü kedvezménynél megadhatja, hogy az adott ételre hány százalék kedvezményt ad a vásárlónak amennyiben az köretet és/vagy italt is vásárol hozzá. A kedvezmény kizárólag a menü fő ételére vonatkozik, a köretekre és italokra nem! További kérdések esetén keresse az ügyfélszolgálatunkat." data-trigger="hover" data-original-title="Mi az a Menü kedvezmény?" data-placement="top" style="cursor: pointer;">Menü kedvezmény* (%) <i class="fa fa-info-circle" style="color: #47b272; cursor: pointer;"></i></span>
                                                             </div>
                                                             <div class="col-md-8">
-                                                                <input min="0" max="90" type="number" id="menusalepercent" class="form-control" name="menusalepercent" value="{{$menu->menusalepercent}}">
+                                                                <input min="0" max="90" type="number" id="menusalepercent" class="form-control" name="menusalepercent" value="{{$menu->menusalepercent}}" required>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -153,7 +153,7 @@
                                                     <div class="col-12">
                                                         <div class="form-group row">
                                                             <div class="col-md-4 mb-1">
-                                                                <span>Választható köretek</span>
+                                                                <span>Választható köretek*</span>
                                                             </div>
                                                             <div class="col-md-8 mb-1">
                                                             <p>Itt látható az összes feltöltött köret.<br/>
@@ -165,7 +165,7 @@
                                                                     <thead>
                                                                         <tr>
                                                                             <th scope="col">Név</th>
-                                                                            <th scope="col">Menü <a style="color: #47b272;" data-toggle="popover" data-placement="top" data-content="A kizárólag menüben rendelhető tételeket pipával, míg a külön is elérhetőeket x-el jelöltük." data-trigger="hover" data-original-title="Segítség" ><i class="feather icon-alert-octagon"></i></a></th>
+                                                                            <th scope="col">Menü <a style="color: #47b272;" data-toggle="popover" data-placement="top" data-content="A kizárólag menüben rendelhető tételeket pipával, míg a külön is elérhetőeket x-el jelöltük." data-trigger="hover" data-original-title="Segítség" ><i class="fa fa-info-circle"></i></a></th>
                                                                             <th scope="col">Ár</th>
                                                                             <th scope="col">Akciós ár</th>
                                                                             <th scope="col">Művelet</th>
@@ -186,7 +186,7 @@
                                                                             <tr class="table-warning">
                                                                             @elseif($day == 6 && !$data->saturday)
                                                                             <tr class="table-warning">
-                                                                            @elseif($day == 7 && !$data->sunday)
+                                                                            @elseif($day == 0 && !$data->sunday)
                                                                             <tr class="table-warning">
                                                                             @else
                                                                             <tr>
@@ -243,7 +243,7 @@
                                                     <div class="col-12">
                                                         <div class="form-group row">
                                                             <div class="col-md-4 mb-1">
-                                                                <span>Választható italok</span>
+                                                                <span>Választható italok*</span>
                                                             </div>
                                                             <div class="col-md-8 mb-1">
                                                             <p>Itt látható az összes feltöltött ital.<br/>
@@ -255,7 +255,7 @@
                                                                     <thead>
                                                                         <tr>
                                                                             <th scope="col">Név</th>
-                                                                            <th scope="col">Menü <a style="color: #47b272;" data-toggle="popover" data-placement="top" data-content="A kizárólag menüben rendelhető tételeket pipával, míg a külön is elérhetőeket x-el jelöltük." data-trigger="hover" data-original-title="Segítség" ><i class="feather icon-alert-octagon"></i></a></th>
+                                                                            <th scope="col">Menü <a style="color: #47b272;" data-toggle="popover" data-placement="top" data-content="A kizárólag menüben rendelhető tételeket pipával, míg a külön is elérhetőeket x-el jelöltük." data-trigger="hover" data-original-title="Segítség" ><i class="fa fa-info-circle"></i></a></th>
                                                                             <th scope="col">Ár</th>
                                                                             <th scope="col">Akciós ár</th>
                                                                             <th scope="col">Művelet</th>
@@ -276,7 +276,7 @@
                                                                             <tr class="table-warning">
                                                                             @elseif($day == 6 && !$data->saturday)
                                                                             <tr class="table-warning">
-                                                                            @elseif($day == 7 && !$data->sunday)
+                                                                            @elseif($day == 0 && !$data->sunday)
                                                                             <tr class="table-warning">
                                                                             @else
                                                                             <tr>

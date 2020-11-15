@@ -63,11 +63,11 @@
                                                     <div class="col-12">
                                                         <div class="form-group row">
                                                             <div class="col-md-4">
-                                                                <span>Étel fotója</span>
+                                                                <span>Étel fotója*</span>
                                                             </div>
                                                             <div class="col-md-8">
                                                                 <div class="custom-file">
-                                                                        <input type="file" name="image" class="custom-file-input" id="inputGroupFile01">
+                                                                        <input type="file" name="image" class="custom-file-input" id="inputGroupFile01" required>
                                                                         <label class="custom-file-label" for="inputGroupFile01">Válasszon fotót</label>
                                                                 </div>
                                                             </div>
@@ -76,20 +76,20 @@
                                                     <div class="col-12">
                                                         <div class="form-group row">
                                                             <div class="col-md-4">
-                                                                <span>Étel neve</span>
+                                                                <span>Étel neve*</span>
                                                             </div>
                                                             <div class="col-md-8">
-                                                                <input type="text" id="food-name" class="form-control" name="name" placeholder="Étel megnevezése">
+                                                                <input type="text" id="food-name" class="form-control" name="name" placeholder="Étel megnevezése" required>
                                                             </div>
                                                         </div>
                                                     </div>
                                                     <div class="col-12">
                                                         <div class="form-group row">
                                                             <div class="col-md-4">
-                                                                <span>Kategória</span>
+                                                                <span>Kategória*</span>
                                                             </div>
                                                             <div class="col-md-8">
-                                                                        <select class="form-control" name="category" id="basicSelect">
+                                                                        <select class="form-control" name="category" id="basicSelect" required>
                                                                             @foreach($categories as $key => $data)
                                                                                 <option value="{{ $data->id }}">{{ $data->category }}</option>
                                                                             @endforeach
@@ -100,20 +100,20 @@
                                                     <div class="col-12">
                                                         <div class="form-group row">
                                                             <div class="col-md-4">
-                                                                <span>Étel fogyasztói ára</span>
+                                                                <span>Étel fogyasztói ára*</span>
                                                             </div>
                                                             <div class="col-md-8">
-                                                                <input type="text" id="v0" class="form-control" onkeyup="calculate()" name="price" placeholder="Étel eladási ára">
+                                                                <input type="text" id="v0" class="form-control" onkeyup="calculate()" name="price" placeholder="Étel eladási ára" required>
                                                             </div>
                                                         </div>
                                                     </div>
                                                     <div class="col-12">
                                                         <div class="form-group row">
                                                             <div class="col-md-4">
-                                                                <span>Étel akciós ára</span>
+                                                                <span>Étel akciós ára*</span>
                                                             </div>
                                                             <div class="col-md-8">
-                                                                <input type="text" id="v2" onkeyup="calculate()" class="form-control" name="saleprice" placeholder="Étel kedvezményes ára">
+                                                                <input type="text" id="v2" onkeyup="calculate()" class="form-control" name="saleprice" placeholder="Étel kedvezményes ára" required>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -135,10 +135,10 @@
                                                     <div class="col-12">
                                                         <div class="form-group row">
                                                             <div class="col-md-4">
-                                                                <span>Étel elkészítési ára</span>
+                                                                <span>Étel elkészítési ára*</span>
                                                             </div>
                                                             <div class="col-md-8">
-                                                                <input type="text" id="v1" onkeyup="calculate()" class="form-control" name="makeprice" placeholder="Étel elkszítési költsége">
+                                                                <input type="text" id="v1" onkeyup="calculate()" class="form-control" name="makeprice" placeholder="Étel elkszítési költsége" required>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -215,10 +215,10 @@
                                                     <div class="col-12">
                                                         <div class="form-group row">
                                                             <div class="col-md-4">
-                                                                <span>Maximum extrák</span>
+                                                                <span>Maximum extrák*</span>
                                                             </div>
                                                             <div class="col-md-8">
-                                                                <input type="number" min="0" max="20"  id="extralimit" class="form-control" name="extralimit" placeholder="Maximum opcionális extrák száma">
+                                                                <input type="number" min="0" max="20"  id="extralimit" class="form-control" name="extralimit" placeholder="Maximum opcionális extrák száma" required>
                                                             </div>
                                                         </div>
                                                     </div>

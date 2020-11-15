@@ -90,7 +90,7 @@
                                     <span>Titkos azonosító</span>
                                 </div>
                                 <div class="col-md-8">
-                                    <input type="password" id="secretid" class="form-control" value="{{$secret}}">
+                                    <input type="password" id="secretid" class="form-control" value="{{$secret}}" disabled>
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -98,7 +98,7 @@
                                     <span>Titkos jelszó</span>
                                 </div>
                                 <div class="col-md-8">
-                                    <input type="password" id="pass" class="form-control" value="{{$pass}}">
+                                    <input type="password" id="pass" class="form-control" value="{{$pass}}" disabled>
                                 </div>
                             </div>
                             <p style="text-align: left;">Ön is megbizonyosodhat arról, hogy ténylegesen egy kollégánkkal beszél, kérdezze munkatársunktól az alábbi kódot: <b><span id="verify">********</span></b></p>

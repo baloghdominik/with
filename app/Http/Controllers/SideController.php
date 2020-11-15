@@ -92,7 +92,7 @@ class SideController extends Controller
             'friday' => ['boolean'],
             'saturday' => ['boolean'],
             'sunday' => ['boolean'],
-            'description' => ['required', 'string', 'min:0', 'max:500'],
+            'description' => ['max:500'],
             'vegan' => ['boolean'],
             'vegetarian' => ['boolean'],
             'glutenfree' => ['boolean'],
@@ -131,7 +131,11 @@ class SideController extends Controller
         $side->friday = $request->has('friday');
         $side->saturday = $request->has('saturday');
         $side->sunday = $request->has('sunday');
-        $side->description = request('description');
+        if (request('description') == NULL) {
+            $side->description = " ";
+        } else {
+            $side->description = request('description');
+        }
         $side->vegan = $request->has('vegan');
         $side->vegetarian = $request->has('vegetarian');
         $side->glutenfree = $request->has('glutenfree');
@@ -139,7 +143,11 @@ class SideController extends Controller
         $side->fatfree = $request->has('fatfree');
         $side->sugarfree = $request->has('sugarfree');
         $side->allergenicfree = $request->has('allergenicfree');
-        $side->calorie = request('calorie');
+        if (request('calorie') == "NULL") {
+            $side->calorie = NULL;
+        } else {
+            $side->calorie = request('calorie');
+        }
         $side->available_separately = $request->has('available_separately');
         $side->available = $request->has('available');
         $side->save();
@@ -216,7 +224,7 @@ class SideController extends Controller
             'friday' => ['boolean'],
             'saturday' => ['boolean'],
             'sunday' => ['boolean'],
-            'description' => ['required', 'string', 'min:0', 'max:500'],
+            'description' => ['max:500'],
             'vegan' => ['boolean'],
             'vegetarian' => ['boolean'],
             'glutenfree' => ['boolean'],
@@ -259,7 +267,11 @@ class SideController extends Controller
         $side->friday = $request->has('friday');
         $side->saturday = $request->has('saturday');
         $side->sunday = $request->has('sunday');
-        $side->description = request('description');
+        if (request('description') == NULL) {
+            $side->description = " ";
+        } else {
+            $side->description = request('description');
+        }
         $side->vegan = $request->has('vegan');
         $side->vegetarian = $request->has('vegetarian');
         $side->glutenfree = $request->has('glutenfree');
@@ -267,7 +279,11 @@ class SideController extends Controller
         $side->fatfree = $request->has('fatfree');
         $side->sugarfree = $request->has('sugarfree');
         $side->allergenicfree = $request->has('allergenicfree');
-        $side->calorie = request('calorie');
+        if (request('calorie') == "NULL") {
+            $side->calorie = NULL;
+        } else {
+            $side->calorie = request('calorie');
+        }
         $side->available_separately = $request->has('available_separately');
         $side->available = $request->has('available');
         $side->save();

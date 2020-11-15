@@ -167,7 +167,7 @@ class MealController extends Controller
             'friday' => ['boolean'],
             'saturday' => ['boolean'],
             'sunday' => ['boolean'],
-            'description' => ['required', 'string', 'min:0', 'max:500'],
+            'description' => ['max:500'],
             'vegan' => ['boolean'],
             'vegetarian' => ['boolean'],
             'glutenfree' => ['boolean'],
@@ -207,7 +207,11 @@ class MealController extends Controller
         $meal->friday = $request->has('friday');
         $meal->saturday = $request->has('saturday');
         $meal->sunday = $request->has('sunday');
-        $meal->description = request('description');
+        if (request('description') == NULL) {
+            $meal->description = " ";
+        } else {
+            $meal->description = request('description');
+        }
         $meal->vegan = $request->has('vegan');
         $meal->vegetarian = $request->has('vegetarian');
         $meal->glutenfree = $request->has('glutenfree');
@@ -215,7 +219,11 @@ class MealController extends Controller
         $meal->fatfree = $request->has('fatfree');
         $meal->sugarfree = $request->has('sugarfree');
         $meal->allergenicfree = $request->has('allergenicfree');
-        $meal->calorie = request('calorie');
+        if (request('calorie') == "NULL") {
+            $meal->calorie = NULL;
+        } else {
+            $meal->calorie = request('calorie');
+        }
         $meal->available_separately = $request->has('available_separately');
         $meal->available = $request->has('available');
         $meal->save();
@@ -293,7 +301,7 @@ class MealController extends Controller
             'friday' => ['boolean'],
             'saturday' => ['boolean'],
             'sunday' => ['boolean'],
-            'description' => ['required', 'string', 'min:0', 'max:500'],
+            'description' => ['max:500'],
             'vegan' => ['boolean'],
             'vegetarian' => ['boolean'],
             'glutenfree' => ['boolean'],
@@ -337,7 +345,11 @@ class MealController extends Controller
         $meal->friday = $request->has('friday');
         $meal->saturday = $request->has('saturday');
         $meal->sunday = $request->has('sunday');
-        $meal->description = request('description');
+        if (request('description') == NULL) {
+            $meal->description = " ";
+        } else {
+            $meal->description = request('description');
+        }
         $meal->vegan = $request->has('vegan');
         $meal->vegetarian = $request->has('vegetarian');
         $meal->glutenfree = $request->has('glutenfree');
@@ -345,7 +357,11 @@ class MealController extends Controller
         $meal->fatfree = $request->has('fatfree');
         $meal->sugarfree = $request->has('sugarfree');
         $meal->allergenicfree = $request->has('allergenicfree');
-        $meal->calorie = request('calorie');
+        if (request('calorie') == "NULL") {
+            $meal->calorie = NULL;
+        } else {
+            $meal->calorie = request('calorie');
+        }
         $meal->available_separately = $request->has('available_separately');
         $meal->available = $request->has('available');
         $meal->save();

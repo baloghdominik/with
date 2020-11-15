@@ -64,11 +64,11 @@
                                                     <div class="col-12">
                                                         <div class="form-group row">
                                                             <div class="col-md-4">
-                                                                <span>Ital fotója</span>
+                                                                <span>Ital fotója*</span>
                                                             </div>
                                                             <div class="col-md-8">
                                                                 <div class="custom-file">
-                                                                        <input type="file" name="image" class="custom-file-input" id="inputGroupFile01">
+                                                                        <input type="file" name="image" class="custom-file-input" id="inputGroupFile01" required>
                                                                         <label class="custom-file-label" for="inputGroupFile01">Válasszon fotót</label>
                                                                 </div>
                                                             </div>
@@ -77,20 +77,20 @@
                                                     <div class="col-12">
                                                         <div class="form-group row">
                                                             <div class="col-md-4">
-                                                                <span>Ital neve</span>
+                                                                <span>Ital neve*</span>
                                                             </div>
                                                             <div class="col-md-8">
-                                                                <input type="text" id="food-name" class="form-control" name="name" placeholder="Ital megnevezése">
+                                                                <input type="text" id="food-name" class="form-control" name="name" placeholder="Ital megnevezése" required>
                                                             </div>
                                                         </div>
                                                     </div>
                                                     <div class="col-12">
                                                         <div class="form-group row">
                                                             <div class="col-md-4">
-                                                                <span>Kategória</span>
+                                                                <span>Kategória*</span>
                                                             </div>
                                                             <div class="col-md-8">
-                                                                <select class="form-control" name="category" id="basicSelect">
+                                                                <select class="form-control" name="category" id="basicSelect" required>
                                                                     @foreach($categories as $key => $data)
                                                                         <option value="{{ $data->id }}">{{ $data->category }}</option>
                                                                     @endforeach
@@ -101,20 +101,20 @@
                                                     <div class="col-12">
                                                         <div class="form-group row">
                                                             <div class="col-md-4">
-                                                                <span>Ital fogyasztói ára</span>
+                                                                <span>Ital fogyasztói ára*</span>
                                                             </div>
                                                             <div class="col-md-8">
-                                                                <input type="text" id="v0" onkeyup="calculate()" class="form-control" name="price" placeholder="Ital eladási ára">
+                                                                <input type="text" id="v0" onkeyup="calculate()" class="form-control" name="price" placeholder="Ital eladási ára" required>
                                                             </div>
                                                         </div>
                                                     </div>
                                                     <div class="col-12">
                                                         <div class="form-group row">
                                                             <div class="col-md-4">
-                                                                <span>Ital akciós ára</span>
+                                                                <span>Ital akciós ára*</span>
                                                             </div>
                                                             <div class="col-md-8">
-                                                                <input type="text" id="v2" onkeyup="calculate()" class="form-control" name="saleprice" placeholder="Ital kedvezményes ára">
+                                                                <input type="text" id="v2" onkeyup="calculate()" class="form-control" name="saleprice" placeholder="Ital kedvezményes ára" required>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -136,10 +136,10 @@
                                                     <div class="col-12">
                                                         <div class="form-group row">
                                                             <div class="col-md-4">
-                                                                <span>Ital beszerzési ára</span>
+                                                                <span>Ital beszerzési ára*</span>
                                                             </div>
                                                             <div class="col-md-8">
-                                                                <input type="text" id="v1" onkeyup="calculate()" class="form-control" name="makeprice" placeholder="Ital elkszítési költsége">
+                                                                <input type="text" id="v1" onkeyup="calculate()" class="form-control" name="makeprice" placeholder="Ital elkszítési költsége" required>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -352,10 +352,23 @@
                                                     <div class="col-12">
                                                         <div class="form-group row">
                                                             <div class="col-md-4">
-                                                                <span>Ital mérete (ml)</span>
+                                                                <span>Ital mérete (ml)*</span>
                                                             </div>
                                                             <div class="col-md-8">
-                                                                <input type="number" id="drink-size" class="form-control" name="size" placeholder="Ital mérete mililiterben">
+                                                                <input type="number" id="drink-size" class="form-control" name="size" placeholder="Ital mérete mililiterben" required>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-12">
+                                                        <div class="form-group row">
+                                                            <div class="col-md-4">
+                                                                <span>Ital leírása</span>
+                                                            </div>
+                                                            <div class="col-md-8">
+                                                              <fieldset class="form-label-group mb-0">
+                                                                <textarea data-length="500" class="form-control char-textarea active" id="textarea-counter" name="description" rows="5" placeholder="Ital leírás"></textarea>
+                                                              </fieldset>
+                                                              <small class="counter-value float-right"><span class="char-count">0</span> / 500 </small>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -407,6 +420,17 @@
                                                                                 </span>
                                                                                 </span>
                                                                                 <span class="">Ez az ital alkohol mentes</span>
+                                                                        </div>
+                                                                </fieldset>
+                                                                <fieldset class="form-group">
+                                                                        <div class="vs-checkbox-con vs-checkbox-primary">
+                                                                                <input type="checkbox" name="allergenicfree" value="0">
+                                                                                <span class="vs-checkbox">
+                                                                                <span class="vs-checkbox--check">
+                                                                                        <i class="vs-icon feather icon-check"></i>
+                                                                                </span>
+                                                                                </span>
+                                                                                <span class="">Ez az ital nem tartalmaz allergén alapanyagokat</span>
                                                                         </div>
                                                                 </fieldset>
                                                             </div>

@@ -64,11 +64,11 @@
                                                     <div class="col-12">
                                                         <div class="form-group row">
                                                             <div class="col-md-4">
-                                                                <span>Köret fotója</span>
+                                                                <span>Köret fotója*</span>
                                                             </div>
                                                             <div class="col-md-8">
                                                                 <div class="custom-file">
-                                                                        <input type="file" name="image" class="custom-file-input" id="inputGroupFile01">
+                                                                        <input type="file" name="image" class="custom-file-input" id="inputGroupFile01" required>
                                                                         <label class="custom-file-label" for="inputGroupFile01">Válasszon fotót</label>
                                                                 </div>
                                                             </div>
@@ -77,20 +77,20 @@
                                                     <div class="col-12">
                                                         <div class="form-group row">
                                                             <div class="col-md-4">
-                                                                <span>Köret neve</span>
+                                                                <span>Köret neve*</span>
                                                             </div>
                                                             <div class="col-md-8">
-                                                                <input type="text" id="food-name" class="form-control" name="name" placeholder="Köret megnevezése">
+                                                                <input type="text" id="food-name" class="form-control" name="name" placeholder="Köret megnevezése" required>
                                                             </div>
                                                         </div>
                                                     </div>
                                                     <div class="col-12">
                                                         <div class="form-group row">
                                                             <div class="col-md-4">
-                                                                <span>Kategória</span>
+                                                                <span>Kategória*</span>
                                                             </div>
                                                             <div class="col-md-8">
-                                                                <select class="form-control" name="category" id="basicSelect">
+                                                                <select class="form-control" name="category" id="basicSelect" required>
                                                                     @foreach($categories as $key => $data)
                                                                         <option value="{{ $data->id }}">{{ $data->category }}</option>
                                                                     @endforeach
@@ -101,20 +101,20 @@
                                                     <div class="col-12">
                                                         <div class="form-group row">
                                                             <div class="col-md-4">
-                                                                <span>Köret fogyasztói ára</span>
+                                                                <span>Köret fogyasztói ára*</span>
                                                             </div>
                                                             <div class="col-md-8">
-                                                                <input type="text" id="v0" onkeyup="calculate()" class="form-control" name="price" placeholder="Köret eladási ára">
+                                                                <input type="text" id="v0" onkeyup="calculate()" class="form-control" name="price" placeholder="Köret eladási ára" required>
                                                             </div>
                                                         </div>
                                                     </div>
                                                     <div class="col-12">
                                                         <div class="form-group row">
                                                             <div class="col-md-4">
-                                                                <span>Köret akciós ára</span>
+                                                                <span>Köret akciós ára*</span>
                                                             </div>
                                                             <div class="col-md-8">
-                                                                <input type="text" id="v2" onkeyup="calculate()" class="form-control" name="saleprice" placeholder="Köret kedvezményes ára">
+                                                                <input type="text" id="v2" onkeyup="calculate()" class="form-control" name="saleprice" placeholder="Köret kedvezményes ára" required>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -136,10 +136,10 @@
                                                     <div class="col-12">
                                                         <div class="form-group row">
                                                             <div class="col-md-4">
-                                                                <span>Köret elkészítési ára</span>
+                                                                <span>Köret elkészítési ára*</span>
                                                             </div>
                                                             <div class="col-md-8">
-                                                                <input type="text" id="v1" onkeyup="calculate()" class="form-control" name="makeprice" placeholder="Köret elkszítési költsége">
+                                                                <input type="text" id="v1" onkeyup="calculate()" class="form-control" name="makeprice" placeholder="Köret elkszítési költsége" required>
                                                             </div>
                                                         </div>
                                                     </div>

@@ -64,7 +64,7 @@
                                                     <div class="col-12">
                                                         <div class="form-group row">
                                                             <div class="col-md-4">
-                                                                <span>Ital fotója</span>
+                                                                <span>Ital fotója*</span>
                                                             </div>
                                                             <div class="col-md-8">
                                                             <img src="{{ asset('images/drinks/'.$drink->picid.'.jpg') }}" width="100%" height="auto" style="margin-bottom: 25px; border-radius: 1rem;">
@@ -78,21 +78,21 @@
                                                     <div class="col-12">
                                                         <div class="form-group row">
                                                             <div class="col-md-4">
-                                                                <span>Ital neve</span>
+                                                                <span>Ital neve*</span>
                                                             </div>
                                                             <div class="col-md-8">
                                                                 <input type="hidden" id="picid" class="form-control" name="picid" value="{{$drink->picid}}">
-                                                                <input type="text" id="food-name" class="form-control" name="name" value="{{$drink->name}}" placeholder="Ital megnevezése">
+                                                                <input type="text" id="food-name" class="form-control" name="name" value="{{$drink->name}}" placeholder="Ital megnevezése" required>
                                                             </div>
                                                         </div>
                                                     </div>
                                                     <div class="col-12">
                                                         <div class="form-group row">
                                                             <div class="col-md-4">
-                                                                <span>Kategória</span>
+                                                                <span>Kategória*</span>
                                                             </div>
                                                             <div class="col-md-8">
-                                                                <select class="form-control" name="category" id="basicSelect">
+                                                                <select class="form-control" name="category" id="basicSelect" required>
                                                                     @foreach($categories as $key => $data)
                                                                         @if($data->id == $drink->category)
                                                                             <option value="{{ $data->id }}" selected>{{ $data->category }}</option>
@@ -107,20 +107,20 @@
                                                     <div class="col-12">
                                                         <div class="form-group row">
                                                             <div class="col-md-4">
-                                                                <span>Ital fogyasztói ára</span>
+                                                                <span>Ital fogyasztói ára*</span>
                                                             </div>
                                                             <div class="col-md-8">
-                                                                <input type="text" id="v0" onkeyup="calculate()" class="form-control" name="price" value="{{$drink->price}}" placeholder="Ital eladási ára">
+                                                                <input type="text" id="v0" onkeyup="calculate()" class="form-control" name="price" value="{{$drink->price}}" placeholder="Ital eladási ára" required>
                                                             </div>
                                                         </div>
                                                     </div>
                                                     <div class="col-12">
                                                         <div class="form-group row">
                                                             <div class="col-md-4">
-                                                                <span>Ital akciós ára</span>
+                                                                <span>Ital akciós ára*</span>
                                                             </div>
                                                             <div class="col-md-8">
-                                                                <input type="text" id="v2" onkeyup="calculate()" class="form-control" name="saleprice" value="{{$drink->saleprice}}" placeholder="Ital kedvezményes ára">
+                                                                <input type="text" id="v2" onkeyup="calculate()" class="form-control" name="saleprice" value="{{$drink->saleprice}}" placeholder="Ital kedvezményes ára" required>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -152,10 +152,10 @@
                                                     <div class="col-12">
                                                         <div class="form-group row">
                                                             <div class="col-md-4">
-                                                                <span>Ital elkészítési ára</span>
+                                                                <span>Ital elkészítési ára*</span>
                                                             </div>
                                                             <div class="col-md-8">
-                                                                <input type="text" id="v1" onkeyup="calculate()" class="form-control" name="makeprice" value="{{$drink->makeprice}}" placeholder="Ital elkszítési költsége">
+                                                                <input type="text" id="v1" onkeyup="calculate()" class="form-control" name="makeprice" value="{{$drink->makeprice}}" placeholder="Ital elkszítési költsége" required>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -509,12 +509,25 @@
                                                     <div class="col-12">
                                                         <div class="form-group row">
                                                             <div class="col-md-4">
-                                                                <span>Ital leírása</span>
+                                                                <span>Ital mérete (ml)*</span>
                                                             </div>
                                                             <div class="col-md-8">
                                                               <fieldset class="form-group">
-                                                              <input type="number" id="drink-size" class="form-control" name="size" value="{{$drink->size}}" placeholder="Ital mérete mililiterben">
+                                                              <input type="number" id="drink-size" class="form-control" name="size" value="{{$drink->size}}" placeholder="Ital mérete mililiterben" required>
                                                               </fieldset>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-12">
+                                                        <div class="form-group row">
+                                                            <div class="col-md-4">
+                                                                <span>Ital leírása</span>
+                                                            </div>
+                                                            <div class="col-md-8">
+                                                              <fieldset class="form-label-group mb-0">
+                                                                <textarea data-length="500" class="form-control char-textarea active" id="textarea-counter" name="description" rows="5" placeholder="Ital leírás">{{$drink->description}}</textarea>
+                                                              </fieldset>
+                                                              <small class="counter-value float-right"><span class="char-count">0</span> / 500 </small>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -613,6 +626,29 @@
                                                                                 </span>
                                                                                 </span>
                                                                                 <span class="">Ez az ital Alkohol mentes</span>
+                                                                        </div>
+                                                                    @endif
+                                                                </fieldset>
+                                                                <fieldset class="form-group">
+                                                                    @if($drink->allergenicfree)
+                                                                        <div class="vs-checkbox-con vs-checkbox-primary">
+                                                                                <input type="checkbox" name="allergenicfree" value="1" checked>
+                                                                                <span class="vs-checkbox">
+                                                                                <span class="vs-checkbox--check">
+                                                                                        <i class="vs-icon feather icon-check"></i>
+                                                                                </span>
+                                                                                </span>
+                                                                                <span class="">Ez az ital nem tartalmaz allergén alapanyagokat</span>
+                                                                        </div>
+                                                                    @else
+                                                                        <div class="vs-checkbox-con vs-checkbox-primary">
+                                                                                <input type="checkbox" name="allergenicfree" value="0">
+                                                                                <span class="vs-checkbox">
+                                                                                <span class="vs-checkbox--check">
+                                                                                        <i class="vs-icon feather icon-check"></i>
+                                                                                </span>
+                                                                                </span>
+                                                                                <span class="">Ez az ital nem tartalmaz allergén alapanyagokat</span>
                                                                         </div>
                                                                     @endif
                                                                 </fieldset>

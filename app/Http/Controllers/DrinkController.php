@@ -95,10 +95,12 @@ class DrinkController extends Controller
             'saturday' => ['boolean'],
             'sunday' => ['boolean'],
             'size' => ['required', 'integer', 'min:0', 'max:5000'],
+            'description' => ['max:500'],
             'vegan' => ['boolean'],
             'lactosefree' => ['boolean'],
             'sugarfree' => ['boolean'],
             'alcoholfree' => ['boolean'],
+            'allergenicfree' => ['boolean'],
             'calorie' => ['required', 'string'],
             'available_separately' => ['boolean'],
             'available' => ['boolean'],
@@ -131,11 +133,21 @@ class DrinkController extends Controller
         $drink->saturday = $request->has('saturday');
         $drink->sunday = $request->has('sunday');
         $drink->size = request('size');
+        if (request('description') == NULL) {
+            $drink->description = " ";
+        } else {
+            $drink->description = request('description');
+        }
         $drink->vegan = $request->has('vegan');
         $drink->lactosefree = $request->has('lactosefree');
         $drink->alcoholfree = $request->has('alcoholfree');
         $drink->sugarfree = $request->has('sugarfree');
-        $drink->calorie = request('calorie');
+        $drink->allergenicfree = $request->has('allergenicfree');
+        if (request('calorie') == "NULL") {
+            $drink->calorie = NULL;
+        } else {
+            $drink->calorie = request('calorie');
+        }
         $drink->available_separately = $request->has('available_separately');
         $drink->available = $request->has('available');
         $drink->save();
@@ -213,10 +225,12 @@ class DrinkController extends Controller
             'saturday' => ['boolean'],
             'sunday' => ['boolean'],
             'size' => ['required', 'integer', 'min:0', 'max:5000'],
+            'description' => ['max:500'],
             'vegan' => ['boolean'],
             'alcoholfree' => ['boolean'],
             'lactosefree' => ['boolean'],
             'sugarfree' => ['boolean'],
+            'allergenicfree' => ['boolean'],
             'calorie' => ['required', 'string'],
             'available_separately' => ['boolean'],
             'available' => ['boolean'],
@@ -253,11 +267,21 @@ class DrinkController extends Controller
         $drink->saturday = $request->has('saturday');
         $drink->sunday = $request->has('sunday');
         $drink->size = request('size');
+        if (request('description') == NULL) {
+            $drink->description = " ";
+        } else {
+            $drink->description = request('description');
+        }
         $drink->vegan = $request->has('vegan');
         $drink->alcoholfree = $request->has('alcoholfree');
         $drink->lactosefree = $request->has('lactosefree');
         $drink->sugarfree = $request->has('sugarfree');
-        $drink->calorie = request('calorie');
+        $drink->allergenicfree = $request->has('allergenicfree');
+        if (request('calorie') == "NULL") {
+            $drink->calorie = NULL;
+        } else {
+            $drink->calorie = request('calorie');
+        }
         $drink->available_separately = $request->has('available_separately');
         $drink->available = $request->has('available');
         $drink->save();

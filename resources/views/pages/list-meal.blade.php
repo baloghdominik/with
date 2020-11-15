@@ -104,7 +104,7 @@
                                                 <th scope="col">Szombat</th>
                                             @endif
 
-                                            @if($day == 7)
+                                            @if($day == 0)
                                                 <th style="background: #c3efd7;" scope="col">Vasárnap</th>
                                             @else
                                                 <th scope="col">Vasárnap</th>
@@ -128,7 +128,7 @@
                                             <tr class="table-warning">
                                             @elseif($day == 6 && !$data->saturday)
                                             <tr class="table-warning">
-                                            @elseif($day == 7 && !$data->sunday)
+                                            @elseif($day == 0 && !$data->sunday)
                                             <tr class="table-warning">
                                             @else
                                             <tr>
