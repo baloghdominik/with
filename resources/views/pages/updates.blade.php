@@ -34,6 +34,7 @@
                         <li>Pizzatervező</li>
                         <li>Ételek értékesítése menüként</li>
                         <li>Részletesebb statisztikák</li>
+                        <li>Azonosítókód az éttermek és munkatársaink azonosítása érdekében az ügyfélszolgálat oldalon</li>
                         <li>Hibajavítások</li>
                     </ul>
                 </div>

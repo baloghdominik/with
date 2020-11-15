@@ -38,7 +38,7 @@ class HelpController extends Controller
             $date=date_create($secretcode);
             $secretcode = date_format($date,"y-md");
         } else {
-            $secretcode = "000000";
+            $secretcode = "20-0000";
         }
 
         $id = $restaurant->id;
