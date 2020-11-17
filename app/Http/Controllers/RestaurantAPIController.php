@@ -542,13 +542,13 @@ class RestaurantAPIController extends Controller
                     $productDTO->is_alcoholfree = false;
                 }
 
-                if (is_integer($item->size)) {
+                if ($item->size > 0) {
                     $productDTO->size = $item->size;
                 } else {
                     $productDTO->size = NULL;
                 }
 
-                if (is_integer($item->extralimit) && $item->extralimit > 0 && $item->extralimit < 25) {
+                if ($item->extralimit > 0 && $item->extralimit < 25) {
                     $productDTO->extralimit = $item->extralimit;
                 } else {
                     $productDTO->extralimit = 0;
@@ -700,13 +700,13 @@ class RestaurantAPIController extends Controller
                     $productDTO->is_alcoholfree = false;
                 }
 
-                if (is_integer($item->size)) {
+                if ($item->size > 0) {
                     $productDTO->size = $item->size;
                 } else {
                     $productDTO->size = NULL;
                 }
 
-                if (is_integer($item->extralimit) && $item->extralimit > 0 && $item->extralimit < 25) {
+                if ($item->extralimit > 0 && $item->extralimit < 25) {
                     $productDTO->extralimit = $item->extralimit;
                 } else {
                     $productDTO->extralimit = 0;
@@ -846,13 +846,13 @@ class RestaurantAPIController extends Controller
                     $productDTO->is_alcoholfree = false;
                 }
 
-                if (is_integer($item->size)) {
+                if ($item->size > 0) {
                     $productDTO->size = $item->size;
                 } else {
                     $productDTO->size = NULL;
                 }
 
-                if (is_integer($item->extralimit) && $item->extralimit > 0 && $item->extralimit < 25) {
+                if ($item->extralimit > 0 && $item->extralimit < 25) {
                     $productDTO->extralimit = $item->extralimit;
                 } else {
                     $productDTO->extralimit = 0;
@@ -906,7 +906,7 @@ class RestaurantAPIController extends Controller
                         $productDTO->is_sale = true;
                         $productDTO->old_price = $item->meal->price;
 
-                        if (is_integer($item->menusalepercent) && $item->menusalepercent > 0 && $item->menusalepercent < 91 && $item->meal->saleprice > 0) {
+                        if ($item->menusalepercent > 0 && $item->menusalepercent < 91 && $item->meal->saleprice > 0) {
                             $price = $item->meal->saleprice;
                             $price = ($price / 100) * (100 - $item->menusalepercent);
                         } else {
@@ -915,7 +915,7 @@ class RestaurantAPIController extends Controller
 
                         $productDTO->price = $price;
                     } else {
-                        if (is_integer($item->menusalepercent) && $item->menusalepercent > 0 && $item->menusalepercent < 91 && $item->meal->price > 0) {
+                        if ($item->menusalepercent > 0 && $item->menusalepercent < 91 && $item->meal->price > 0) {
                             $price = $item->meal->price;
                             $price = ($price / 100) * (100 - $item->menusalepercent);
                             $productDTO->is_sale = true;
@@ -1009,7 +1009,7 @@ class RestaurantAPIController extends Controller
                         $productDTO->is_alcoholfree = false;
                     }
 
-                    if (is_integer($item->meal->size)) {
+                    if ($item->meal->size > 0) {
                         $productDTO->size = $item->meal->size;
                     } else {
                         $productDTO->size = NULL;
@@ -1113,10 +1113,12 @@ class RestaurantAPIController extends Controller
                             }
                         }
                     }
-
+                    
                     $productDTO->drinks = $drinks;
 
-                    array_push($products, $productDTO);
+                    if (count($productDTO->drinks) > 0 && count($productDTO->sides) > 0) {
+                        array_push($products, $productDTO);
+                    }
                 }
             }
 
