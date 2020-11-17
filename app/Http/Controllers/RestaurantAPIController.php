@@ -557,14 +557,16 @@ class RestaurantAPIController extends Controller
                 //extras
                 $extras = array();
 
-                foreach ($item->extras as $extra) {
-                    $productExtrasDTO = new ProductExtrasDTO;
-                    $productExtrasDTO->product_id = $item->id;
-                    $productExtrasDTO->id = $extra->id;
-                    $productExtrasDTO->name = $extra->name;
-                    $productExtrasDTO->price = $extra->price;
+                if ($productDTO->extralimit > 0) {
+                    foreach ($item->extras as $extra) {
+                        $productExtrasDTO = new ProductExtrasDTO;
+                        $productExtrasDTO->product_id = $item->id;
+                        $productExtrasDTO->id = $extra->id;
+                        $productExtrasDTO->name = $extra->name;
+                        $productExtrasDTO->price = $extra->price;
 
-                    array_push($extras, $productExtrasDTO);
+                        array_push($extras, $productExtrasDTO);
+                    }
                 }
 
                 $productDTO->extras = $extras;
@@ -1022,14 +1024,16 @@ class RestaurantAPIController extends Controller
                     //extras
                     $extras = array();
 
-                    foreach ($item->meal->extras as $extra) {
-                        $productExtrasDTO = new ProductExtrasDTO;
-                        $productExtrasDTO->product_id = $item->id;
-                        $productExtrasDTO->id = $extra->id;
-                        $productExtrasDTO->name = $extra->name;
-                        $productExtrasDTO->price = $extra->price;
+                    if ($productDTO->extralimit > 0) {
+                        foreach ($item->meal->extras as $extra) {
+                            $productExtrasDTO = new ProductExtrasDTO;
+                            $productExtrasDTO->product_id = $item->id;
+                            $productExtrasDTO->id = $extra->id;
+                            $productExtrasDTO->name = $extra->name;
+                            $productExtrasDTO->price = $extra->price;
 
-                        array_push($extras, $productExtrasDTO);
+                            array_push($extras, $productExtrasDTO);
+                        }
                     }
 
                     $productDTO->extras = $extras;
