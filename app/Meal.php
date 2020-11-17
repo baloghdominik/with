@@ -43,4 +43,12 @@ class Meal extends Model
     protected $hidden = [
         'makeprice',
     ];
+
+    public function extras(){
+        return $this->hasMany('App\Extra','mealid','id');
+    }
+
+    public function menu(){
+        return $this->belongsTo('App\Menu','menuid','id');
+    }
 }

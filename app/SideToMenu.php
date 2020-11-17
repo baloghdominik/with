@@ -11,4 +11,12 @@ class SideToMenu extends Model
         'menuid', 
         'sideid'
     ];
+
+    public function menu(){
+        return $this->belongsTo('App\Menu','menuid','id');
+    }
+
+    public function side(){
+        return $this->hasOne('App\Side','id','sideid');
+    }
 }

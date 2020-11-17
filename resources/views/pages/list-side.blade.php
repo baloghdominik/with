@@ -135,7 +135,14 @@
                                         @else
                                             <tr class="table-danger">
                                         @endif
-                                            <td><img src="images/sides/{{$data->picid}}.jpg" width="100%" height="auto" style="border-radius: 0.5rem;"></td>
+                                            @php 
+                                                if (file_exists("images/sides/".$data->picid.".jpg")) {
+                                                    $img = "images/sides/".$data->picid.".jpg";
+                                                } else {
+                                                    $img = "images/notfound/product_default.jpg";
+                                                }
+                                            @endphp
+                                            <td><img src="{{$img}}" width="100%" height="auto" style="border-radius: 0.5rem;"></td>
                                             <td><b>{{$data->name}}</b></td>
                                             <td>
                                                 @foreach($categories as $key => $category)

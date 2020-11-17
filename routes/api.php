@@ -20,16 +20,17 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::post('login', 'CustomerController@login');
 Route::post('register', 'CustomerController@register');
 
-Route::post('login', 'CustomerController@login');
-
 Route::get('notification/{id}', 'NotificationController@update');
 Route::get('/', 'NotificationController@getinfo');
 
 Route::get('restaurants/near/zip/{zipcode}', 'RestaurantAPIController@getAllRestaurantsNearByZipcode');
 Route::get('restaurants/near/geo/{latitude}/{longitude}', 'RestaurantAPIController@getAllRestaurantsNearByGEO');
+
 Route::get('restaurant/alldata/{id}', 'RestaurantAPIController@getRestaurantAlldataById');
 Route::get('restaurant/logo/{id}', 'RestaurantAPIController@getRestaurantLogoById');
 Route::get('restaurant/lowercasename/{lowercasename}', 'RestaurantAPIController@getRestaurantIdBylowercasename');
+
+Route::get('restaurant/{id}/products/category/{categoryid}', 'RestaurantAPIController@getRestaurantProductsByCategory');
 
 Route::get('restaurant/id/{id}', 'RestaurantAPIController@getRestaurantById');
 Route::get('restaurants', 'RestaurantAPIController@getAllRestaurants');

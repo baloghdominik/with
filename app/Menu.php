@@ -16,4 +16,16 @@ class Menu extends Model
         'category', 
         'enable'
     ];
+
+    public function meal(){
+        return $this->hasOne('App\Meal','id','mealid');
+    }
+
+    public function sides(){
+        return $this->hasMany('App\SideToMenu','menuid','id');
+    }
+
+    public function drinks(){
+        return $this->hasMany('App\DrinkToMenu','menuid','id');
+    }
 }

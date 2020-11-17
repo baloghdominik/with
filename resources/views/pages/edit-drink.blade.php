@@ -67,7 +67,14 @@
                                                                 <span>Ital fotója*</span>
                                                             </div>
                                                             <div class="col-md-8">
-                                                            <img src="{{ asset('images/drinks/'.$drink->picid.'.jpg') }}" width="100%" height="auto" style="margin-bottom: 25px; border-radius: 1rem;">
+                                                            @php 
+                                                                if (file_exists("images/drinks/".$drink->picid.".jpg")) {
+                                                                    $img = "images/drinks/".$drink->picid.".jpg";
+                                                                } else {
+                                                                    $img = "images/notfound/product_default.jpg";
+                                                                }
+                                                            @endphp
+                                                            <img src="{{ asset($img) }}" width="100%" height="auto" style="margin-bottom: 25px; border-radius: 1rem;">
                                                                 <div class="custom-file">
                                                                         <input type="file" name="image" class="custom-file-input" id="inputGroupFile01">
                                                                         <label class="custom-file-label" for="inputGroupFile01">Válasszon fotót</label>

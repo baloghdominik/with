@@ -23,4 +23,8 @@ class Extra extends Model
     protected $hidden = [
         'makeprice',
     ];
+
+    public function meal(){
+        return $this->belongsTo('App\Extra','mealid','id');
+    }
 }
