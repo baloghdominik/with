@@ -1015,7 +1015,7 @@ class RestaurantAPIController extends Controller
                         $productDTO->size = NULL;
                     }
 
-                    if (is_integer($item->meal->extralimit) && $item->meal->extralimit > 0 && $item->meal->extralimit < 25) {
+                    if ($item->meal->extralimit > 0 && $item->meal->extralimit < 25) {
                         $productDTO->extralimit = $item->meal->extralimit;
                     } else {
                         $productDTO->extralimit = 0;

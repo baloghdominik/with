@@ -712,7 +712,7 @@
                                                             <div class="col-md-8">
                                                                 <fieldset class="form-group">
                                                                         <select class="form-control" name="calorie" id="basicSelect">
-                                                                                @if($meal->calorie == NULL)
+                                                                                @if($meal->calorie == NULL || $meal->calorie == "NULL")
                                                                                     <option value="NULL">Nincs megadva</option>
                                                                                 @else
                                                                                     <option value="{{$meal->calorie}}" selected>{{$meal->calorie}} Kalória</option>
