@@ -8,7 +8,7 @@ class PizzadesignerBase extends Model
 {
     public $table = "pizzadesigner_base";
     protected $fillable = [
-        'sizeid', 'name', 'price', 'makeprice', 'maketime'
+        'sizeid', 'name', 'price', 'makeprice', 'maketime', 'art'
     ];
 
      /**

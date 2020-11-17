@@ -70,7 +70,11 @@
                                                 <tr>
                                                     <th scope="row"><b>{{$size->size}} cm</b></th>
                                                     <td>{{number_format($size->price, 0)}} Ft</td>
+                                                    @if(($size->price - $size->makeprice) <= 0)
+                                                    <td style="color: #e42728;">{{number_format(($size->price - $size->makeprice), 0)}} Ft</td>
+                                                    @else
                                                     <td>{{number_format(($size->price - $size->makeprice), 0)}} Ft</td>
+                                                    @endif
                                                     <td>{{number_format($size->makeprice, 0)}} Ft</td>
                                                     <td>{{number_format($size->maketime, 0)}} Perc</td>
                                                     <td>{{number_format($size->toppingslimit, 0)}} db</td>

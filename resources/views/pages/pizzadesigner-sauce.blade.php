@@ -57,6 +57,7 @@
                                     <table class="table table-hover-animation mb-0">
                                         <thead>
                                             <tr>
+                                                <th scope="col">Illusztráció</th>
                                                 <th scope="col">Név</th>
                                                 <th scope="col">Fogyasztói ár</th>
                                                 <th scope="col">Árrés</th>
@@ -69,9 +70,21 @@
                                             @foreach($pizzadesigner_sauces as $key => $sauce)
                                                 @if($data->id == $sauce->sizeid)
                                                 <tr>
+                                                    @php 
+                                                        if (file_exists("images/pizzadesigner/".$sauce->art.".png")) {
+                                                            $img = "images/pizzadesigner/".$sauce->art.".png";
+                                                        } else {
+                                                            $img = "images/pizzadesigner/transparent.png";
+                                                        }
+                                                    @endphp
+                                                    <th style="padding: 0px;"><img src="{{ asset($img) }}" height="62px" width="auto" /></th>
                                                     <th scope="row"><b>{{$sauce->name}}</b></th>
                                                     <td>{{number_format($sauce->price, 0)}} Ft</td>
+                                                    @if(($sauce->price - $sauce->makeprice) <= 0)
+                                                    <td style="color: #e42728;">{{number_format(($sauce->price - $sauce->makeprice), 0)}} Ft</td>
+                                                    @else
                                                     <td>{{number_format(($sauce->price - $sauce->makeprice), 0)}} Ft</td>
+                                                    @endif
                                                     <td>{{number_format($sauce->makeprice, 0)}} Ft</td>
                                                     <td>{{number_format($sauce->maketime, 0)}} Perc</td>
                                                     <td>
@@ -147,6 +160,19 @@
                                             </div>
                                             <div class="col-md-8">
                                                 <input type="number" min="0" max="50000" class="form-control" name="makeprice" placeholder="A szósz elkészítési ára">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="form-group row">
+                                            <div class="col-md-4">
+                                                <span>Illusztráció</span>
+                                            </div>
+                                            <div class="col-md-8">
+                                                <select class="form-control" name="art" id="basicSelect">
+                                                    <option value="transparent">Nincs</option>
+                                                    <option value="tomato_sauce">Paradicsom szósz</option>
+                                                </select>
                                             </div>
                                         </div>
                                     </div>

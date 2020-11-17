@@ -141,7 +141,7 @@ class PizzadesignerController extends Controller
 
         $pizzadesigner_bases = DB::table('pizzadesigner_base')
             ->where('restaurantid', '=', $restaurantID)
-            ->orderBy('price', 'asc')
+            ->orderBy('name', 'asc')
             ->get();
         if ($pizzadesigner_bases === null) {
             return redirect('/');
@@ -162,6 +162,7 @@ class PizzadesignerController extends Controller
             'sizeid' => ['required', 'integer', 'min:0'],
             'name' => ['required', 'string', 'min:3', 'max:50'],
             'price' => ['required', 'integer', 'min:0', 'max:10000'],
+            'art' => ['required', 'string'],
             'makeprice' => ['required', 'integer', 'min:0', 'max:10000'],
             'maketime' => ['required', 'integer', 'min:0','max:120'],
         ]);
@@ -174,6 +175,7 @@ class PizzadesignerController extends Controller
         $pizzadesignerbase->name = request('name');
         $pizzadesignerbase->price = request('price');
         $pizzadesignerbase->makeprice = request('makeprice');
+        $pizzadesignerbase->art = request('art');
         $pizzadesignerbase->maketime = request('maketime');
         $pizzadesignerbase->save();
    
@@ -227,7 +229,7 @@ class PizzadesignerController extends Controller
 
         $pizzadesigner_toppings = DB::table('pizzadesigner_topping')
             ->where('restaurantid', '=', $restaurantID)
-            ->orderBy('price', 'asc')
+            ->orderBy('name', 'asc')
             ->get();
         if ($pizzadesigner_toppings === null) {
             return redirect('/');
@@ -249,6 +251,7 @@ class PizzadesignerController extends Controller
             'name' => ['required', 'string', 'min:3', 'max:50'],
             'category' => ['required', 'integer', 'min:1', 'max:10'],
             'price' => ['required', 'integer', 'min:0', 'max:10000'],
+            'art' => ['required', 'string'],
             'makeprice' => ['required', 'integer', 'min:0', 'max:10000'],
             'maketime' => ['required', 'integer', 'min:0','max:120'],
         ]);
@@ -261,6 +264,7 @@ class PizzadesignerController extends Controller
         $pizzadesignertopping->name = request('name');
         $pizzadesignertopping->category = request('category');
         $pizzadesignertopping->price = request('price');
+        $pizzadesignertopping->art = request('art');
         $pizzadesignertopping->makeprice = request('makeprice');
         $pizzadesignertopping->maketime = request('maketime');
         $pizzadesignertopping->save();
@@ -315,7 +319,7 @@ class PizzadesignerController extends Controller
     
             $pizzadesigner_sauces = DB::table('pizzadesigner_sauce')
                 ->where('restaurantid', '=', $restaurantID)
-                ->orderBy('price', 'asc')
+                ->orderBy('name', 'asc')
                 ->get();
             if ($pizzadesigner_sauces === null) {
                 return redirect('/');
@@ -336,6 +340,7 @@ class PizzadesignerController extends Controller
                 'sizeid' => ['required', 'integer', 'min:0'],
                 'name' => ['required', 'string', 'min:3', 'max:50'],
                 'price' => ['required', 'integer', 'min:0', 'max:10000'],
+                'art' => ['required', 'string'],
                 'makeprice' => ['required', 'integer', 'min:0', 'max:10000'],
                 'maketime' => ['required', 'integer', 'min:0','max:120'],
             ]);
@@ -347,6 +352,7 @@ class PizzadesignerController extends Controller
             $pizzadesignersauce->restaurantid = $restaurantID;
             $pizzadesignersauce->name = request('name');
             $pizzadesignersauce->price = request('price');
+            $pizzadesignersauce->art = request('art');
             $pizzadesignersauce->makeprice = request('makeprice');
             $pizzadesignersauce->maketime = request('maketime');
             $pizzadesignersauce->save();
@@ -404,7 +410,7 @@ class PizzadesignerController extends Controller
     
             $pizzadesigner_dough = DB::table('pizzadesigner_dough')
                 ->where('restaurantid', '=', $restaurantID)
-                ->orderBy('price', 'asc')
+                ->orderBy('name', 'asc')
                 ->get();
             if ($pizzadesigner_dough === null) {
                 return redirect('/');

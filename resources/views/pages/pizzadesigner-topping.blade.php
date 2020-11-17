@@ -60,6 +60,7 @@
                                     <table class="table table-hover-animation mb-0">
                                         <thead>
                                             <tr>
+                                                <th scope="col">Illusztráció</th>
                                                 <th scope="col">Név</th>
                                                 <th scope="col">Fogyasztói ár</th>
                                                 <th scope="col">Árrés</th>
@@ -72,9 +73,21 @@
                                             @foreach($pizzadesigner_toppings as $key => $topping)
                                                 @if($data->id == $topping->sizeid && $topping->category == 1)
                                                 <tr>
+                                                    @php 
+                                                        if (file_exists("images/pizzadesigner/".$topping->art.".png")) {
+                                                            $img = "images/pizzadesigner/".$topping->art.".png";
+                                                        } else {
+                                                            $img = "images/pizzadesigner/transparent.png";
+                                                        }
+                                                    @endphp
+                                                    <th style="padding: 0px;"><img src="{{ asset($img) }}" height="62px" width="auto" /></th>
                                                     <th scope="row"><b>{{$topping->name}}</b></th>
                                                     <td>{{number_format($topping->price, 0)}} Ft</td>
+                                                    @if(($topping->price - $topping->makeprice) <= 0)
+                                                    <td style="color: #e42728;">{{number_format(($topping->price - $topping->makeprice), 0)}} Ft</td>
+                                                    @else
                                                     <td>{{number_format(($topping->price - $topping->makeprice), 0)}} Ft</td>
+                                                    @endif
                                                     <td>{{number_format($topping->makeprice, 0)}} Ft</td>
                                                     <td>{{number_format($topping->maketime, 0)}} Perc</td>
                                                     <td>
@@ -100,6 +113,7 @@
                                     <table class="table table-hover-animation mb-0">
                                         <thead>
                                             <tr>
+                                                <th scope="col">Illusztráció</th>
                                                 <th scope="col">Név</th>
                                                 <th scope="col">Fogyasztói ár</th>
                                                 <th scope="col">Árrés</th>
@@ -112,9 +126,21 @@
                                             @foreach($pizzadesigner_toppings as $key => $topping)
                                                 @if($data->id == $topping->sizeid && $topping->category == 2)
                                                 <tr>
+                                                    @php 
+                                                        if (file_exists("images/pizzadesigner/".$topping->art.".png")) {
+                                                            $img = "images/pizzadesigner/".$topping->art.".png";
+                                                        } else {
+                                                            $img = "images/pizzadesigner/transparent.png";
+                                                        }
+                                                    @endphp
+                                                    <th style="padding: 0px;"><img src="{{ asset($img) }}" height="62px" width="auto" /></th>
                                                     <th scope="row"><b>{{$topping->name}}</b></th>
                                                     <td>{{number_format($topping->price, 0)}} Ft</td>
+                                                    @if(($topping->price - $topping->makeprice) <= 0)
+                                                    <td style="color: #e42728;">{{number_format(($topping->price - $topping->makeprice), 0)}} Ft</td>
+                                                    @else
                                                     <td>{{number_format(($topping->price - $topping->makeprice), 0)}} Ft</td>
+                                                    @endif
                                                     <td>{{number_format($topping->makeprice, 0)}} Ft</td>
                                                     <td>{{number_format($topping->maketime, 0)}} Perc</td>
                                                     <td>
@@ -140,6 +166,7 @@
                                     <table class="table table-hover-animation mb-0">
                                         <thead>
                                             <tr>
+                                                <th scope="col">Illusztráció</th>
                                                 <th scope="col">Név</th>
                                                 <th scope="col">Fogyasztói ár</th>
                                                 <th scope="col">Árrés</th>
@@ -152,9 +179,21 @@
                                             @foreach($pizzadesigner_toppings as $key => $topping)
                                                 @if($data->id == $topping->sizeid && $topping->category == 3)
                                                 <tr>
+                                                    @php 
+                                                        if (file_exists("images/pizzadesigner/".$topping->art.".png")) {
+                                                            $img = "images/pizzadesigner/".$topping->art.".png";
+                                                        } else {
+                                                            $img = "images/pizzadesigner/transparent.png";
+                                                        }
+                                                    @endphp
+                                                    <th style="padding: 0px;"><img src="{{ asset($img) }}" height="62px" width="auto" /></th>
                                                     <th scope="row"><b>{{$topping->name}}</b></th>
                                                     <td>{{number_format($topping->price, 0)}} Ft</td>
+                                                    @if(($topping->price - $topping->makeprice) <= 0)
+                                                    <td style="color: #e42728;">{{number_format(($topping->price - $topping->makeprice), 0)}} Ft</td>
+                                                    @else
                                                     <td>{{number_format(($topping->price - $topping->makeprice), 0)}} Ft</td>
+                                                    @endif
                                                     <td>{{number_format($topping->makeprice, 0)}} Ft</td>
                                                     <td>{{number_format($topping->maketime, 0)}} Perc</td>
                                                     <td>
@@ -180,6 +219,7 @@
                                     <table class="table table-hover-animation mb-0">
                                         <thead>
                                             <tr>
+                                                <th scope="col">Illusztráció</th>
                                                 <th scope="col">Név</th>
                                                 <th scope="col">Fogyasztói ár</th>
                                                 <th scope="col">Árrés</th>
@@ -192,9 +232,21 @@
                                             @foreach($pizzadesigner_toppings as $key => $topping)
                                                 @if($data->id == $topping->sizeid && $topping->category == 4)
                                                 <tr>
+                                                    @php 
+                                                        if (file_exists("images/pizzadesigner/".$topping->art.".png")) {
+                                                            $img = "images/pizzadesigner/".$topping->art.".png";
+                                                        } else {
+                                                            $img = "images/pizzadesigner/transparent.png";
+                                                        }
+                                                    @endphp
+                                                    <th style="padding: 0px;"><img src="{{ asset($img) }}" height="62px" width="auto" /></th>
                                                     <th scope="row"><b>{{$topping->name}}</b></th>
                                                     <td>{{number_format($topping->price, 0)}} Ft</td>
+                                                    @if(($topping->price - $topping->makeprice) <= 0)
+                                                    <td style="color: #e42728;">{{number_format(($topping->price - $topping->makeprice), 0)}} Ft</td>
+                                                    @else
                                                     <td>{{number_format(($topping->price - $topping->makeprice), 0)}} Ft</td>
+                                                    @endif
                                                     <td>{{number_format($topping->makeprice, 0)}} Ft</td>
                                                     <td>{{number_format($topping->maketime, 0)}} Perc</td>
                                                     <td>
@@ -220,6 +272,7 @@
                                     <table class="table table-hover-animation mb-0">
                                         <thead>
                                             <tr>
+                                                <th scope="col">Illusztráció</th>
                                                 <th scope="col">Név</th>
                                                 <th scope="col">Fogyasztói ár</th>
                                                 <th scope="col">Árrés</th>
@@ -232,9 +285,21 @@
                                             @foreach($pizzadesigner_toppings as $key => $topping)
                                                 @if($data->id == $topping->sizeid && $topping->category == 5)
                                                 <tr>
+                                                    @php 
+                                                        if (file_exists("images/pizzadesigner/".$topping->art.".png")) {
+                                                            $img = "images/pizzadesigner/".$topping->art.".png";
+                                                        } else {
+                                                            $img = "images/pizzadesigner/transparent.png";
+                                                        }
+                                                    @endphp
+                                                    <th style="padding: 0px;"><img src="{{ asset($img) }}" height="62px" width="auto" /></th>
                                                     <th scope="row"><b>{{$topping->name}}</b></th>
                                                     <td>{{number_format($topping->price, 0)}} Ft</td>
+                                                    @if(($topping->price - $topping->makeprice) <= 0)
+                                                    <td style="color: #e42728;">{{number_format(($topping->price - $topping->makeprice), 0)}} Ft</td>
+                                                    @else
                                                     <td>{{number_format(($topping->price - $topping->makeprice), 0)}} Ft</td>
+                                                    @endif
                                                     <td>{{number_format($topping->makeprice, 0)}} Ft</td>
                                                     <td>{{number_format($topping->maketime, 0)}} Perc</td>
                                                     <td>
@@ -300,11 +365,11 @@
                                             </div>
                                             <div class="col-md-8">
                                                 <select class="form-control" name="category" id="basicSelect2">
-                                                            <option value="1">Húsok</option>
-                                                            <option value="2">Sajtok</option>
-                                                            <option value="3">Zöldségek</option>
-                                                            <option value="4">Gyümölcsök</option>
-                                                            <option value="5">Egyéb</option>
+                                                        <option value="1">Húsok</option>
+                                                        <option value="2">Sajtok</option>
+                                                        <option value="3">Zöldségek</option>
+                                                        <option value="4">Gyümölcsök</option>
+                                                        <option value="5">Egyéb</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -326,6 +391,19 @@
                                             </div>
                                             <div class="col-md-8">
                                                 <input type="number" min="0" max="50000" class="form-control" name="makeprice" placeholder="A feltét elkészítési ára">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="form-group row">
+                                            <div class="col-md-4">
+                                                <span>Illusztráció</span>
+                                            </div>
+                                            <div class="col-md-8">
+                                                <select class="form-control" name="art" id="basicSelect">
+                                                    <option value="transparent">Nincs</option>
+                                                    <option value="tomato_sauce">Paradicsom szósz</option>
+                                                </select>
                                             </div>
                                         </div>
                                     </div>

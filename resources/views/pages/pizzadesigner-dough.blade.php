@@ -69,7 +69,11 @@
                                                 <tr>
                                                     <th scope="row"><b>{{$dough->name}}</b></th>
                                                     <td>{{number_format($dough->price, 0)}} Ft</td>
+                                                    @if($dough->price <= 0)
+                                                    <td style="color: #e42728;">{{number_format(($dough->price), 0)}} Ft</td>
+                                                    @else
                                                     <td>{{number_format($dough->price, 0)}} Ft</td>
+                                                    @endif
                                                     <td>
                                                         <form method="post" action="{{ url('pizzadesigner-remove-dough') }}">
                                                         @csrf
