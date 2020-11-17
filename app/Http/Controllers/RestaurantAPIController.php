@@ -1117,7 +1117,7 @@ class RestaurantAPIController extends Controller
             }
 
             //sorting products into abc order
-            usort($products, fn($a, $b) => strcmp($a->name, $b->name));
+            usort($products, function($a, $b) {return strcmp($a->name, $b->name);});
 
         }
 
