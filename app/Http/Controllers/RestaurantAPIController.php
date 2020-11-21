@@ -20,6 +20,18 @@ use App\DrinkToMenu;
 use App\SideToMenu;
 use App\Extra;
 use App\Category;
+use App\PizzadesignerBase;
+use App\PizzadesignerDough;
+use App\PizzadesignerSauce;
+use App\PizzadesignerSize;
+use App\PizzadesignerTopping;
+use App\PizzadesignerDTO;
+use App\PizzadesignerSizeDTO;
+use App\PizzadesignerBaseDTO;
+use App\PizzadesignerDoughDTO;
+use App\PizzadesignerSauceDTO;
+use App\PizzadesignerToppingsDTO;
+use App\PizzadesignerToppingDTO;
 use App\Http\Services\RestaurantService;
 use Illuminate\Support\Facades\DB;
 
@@ -1130,4 +1142,183 @@ class RestaurantAPIController extends Controller
         return response()->json($products, 200);
     }
 
+    public function getRestaurantPizzaDesigner($id) {
+        $restaurant = Restaurant::where('id', $id)->select('*')->first();
+
+        if ($restaurant === null) {
+            return response()->json("Not found", 404);
+        }
+
+        if ($restaurant->pizzadesigner == 0) {
+            $pizzadesignerDTO = new PizzadesignerDTO;
+            $pizzadesignerDTO->available = false;
+            $pizzadesignerDTO->sizes = array();
+        } else {
+            $pizzadesignerDTO = new PizzadesignerDTO;
+            $pizzadesignerDTO->available = true;
+            $isempty = false;
+
+            $pizzadesignerSize = PizzadesignerSize::where('restaurantid', $restaurant->id)->select('*')->get();
+
+            $sizes = array();
+
+            foreach ($pizzadesignerSize as $size) {
+                $pizzadesignerSizeDTO = new PizzadesignerSizeDTO;
+                $pizzadesignerSizeDTO->id = $size->id;
+                $pizzadesignerSizeDTO->size = $size->size;
+                $pizzadesignerSizeDTO->price = $size->price;
+                $pizzadesignerSizeDTO->maxtoppings = $size->toppingslimit;
+                $pizzadesignerSizeDTO->illustration = getenv('APP_URL')."/images/pizzadesigner/pizza_base.png";
+
+                // bases
+                $pizzadesignerBase = PizzadesignerBase::where('restaurantid', $restaurant->id)->where('sizeid', $size->id)->select('*')->get();
+                $bases = array();
+                foreach ($pizzadesignerBase as $base) {
+                    $pizzadesignerBaseDTO = new PizzadesignerBaseDTO;
+                    $pizzadesignerBaseDTO->id = $base->id;
+                    $pizzadesignerBaseDTO->name = $base->name;
+                    $pizzadesignerBaseDTO->price = $base->price;
+                    if ($base->art !== NULL && file_exists(public_path()."/images/pizzadesigner/".$base->art.".png")) {
+                        $pizzadesignerBaseDTO->illustration = getenv('APP_URL')."/images/pizzadesigner/".$base->art.".png";
+                    } else {
+                        $pizzadesignerBaseDTO->illustration = getenv('APP_URL')."/images/pizzadesigner/transparent.png";
+                    }
+
+                    array_push($bases, $pizzadesignerBaseDTO);
+                }
+                if (count($bases) > 0) {
+                    //sorting products into abc order
+                    usort($bases, function($a, $b) {return strcmp($a->name, $b->name);});
+
+                    $pizzadesignerSizeDTO->bases = $bases;
+                } else {
+                    $isempty = true;
+                }
+
+                // toppings
+                $meats = array();
+                $cheeses = array();
+                $vegetables = array();
+                $fruits = array();
+                $others = array();
+                $pizzadesignerTopping = PizzadesignerTopping::where('restaurantid', $restaurant->id)->where('sizeid', $size->id)->select('*')->get();
+                foreach ($pizzadesignerTopping as $topping) {
+                    $pizzadesignerToppingDTO = new PizzadesignerToppingDTO;
+                    $pizzadesignerToppingDTO->id = $topping->id;
+                    $pizzadesignerToppingDTO->name = $topping->name;
+                    $pizzadesignerToppingDTO->price = $topping->price;
+                    if ($topping->art !== NULL && file_exists(public_path()."/images/pizzadesigner/".$topping->art.".png")) {
+                        $pizzadesignerToppingDTO->illustration = getenv('APP_URL')."/images/pizzadesigner/".$topping->art.".png";
+                    } else {
+                        $pizzadesignerToppingDTO->illustration = getenv('APP_URL')."/images/pizzadesigner/transparent.png";
+                    }
+
+                    if ($topping->category == 1) {
+                        array_push($meats, $pizzadesignerToppingDTO);
+                    } else if ($topping->category == 2) {
+                        array_push($cheeses, $pizzadesignerToppingDTO);
+                    } else if ($topping->category == 3) {
+                        array_push($vegetables, $pizzadesignerToppingDTO);
+                    } else if ($topping->category == 4) {
+                        array_push($fruits, $pizzadesignerToppingDTO);
+                    } else if ($topping->category == 5) {
+                        array_push($others, $pizzadesignerToppingDTO);
+                    }
+                }
+
+                $pizzadesignerToppingsDTO = new PizzadesignerToppingsDTO;
+
+                //sorting products into abc order
+                usort($meats, function($a, $b) {return strcmp($a->name, $b->name);});
+
+                $pizzadesignerToppingsDTO->meats = $meats;
+
+                //sorting products into abc order
+                usort($cheeses, function($a, $b) {return strcmp($a->name, $b->name);});
+
+                $pizzadesignerToppingsDTO->cheeses = $cheeses;
+
+                //sorting products into abc order
+                usort($vegetables, function($a, $b) {return strcmp($a->name, $b->name);});
+
+                $pizzadesignerToppingsDTO->vegetables = $vegetables;
+
+                //sorting products into abc order
+                usort($bases, function($a, $b) {return strcmp($a->fruits, $b->name);});
+
+                $pizzadesignerToppingsDTO->fruits = $fruits;
+
+                //sorting products into abc order
+                usort($others, function($a, $b) {return strcmp($a->name, $b->name);});
+
+                $pizzadesignerToppingsDTO->others = $others;
+
+                if ((count($meats) + count($cheeses) + count($vegetables) + count($fruits) + count($others)) > 0) {
+                    $pizzadesignerSizeDTO->toppings = $pizzadesignerToppingsDTO;
+                } else {
+                    $isempty = true;
+                }
+
+                // sauces
+                $pizzadesignerSauce = PizzadesignerSauce::where('restaurantid', $restaurant->id)->where('sizeid', $size->id)->select('*')->get();
+                $sauces = array();
+                foreach ($pizzadesignerSauce as $sauce) {
+                    $pizzadesignerSauceDTO = new PizzadesignerSauceDTO;
+                    $pizzadesignerSauceDTO->id = $sauce->id;
+                    $pizzadesignerSauceDTO->name = $sauce->name;
+                    $pizzadesignerSauceDTO->price = $sauce->price;
+                    if ($sauce->art !== NULL && file_exists(public_path()."/images/pizzadesigner/".$sauce->art.".png")) {
+                        $pizzadesignerSauceDTO->illustration = getenv('APP_URL')."/images/pizzadesigner/".$sauce->art.".png";
+                    } else {
+                        $pizzadesignerSauceDTO->illustration = getenv('APP_URL')."/images/pizzadesigner/transparent.png";
+                    }
+
+                    array_push($sauces, $pizzadesignerSauceDTO);
+                }
+
+                //sorting products into abc order
+                usort($sauces, function($a, $b) {return strcmp($a->name, $b->name);});
+
+                $pizzadesignerSizeDTO->sauces = $sauces;
+
+                // doughs
+                $pizzadesignerDough = PizzadesignerDough::where('restaurantid', $restaurant->id)->where('sizeid', $size->id)->select('*')->get();
+                $doughs = array();
+                foreach ($pizzadesignerDough as $dough) {
+                    $pizzadesignerDoughDTO = new PizzadesignerDoughDTO;
+                    $pizzadesignerDoughDTO->id = $dough->id;
+                    $pizzadesignerDoughDTO->name = $dough->name;
+                    $pizzadesignerDoughDTO->price = $dough->price;
+
+                    array_push($doughs, $pizzadesignerDoughDTO);
+                }
+                if (count($doughs) > 0) {
+
+                    //sorting products into abc order
+                    usort($doughs, function($a, $b) {return strcmp($a->name, $b->name);});
+
+                    $pizzadesignerSizeDTO->doughs = $doughs;
+                } else {
+                    $isempty = true;
+                }
+
+                if ((count($meats) + count($cheeses) + count($vegetables) + count($fruits) + count($others)) > 0 && count($doughs) > 0 && count($bases) > 0) {
+                    array_push($sizes, $pizzadesignerSizeDTO);
+                }
+            }
+
+            //sorting products into abc order
+            usort($sizes, function($a, $b) {return strcmp($a->size, $b->size);});
+
+            $pizzadesignerDTO->sizes = $sizes;
+        }
+
+        if (count($pizzadesignerDTO->sizes) <= 0) {
+            $pizzadesignerDTO = new PizzadesignerDTO;
+            $pizzadesignerDTO->available = false;
+            $pizzadesignerDTO->sizes = array();
+        }
+
+        return response()->json($pizzadesignerDTO, 200);
+    }
 }

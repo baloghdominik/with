@@ -31,6 +31,7 @@ Route::get('restaurant/logo/{id}', 'RestaurantAPIController@getRestaurantLogoByI
 Route::get('restaurant/lowercasename/{lowercasename}', 'RestaurantAPIController@getRestaurantIdBylowercasename');
 
 Route::get('restaurant/{id}/products/category/{categoryid}', 'RestaurantAPIController@getRestaurantProductsByCategory');
+Route::get('restaurant/{id}/products/pizzadesigner', 'RestaurantAPIController@getRestaurantPizzaDesigner');
 
 Route::get('restaurant/id/{id}', 'RestaurantAPIController@getRestaurantById');
 Route::get('restaurants', 'RestaurantAPIController@getAllRestaurants');
