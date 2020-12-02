@@ -41,6 +41,10 @@ Route::group(['middleware' => 'auth:api'], function(){
     Route::post('details', 'CustomerController@details');
     Route::post('logout', 'CustomerController@logout');
 
+    Route::get('customer/details', 'CustomerController@getCustomerDetails');
+    Route::post('customer/update/details', 'CustomerController@updateCustomerDetails');
+    Route::post('customer/update/password', 'CustomerController@updateCustomerPassword');
+
     Route::post('reservate', 'ReservationController@addReservation');
     Route::post('addorder', 'OrderController@addOrder');
 });
