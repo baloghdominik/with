@@ -411,7 +411,7 @@
                                         <input name="order_id" value="{{ $order->id}}" hidden />
                                         <fieldset class="form-group">
                                                     <select name="pickuptime" required class="form-control">
-                                                        <option value="0" selected disabled>Válasszon időpontot a helyszíni átvételhez!</option>
+                                                        <option value="" selected disabled>Válasszon időpontot a helyszíni átvételhez!</option>
                                                         <option value="5">5 perc múlva</option>
                                                         <option value="10">10 perc múlva</option>
                                                         <option value="15">15 perc múlva</option>

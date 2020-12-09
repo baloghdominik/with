@@ -5,9 +5,24 @@ use App\Http\Controllers\Controller;
 use App\Customer; 
 use App\CustomerDTO; 
 use App\Zipcode; 
+use App\Order;
+use App\OrderMeal;
+use App\OrderMealExtras;
+use App\OrderSide;
+use App\OrderDrink;
+use App\OrderMenu;
+use App\OrderMenuExtras;
+use App\OrderPizza;
+use App\OrderPizzaSauces;
+use App\OrderPizzaToppings;
+use App\CustomerOrderDTO;
+use App\CustomerOrderProductDTO;
+use App\Restaurant;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth; 
 use Validator;
+use DateTime;
+use DateTimeZone;
 class CustomerController extends Controller {
 
     public $successStatus = 200;
@@ -311,5 +326,269 @@ class CustomerController extends Controller {
         }
 
         return response()->json(['success'=>"Customer password has been updated."], $this-> successStatus); 
+    }
+
+    public function getCustomerOrders($status) {
+        $customer = Auth::user();
+
+        if ($status == "inprogress") {
+            $customerorders = Order::where('customer_id', '=', $customer->id)
+            ->where('order.is_final_order', '=', 1)
+            ->where('order.is_refund_finished', '=', 0)
+            ->where('order.is_finished', '=', 0)
+            ->orderBy('order.created_at', 'DESC')
+            ->with('orderside.side')
+            ->with('orderdrink.drink')
+            ->with('ordermeal.meal')
+            ->with('ordermenu.meal')
+            ->with('ordermenu.side')
+            ->with('ordermenu.drink')
+            ->with('ordermenu.ordermenuextras')
+            ->with('ordermeal.ordermealextras.extra')->get();
+        } else {
+            $customerorders = Order::where('customer_id', '=', $customer->id)
+            ->where('order.is_refund_finished', '=', 1)
+            ->orWhere('order.is_finished', '=', 1)
+            ->orderBy('order.created_at', 'DESC')
+            ->with('orderside.side')
+            ->with('orderdrink.drink')
+            ->with('ordermeal.meal')
+            ->with('ordermenu.meal')
+            ->with('ordermenu.side')
+            ->with('ordermenu.drink')
+            ->with('ordermenu.ordermenuextras')
+            ->with('ordermeal.ordermealextras.extra')->get();
+        }
+
+        $orders = array();
+
+        foreach ($customerorders as $order) {
+
+            $customerOrderDTO = new CustomerOrderDTO;
+
+            $restaurant = Restaurant::where('id', $order->restaurant_id)->select('name', 'id', 'lowercasename', 'deliverytime', 'address')->first();
+
+            if ($restaurant === null) {
+                $customerOrderDTO->restaurant_name = "Nem található!";
+                $customerOrderDTO->restaurant_lowercasename = "nemtalalhato";
+                $customerOrderDTO->restaurant_id = $order->restaurant_id;
+            } else {
+                $customerOrderDTO->restaurant_name = $restaurant->name;
+                $customerOrderDTO->restaurant_lowercasename = $restaurant->lowercasename;
+                $customerOrderDTO->restaurant_id = $restaurant->id;
+            }
+
+            $ordered_at = DateTime::createFromFormat('Y-m-d H:i:s', $order->created_at);
+            $customerOrderDTO->ordered_at = $ordered_at->format('Y-m-d H:i');;
+
+            if ($order->is_refund == 1 && $order->is_refund_finished == 0) {
+                $customerOrderDTO->status = "Visszatérítésre vár!";
+            } else if ($order->is_refund_finished == 1) {
+                $customerOrderDTO->status = "Elutasítva!";
+            } else if ($order->is_accepted == 0) {
+                $customerOrderDTO->status = "Felvételre vár!";
+            } else if ($order->is_done == 0) {
+                $customerOrderDTO->status = "Éppen készül!";
+            } else if ($order->is_refund == 0) {
+                if ($order->is_delivery == 1) {
+                    if ($order->is_out_for_delivery == 0) {
+                        $customerOrderDTO->status = "Futárra vár!";
+                    } else if ($order->is_delivered == 0) {
+                        $customerOrderDTO->status = "Szállítás alatt!";
+                    } else if ($order->is_finished == 0) {
+                        $customerOrderDTO->status = "Kiszállítva!";
+                    } else if ($order->is_finished == 1) {
+                        $customerOrderDTO->status = "Teljesítve!";
+
+                        $finished_at = DateTime::createFromFormat('Y-m-d H:i:s', $order->finished_at);
+                        $customerOrderDTO->finished_at = $finished_at->format('Y-m-d H:i');
+                    }
+                } else {
+                    if ($order->is_finished == 0) {
+                        $customerOrderDTO->status = "Átveheti rendelését!";
+                    } else if ($order->is_finished == 1) {
+                        $customerOrderDTO->status = "Teljesítve!";
+
+                        $finished_at = DateTime::createFromFormat('Y-m-d H:i:s', $order->finished_at);
+                        $customerOrderDTO->finished_at = $finished_at->format('Y-m-d H:i');
+                    }
+                }
+            } else {
+                $customerOrderDTO->status = "Ismeretlen.";
+            }
+
+            if ($order->coupon === NULL) {
+                $customerOrderDTO->coupon = NULL; 
+                $customerOrderDTO->coupoin_sale = "-0%";   
+            } else {
+                $customerOrderDTO->coupon = $order->coupon; 
+                $customerOrderDTO->coupoin_sale = "-".$order->coupon_sale."%";   
+            }
+
+            if ($order->is_online_payment == 1) {
+                $customerOrderDTO->payment_type = "Online előre fizetés";
+            } else if ($order->is_online_payment == 0) {
+                $customerOrderDTO->payment_type = "Utánvét";
+            }
+
+            if ($order->is_delivery == 1) {
+                $customerOrderDTO->delivery_type = "Házhozszállítás";
+            } else {
+                $customerOrderDTO->delivery_type = "Helyszíni átvétel";
+            }
+
+            $customerOrderDTO->total_price = number_format($order->total_price, 0)."Ft";
+
+            $today = new DateTime("now", new DateTimeZone('Europe/Budapest'));
+            $today = $today->format('Y-m-d');
+            if ($order->is_delivery == 1) {
+                if ($order->is_accepted == 0) {
+                    $customerOrderDTO->delivery_time = "Átvételre vár!";
+                } else {
+                    $delivery_at = DateTime::createFromFormat('Y-m-d H:i:s', $order->created_at);
+                    $timemodifier = "+".$restaurant->deliverytime." minutes";
+                    $delivery_at->modify($timemodifier);
+                    $delivery_at_datetime = $delivery_at->format('Y-m-d H:i');
+                    $delivery_at_time = $delivery_at->format('H:i');
+                    $delivery_at_date = $delivery_at->format('Y-m-d');
+
+                    if ($today == $delivery_at_date) {
+                        $deliverytime = "Ma ".$delivery_at_time;
+                    } else {
+                        $deliverytime = $delivery_at_datetime;
+                    }
+
+                    $customerOrderDTO->delivery_time = $deliverytime;
+                }
+
+                $customerOrderDTO->delivery_address = $customer->zipcode." ".$customer->city." ".$customer->address;
+            } else {
+                if ($order->pickuptime === NULL) {
+                    $customerOrderDTO->delivery_time = "Átvételre vár!";
+                } else {
+                    $pickup_at = DateTime::createFromFormat('Y-m-d H:i:s', $order->pickuptime);
+                    $pickup_at_datetime = $pickup_at->format('Y-m-d H:i');
+                    $pickup_at_time = $pickup_at->format('H:i');
+                    $pickup_at_date = $pickup_at->format('Y-m-d');
+
+                    if ($today == $pickup_at_date) {
+                        $deliverytime = "Ma ".$pickup_at_time;
+                    } else {
+                        $deliverytime = $pickup_at_datetime;
+                    }
+
+                    $customerOrderDTO->delivery_time = $deliverytime;
+                }
+                $customerOrderDTO->delivery_address = $restaurant->address;
+            }
+
+            $customerOrderDTO->customer_phone = $customer->phone;
+            $customerOrderDTO->name = $customer->lastname." ".$customer->firstname;
+
+            $products = array();
+
+            foreach ($order->ordermeal as $item) {
+                $customerOrderProductDTO = new CustomerOrderProductDTO;
+                $customerOrderProductDTO->product_name = $item->meal->name;
+
+                $description = "";
+                foreach ($item->ordermealextras as $extra) {
+                    if ($description == "") {
+                        $description = $description."+".$extra->extra->name;
+                    } else {
+                        $description = $description.", +".$extra->extra->name;
+                    }
+                }
+                $customerOrderProductDTO->product_description = $description;
+
+                $customerOrderProductDTO->product_quantity = $item->quantity;
+
+                array_push($products, $customerOrderProductDTO);
+            }
+            
+            foreach ($order->orderside as $item) {
+                $customerOrderProductDTO = new CustomerOrderProductDTO;
+                $customerOrderProductDTO->product_name = $item->side->name;
+                $customerOrderProductDTO->product_description = "";
+                $customerOrderProductDTO->product_quantity = $item->quantity;
+
+                array_push($products, $customerOrderProductDTO);
+            }
+
+            foreach ($order->orderdrink as $item) {
+                $customerOrderProductDTO = new CustomerOrderProductDTO;
+                $customerOrderProductDTO->product_name = $item->drink->name;
+                $customerOrderProductDTO->product_description = "";
+                $customerOrderProductDTO->product_quantity = $item->quantity;
+
+                array_push($products, $customerOrderProductDTO);
+            }
+
+            foreach ($order->ordermenu as $item) {
+                $customerOrderProductDTO = new CustomerOrderProductDTO;
+                $customerOrderProductDTO->product_name = $item->menu->name." +".$item->side->name." +".$item->drink->name." (".$item->drink->size."ml)";
+
+                $description = "";
+                foreach ($item->ordermenuextras as $extra) {
+                    if ($description == "") {
+                        $description = $description."+".$extra->extra->name;
+                    } else {
+                        $description = $description.", +".$extra->extra->name;
+                    }
+                }
+                $customerOrderProductDTO->product_description = $description;
+
+                $customerOrderProductDTO->product_quantity = $item->quantity;
+
+                array_push($products, $customerOrderProductDTO);
+            }
+
+            foreach ($order->orderpizza as $item) {
+                $customerOrderProductDTO = new CustomerOrderProductDTO;
+                $customerOrderProductDTO->product_name = $item->size->size."cm-es Egyéni Pizza";
+
+                $description = "Tészta: ".$item->dough->name." | Alap: ".$item->base->name." | Feltétek: ";
+
+                $toppings = "";
+                foreach ($item->toppings as $topping) {
+                    if ($toppings == "") {
+                        $toppings = $topping->topping->name;
+                    } else {
+                        $toppings = $toppings.", ".$topping->topping->name;
+                    }
+                }
+                if (strlen($toppings) > 1) {
+                    $description = $description.$toppings;
+                } else {
+                    $description = $description."nincs";
+                }
+
+                $sauces = "";
+                foreach ($item->sauces as $sauce) {
+                    if ($sauces == "") {
+                        $sauces = $sauce->sauce->name;
+                    } else {
+                        $sauces = $sauces.", ".$sauce->sauce->name;
+                    }
+                }
+                if (strlen($sauces) > 1) {
+                    $description = $description." | Szószok: ".$sauces;
+                } 
+
+                $customerOrderProductDTO->product_description = $description;
+
+                $customerOrderProductDTO->product_quantity = $item->quantity;
+
+                array_push($products, $customerOrderProductDTO);
+            }
+
+            usort($products, function($a, $b) {return strcmp($a->product_name, $b->product_name);});
+
+            $customerOrderDTO->products = $products;
+
+            array_push($orders, $customerOrderDTO);
+        }
+
+        return response()->json($orders, 200);
     }
 }

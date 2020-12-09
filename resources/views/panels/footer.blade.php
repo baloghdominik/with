@@ -21,8 +21,9 @@
                 </button>
             </div>
             <div class="modal-body text-center">
-                <h1><i class="fa fa-check" style="color: #47b272 !important;"></i></h1>
-                <h4 style="color: #47b272 !important;">Új rendelés!</h4>
+                <!--<h1><i class="fas fa-cash-register" style="color: #47b272 !important;"></i></h1>-->
+                <h4 style="color: #47b272 !important; font-size: 1.65rem; font-weight: 800; padding-top: 10px; padding-bottom: 10px;"><span id="orderAmount"></span> új rendelés!</h4>
+                <img src="{{ asset('images/sell.gif') }}" width="100%" height="auto">
             </div>
             <div class="modal-footer">
                 <a href="{{ url('orders') }}" class="btn btn-primary" >Megtekintés</a>
@@ -77,11 +78,12 @@ if (this.readyState == 4 && this.status == 200) {
     document.getElementById("reservations").innerHTML = myObj.reservation;
     document.getElementById("orders").innerHTML = myObj.order;
     if (myObj.order > 0) {
+        document.getElementById("orderAmount").innerHTML = myObj.order;
         notificate();
     }
 }
 };
-xmlhttp.open("GET", 'https://admin.with.hu/api/notification/{{ Auth::user()->restaurantid }}', false);
+xmlhttp.open("GET", '{{ getenv('APP_URL') }}/api/notification/{{ Auth::user()->restaurantid }}', false);
 xmlhttp.send();
 
 window.setInterval(function(){
@@ -93,7 +95,7 @@ if (this.readyState == 4 && this.status == 200) {
     document.getElementById("orders").innerHTML = myObj.order;
 }
 };
-xmlhttp.open("GET", 'https://admin.with.hu/api/notification/{{ Auth::user()->restaurantid }}', true);
+xmlhttp.open("GET", '{{ getenv('APP_URL') }}/api/notification/{{ Auth::user()->restaurantid }}', true);
 xmlhttp.send();
 }, 15000);
 
@@ -105,11 +107,12 @@ if (this.readyState == 4 && this.status == 200) {
     var myObj = JSON.parse(this.response);
 
     if (myObj.order > 0) {
+        document.getElementById("orderAmount").innerHTML = myObj.order;
         notificate();
     }
 }
 };
-xmlhttp.open("GET", 'https://admin.with.hu/api/notification/{{ Auth::user()->restaurantid }}', true);
+xmlhttp.open("GET", '{{ getenv('APP_URL') }}/api/notification/{{ Auth::user()->restaurantid }}', true);
 xmlhttp.send();
 }, 60000);
 

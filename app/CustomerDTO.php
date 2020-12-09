@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class CustomerDTO extends Model
 {
-    public $table = "meal";
     protected $fillable = [
         'firstname', 
         'lastname',
