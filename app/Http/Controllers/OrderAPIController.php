@@ -32,6 +32,7 @@ class OrderAPIController extends Controller {
             'restaurant_id' => 'integer|min:0',
             'is_delivery' => 'integer|min:0|max:1|required',
             'coupon' => 'string',
+            'comment' => 'string|max:501',
             'is_online_payment' => 'integer|min:0|max:1|required',
             'meal.*.meal_id' => 'integer|min:0',
             'meal.*.quantity' => 'integer|min:1',
@@ -64,6 +65,24 @@ class OrderAPIController extends Controller {
         $order->restaurant_id = request('restaurant_id');
         $restaurantID = request('restaurant_id');
         $order->customer_id = $customer->id;
+
+        $order->comment = request('comment');
+
+        function randomString($length = 10, $type = 1) {
+            if ($type == 1) {
+                $characters = 'AWWWBCDEFGHIJKWWWLMNOPQRSWWWTUVWXYZ';
+            } else {
+                $characters = '0123456789';
+            }
+            $charactersLength = strlen($characters);
+            $randomString = '';
+            for ($i = 0; $i < $length; $i++) {
+                $randomString .= $characters[rand(0, $charactersLength - 1)];
+            }
+            return $randomString;
+        }
+
+        $order->identifier = strtoupper("#".substr(date("M"), 0, 2).date("d")."-".randomString(2, 1).randomString(2, 2)."-".randomString(2, 1).randomString(2, 2));
 
         if (!$RestaurantService->isValidCustomer($customer->id)) {
             return response()->json(['error'=>"Hibás felhasználó."], 400); 

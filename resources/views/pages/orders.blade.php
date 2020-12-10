@@ -264,6 +264,9 @@
                                 <p><i class="fa fa-phone" ></i> {{ $order->customer->phone }}</p>
                                 <p><i class="fa fa-envelope" ></i> {{ $order->customer->email }}</p>
                                 <p><i class="fa fa-address-card" ></i> {{ $order->customer->zipcode }} {{ $order->customer->city }} {{ $order->customer->address }}</p>
+                                @if (strlen($order->comment) > 2)
+                                <p><i class="fas fa-comment" ></i> {{ $order->comment }}</p>
+                                @endif
                                 <p><i class="fa fa-clock" ></i> {{ $order->created_at }}</p>
                                 @if ($order->pickuptime != NULL && $order->is_delivery == 0)
                                 <p><i class="fa fa-calendar" ></i> Várható átvétel: {{ $order->pickuptime }}</p>
@@ -347,7 +350,7 @@
                                     @endphp
                                     <p><i class="fa fa-hourglass" ></i> Rendeléstől - Teljesítésig eltelt idő: {{ $t }}</p>
                                 @endif
-                                <p><i class="fa fa-circle" ></i> Azonosító: #W{{ $order->id }}</p>
+                                <p><i class="fa fa-circle" ></i> Azonosító: {{ $order->identifier }}</p>
                                 <div id="warn{{ $n }}" style="display:none;">
                                     <div class="alert alert-danger" role="alert">
                                         <h4 class="alert-heading">Figyelem!</h4>
@@ -726,6 +729,9 @@
                                 <p><i class="fa fa-phone" ></i> {{ $order->customer->phone }}</p>
                                 <p><i class="fa fa-envelope" ></i> {{ $order->customer->email }}</p>
                                 <p><i class="fa fa-address-card" ></i> {{ $order->customer->zipcode }} {{ $order->customer->city }} {{ $order->customer->address }}</p>
+                                @if (strlen($order->comment) > 2)
+                                <p><i class="fas fa-comment" ></i> {{ $order->comment }}</p>
+                                @endif
                                 <p><i class="fa fa-clock" ></i> {{ $order->created_at }}</p>
                                 @if ($order->pickuptime != NULL && $order->is_delivery == 0)
                                 <p><i class="fa fa-calendar" ></i> Várható átvétel: {{ $order->pickuptime }}</p>
@@ -809,7 +815,7 @@
                                     @endphp
                                     <p><i class="fa fa-hourglass" ></i> Rendeléstől - Teljesítésig eltelt idő: {{ $t }}</p>
                                 @endif
-                                    <p><i class="fa fa-circle" ></i> Azonosító: #W{{ $order->id }}</p>
+                                    <p><i class="fa fa-circle" ></i> Azonosító: {{ $order->identifier }}</p>
                                 <div id="warn{{ $n }}" style="display:none;">
                                     <div class="alert alert-danger" role="alert">
                                         <h4 class="alert-heading">Figyelem!</h4>
@@ -958,7 +964,7 @@
             $s++;
             @endphp
             <div class="col-12 ">
-                <div class="card ecommerce-card">
+                <div class="card ecommerce-card" style="opacity: 0.5;">
                     <div class="card-body" style="padding: 0px;">
                         <div class="row" style="margin: 0px;">
 
@@ -1139,6 +1145,9 @@
                                 <p><i class="fa fa-phone" ></i> {{ $order->customer->phone }}</p>
                                 <p><i class="fa fa-envelope" ></i> {{ $order->customer->email }}</p>
                                 <p><i class="fa fa-address-card" ></i> {{ $order->customer->zipcode }} {{ $order->customer->city }} {{ $order->customer->address }}</p>
+                                @if (strlen($order->comment) > 2)
+                                <p><i class="fas fa-comment" ></i> {{ $order->comment }}</p>
+                                @endif
                                 <p><i class="fa fa-clock" ></i> {{ $order->created_at }}</p>
                                 @if ($order->pickuptime != NULL && $order->is_delivery == 0)
                                 <p><i class="fa fa-calendar" ></i> Várható átvétel: {{ $order->pickuptime }}</p>
@@ -1222,7 +1231,7 @@
                                     @endphp
                                     <p><i class="fa fa-hourglass" ></i> Rendeléstől - Teljesítésig eltelt idő: {{ $t }}</p>
                                 @endif
-                                <p><i class="fa fa-circle" ></i> Azonosító: #W{{ $order->id }}</p>
+                                <p><i class="fa fa-circle" ></i> Azonosító: {{ $order->identifier }}</p>
                                 <div id="warn{{ $n }}" style="display:none;">
                                     <div class="alert alert-danger" role="alert">
                                         <h4 class="alert-heading">Figyelem!</h4>

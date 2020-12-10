@@ -28,7 +28,9 @@ class Order extends Model
         'is_cancelled',
         'is_refund',
         'is_refiund_finished',
-        'pickuptime'
+        'pickuptime'.
+        'identifier',
+        'comment'
     ];
 
      /**

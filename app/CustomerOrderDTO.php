@@ -8,7 +8,8 @@ class CustomerOrderDTO extends Model
 {
     protected $fillable = [
         'restaurant_name', 
-        'restaurant_id', 
+        'restaurant_id',
+        'identifier', 
         'ordered_at', 
         'finished_at', 
         'status', 
@@ -21,6 +22,7 @@ class CustomerOrderDTO extends Model
         'delivery_address',
         'customer_phone',
         'customer_name',
+        'comment',
         'products'
     ];
 }

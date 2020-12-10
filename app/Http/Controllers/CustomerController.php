@@ -381,6 +381,10 @@ class CustomerController extends Controller {
             $ordered_at = DateTime::createFromFormat('Y-m-d H:i:s', $order->created_at);
             $customerOrderDTO->ordered_at = $ordered_at->format('Y-m-d H:i');;
 
+            $customerOrderDTO->identifier = $order->identifier;
+
+            $customerOrderDTO->comment = $order->comment;
+
             if ($order->is_refund == 1 && $order->is_refund_finished == 0) {
                 $customerOrderDTO->status = "Visszatérítésre vár!";
             } else if ($order->is_refund_finished == 1) {
@@ -443,7 +447,7 @@ class CustomerController extends Controller {
             $today = $today->format('Y-m-d');
             if ($order->is_delivery == 1) {
                 if ($order->is_accepted == 0) {
-                    $customerOrderDTO->delivery_time = "Átvételre vár!";
+                    $customerOrderDTO->delivery_time = "Felvételre vár!";
                 } else {
                     $delivery_at = DateTime::createFromFormat('Y-m-d H:i:s', $order->created_at);
                     $timemodifier = "+".$restaurant->deliverytime." minutes";
