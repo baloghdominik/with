@@ -330,16 +330,18 @@ a.es-button, button.es-button {
   font-family: arial, sans-serif;
   border-collapse: collapse;
   width: 100%;
+  background-color: #e7e7e7;
 }
 
 .products tr {
-    background-color: #fff;
+    background-color: #e7e7e7;
 }
 
 .products td, .products th {
   text-align: left;
   padding: 4px;
   font-size: 12px;
+  border-bottom: 1px solid #ccc;
 }
 
 .bg-grey {
