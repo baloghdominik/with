@@ -364,7 +364,7 @@ a.es-button, button.es-button {
 				<v:fill type="tile" src="{{ asset('images/mail-order-bg.png') }}" color="#f6f6f6" origin="0.5, 0" position="0.5,0"></v:fill>
 			</v:background>
 		<![endif]--> 
-   <table class="es-wrapper" width="100%" cellspacing="0" cellpadding="0" style="background-position: center top"> 
+   <table class="es-wrapper" width="100%" cellspacing="0" cellpadding="0" style="background-color: #e7e7e7; background-image: url('{{ asset('images/mail-order-bg.png') }}'); background-position: center top" background="{{ asset('images/mail-order-bg.png') }}"> 
      <tr> 
       <td valign="top"> 
        <table class="es-content" cellspacing="0" cellpadding="0" align="center"> 
