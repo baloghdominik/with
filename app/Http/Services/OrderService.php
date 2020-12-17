@@ -123,6 +123,16 @@ class OrderService
         }
     }
 
+    public function getMealName($mealid, $restaurantid) {
+        $meal = DB::table('meal')
+            ->select('name')
+            ->where('restaurantid', '=', $restaurantid)
+            ->where('id', '=', $mealid)
+            ->first();
+        
+        return $meal->name;
+    }
+
     public function getMealMaxExtras($mealid, $restaurantid) {
         $meal = DB::table('meal')
             ->select('extralimit')
@@ -196,6 +206,16 @@ class OrderService
             ->first();
         
         return $extra->price;
+    }
+
+    public function getExtraName($extraid, $restaurantid) {
+        $extra = DB::table('extra')
+            ->select('name')
+            ->where('restaurantid', '=', $restaurantid)
+            ->where('id', '=', $extraid)
+            ->first();
+        
+        return $extra->name;
     }
 
     public function getExtraMargin($extraid, $restaurantid) {
@@ -298,6 +318,16 @@ class OrderService
         } else {
             return $side->price;
         }
+    }
+
+    public function getSideName($sideid, $restaurantid) {
+        $side = DB::table('side')
+            ->select('name')
+            ->where('restaurantid', '=', $restaurantid)
+            ->where('id', '=', $sideid)
+            ->first();
+        
+        return $side->name;
     }
 
     public function getSideMargin($sideid, $restaurantid) {
@@ -407,6 +437,16 @@ class OrderService
         }
     }
 
+    public function getDrinkName($drinkid, $restaurantid) {
+        $drink = DB::table('drink')
+            ->select('name', 'size')
+            ->where('restaurantid', '=', $restaurantid)
+            ->where('id', '=', $drinkid)
+            ->first();
+        
+        return $drink->name." (".$drink->size."ml)";
+    }
+
     public function getDrinkMargin($drinkid, $restaurantid) {
         $drink = DB::table('drink')
             ->select('price', 'saleprice', 'sale', 'makeprice')
@@ -483,6 +523,16 @@ class OrderService
             ->first();
 
         return $menu->menusalepercent;
+    }
+
+    public function getMenuName($menuid, $restaurantid) {
+        $menu = DB::table('menu')
+            ->select('name')
+            ->where('restaurantid', '=', $restaurantid)
+            ->where('id', '=', $menuid)
+            ->first();
+
+        return $menu->name;
     }
 
     public function getOrderMenuID($orderid, $menuid) {
@@ -722,6 +772,16 @@ class OrderService
         return $pizzadesigner_size->price;
     }
 
+    public function getPizzadesignerSizeName($pizzadesigner_size_id, $restaurantid) {
+        $pizzadesigner_size = DB::table('pizzadesigner_size')
+            ->select('size')
+            ->where('restaurantid', '=', $restaurantid)
+            ->where('id', '=', $pizzadesigner_size_id)
+            ->first();
+        
+        return $pizzadesigner_size->size."cm";
+    }
+
     public function getPizzadesignerSizeMargin($pizzadesigner_size_id, $restaurantid) {
         $pizzadesigner_size = DB::table('pizzadesigner_size')
             ->select('price', 'makeprice')
@@ -766,6 +826,16 @@ class OrderService
         return $pizzadesigner_base->price;
     }
 
+    public function getPizzadesignerBaseName($pizzadesigner_base_id, $restaurantid) {
+        $pizzadesigner_base = DB::table('pizzadesigner_base')
+            ->select('name')
+            ->where('restaurantid', '=', $restaurantid)
+            ->where('id', '=', $pizzadesigner_base_id)
+            ->first();
+        
+        return $pizzadesigner_base->name;
+    }
+
     public function getPizzadesignerBaseMargin($pizzadesigner_base_id, $restaurantid) {
         $pizzadesigner_base = DB::table('pizzadesigner_base')
             ->select('price', 'makeprice')
@@ -798,6 +868,16 @@ class OrderService
             ->first();
         
         return $pizzadesigner_dough->price;
+    }
+
+    public function getPizzadesignerDoughName($pizzadesigner_dough_id, $restaurantid) {
+        $pizzadesigner_dough = DB::table('pizzadesigner_dough')
+            ->select('name')
+            ->where('restaurantid', '=', $restaurantid)
+            ->where('id', '=', $pizzadesigner_dough_id)
+            ->first();
+        
+        return $pizzadesigner_dough->name;
     }
 
     public function getPizzadesignerDoughMargin($pizzadesigner_dough_id, $restaurantid) {
@@ -834,6 +914,16 @@ class OrderService
         return $pizzadesigner_topping->price;
     }
 
+    public function getPizzadesignerToppingName($pizzadesigner_topping_id, $restaurantid) {
+        $pizzadesigner_topping = DB::table('pizzadesigner_topping')
+            ->select('name')
+            ->where('restaurantid', '=', $restaurantid)
+            ->where('id', '=', $pizzadesigner_topping_id)
+            ->first();
+        
+        return $pizzadesigner_topping->name;
+    }
+
     public function getPizzadesignerToppingMargin($pizzadesigner_topping_id, $restaurantid) {
         $pizzadesigner_topping = DB::table('pizzadesigner_topping')
             ->select('price', 'makeprice')
@@ -866,6 +956,16 @@ class OrderService
             ->first();
         
         return $pizzadesigner_sauce->price;
+    }
+
+    public function getPizzadesignerSauceName($pizzadesigner_sauce_id, $restaurantid) {
+        $pizzadesigner_sauce = DB::table('pizzadesigner_sauce')
+            ->select('name')
+            ->where('restaurantid', '=', $restaurantid)
+            ->where('id', '=', $pizzadesigner_sauce_id)
+            ->first();
+        
+        return $pizzadesigner_sauce->name;
     }
 
     public function getPizzadesignerSauceMargin($pizzadesigner_sauce_id, $restaurantid) {

@@ -10,6 +10,7 @@ class OrderMenuExtras extends Model
     protected $fillable = [
         'order_menu_id', 
         'extra_id', 
+        'name',
         'price'
     ];
 

@@ -12,6 +12,7 @@ class OrderPizza extends Model
         'pizzadesigner_base_id', 
         'pizzadesigner_dough_id', 
         'pizzadesigner_size_id', 
+        'name',
         'quantity', 
         'price'
     ];

@@ -12,6 +12,7 @@ use App\OrderMenuExtras;
 use App\OrderPizza;
 use App\OrderPizzaSauces;
 use App\OrderPizzaToppings;
+use App\OrderInvoice;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -50,6 +51,7 @@ class OrderController extends Controller {
         ->where('order.is_refund_finished', '=', 0)
         ->where('order.is_finished', '=', 0)
         ->orderBy('order.created_at', 'DESC')
+        ->with('invoice')
         ->with('customer.orders')
         ->with('orderside.side')
         ->with('orderdrink.drink')
@@ -66,22 +68,34 @@ class OrderController extends Controller {
         ->where('order.is_refund_finished', '=', 0)
         ->where('order.is_finished', '=', 0)
         ->orderBy('order.created_at', 'DESC')
+        ->with('invoice')
         ->with('customer.orders')
-        ->with('orderside.side')
-        ->with('orderdrink.drink')
-        ->with('ordermeal.meal')
-        ->with('ordermenu.meal')
-        ->with('ordermenu.side')
-        ->with('ordermenu.drink')
-        ->with('ordermenu.ordermenuextras')
-        ->with('ordermeal.ordermealextras.extra')->get();
+        ->with('orderside')
+        ->with('orderdrink')
+        ->with('ordermeal')
+        ->with('ordermenu')
+        ->with('ordermenu')
+        ->with('ordermenu')
+        ->with('ordermenu')
+        ->with('ordermeal.ordermealextras')->get();
+
+        $dt = new DateTime("now", new DateTimeZone('Europe/Budapest'));
+        $dt = $dt->format('Y-m-d H:i:s');
+
+        $DateTime = DateTime::createFromFormat('Y-m-d H:i:s', $dt);
+        $DateTime->modify('-24 hours');
+        $DateTime->format("Y-m-d H:i:s");
+        $last24hour = $DateTime;
 
         $finishedorders = Order::where('restaurant_id', '=', $restaurantID)
         ->where('order.is_final_order', '=', 1)
         ->where('order.is_finished', '=', 1)
+        ->where('order.created_at', '>', $last24hour)
         ->orWhere('order.is_refund_finished', '=', 1)
         ->where('order.is_final_order', '=', 1)
+        ->where('order.created_at', '>', $last24hour)
         ->orderBy('order.created_at', 'DESC')
+        ->with('invoice')
         ->with('customer.orders')
         ->with('orderside.side')
         ->with('orderdrink.drink')

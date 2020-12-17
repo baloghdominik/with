@@ -11,6 +11,28 @@
         DARK LAYOUT
 =========================================================*/
 
+.invoice-alert {
+  border-radius: 4px;
+  background-color: rgb(255, 230, 230);
+  padding: 5px 5px 5px 5px;
+  margin-bottom: 14px;
+}
+
+.invoice-alert p {
+  margin-bottom: 0px;
+}
+
+.invoice-alert-post {
+  border-radius: 4px;
+  background-color: rgb(235, 235, 235);
+  padding: 5px 5px 5px 5px;
+  margin-bottom: 14px;
+}
+
+.invoice-alert-post p {
+  margin-bottom: 0px;
+}
+
 body.vertical-layout.vertical-menu-modern .horizontal-menu-wrapper {
   display: none;
 }

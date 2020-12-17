@@ -109,14 +109,14 @@
                                             @endphp
                                             <tr>
                                                 <td><div class="badge badge-secondary"><span>Étel</span></div></td>
-                                                <td>{{ $meals->meal->name }}</td>
+                                                <td>{{ $meals->name }}</td>
                                                 <td>{{ $meals->quantity }} adag</td>
                                                 <td>
                                                     @foreach ($meals->ordermealextras as $extra)
                                                     @php
                                                     $subtotal = $subtotal + $extra->price
                                                     @endphp
-                                                        +{{ $extra->extra->name }}<br/>
+                                                        +{{ $extra->name }}<br/>
                                                     @endforeach
                                                 </td>
                                                 <td>{{ $subtotal }} Ft</td>
@@ -131,7 +131,7 @@
                                             @endphp
                                             <tr>
                                                 <td><div class="badge badge-secondary"><span>Köret</span></div></td>
-                                                <td>{{ $sides->side->name }}</td>
+                                                <td>{{ $sides->name }}</td>
                                                 <td>{{ $sides->quantity }} adag</td>
                                                 <td></td>
                                                 <td>{{ $subtotal }} Ft</td>
@@ -146,7 +146,7 @@
                                             @endphp
                                             <tr>
                                             <td><div class="badge badge-secondary"><span>Ital</span></div></td>
-                                                <td>{{ $drinks->drink->name }}({{ $drinks->drink->size }}ml)</td>
+                                                <td>{{ $drinks->name }}({{ $drinks->drink->size }}ml)</td>
                                                 <td>{{ $drinks->quantity }} darab</td>
                                                 <td></td>
                                                 <td>{{ $subtotal }} Ft</td>
@@ -161,14 +161,14 @@
                                             @endphp
                                             <tr>
                                                 <td><div class="badge badge-secondary"><span>Menü</span></div></td>
-                                                <td>{{ $menus->menu->name }} + {{ $menus->side->name }} + {{ $menus->drink->name }}({{ $menus->drink->size }}ml)</td>
+                                                <td>{{ $menus->menu_name }} + {{ $menus->side_name }} + {{ $menus->drink_name }}</td>
                                                 <td>{{ $menus->quantity }} adag</td>
                                                 <td>
                                                     @foreach ($menus->ordermenuextras as $extras)
                                                     @php
                                                     $subtotal = $subtotal + $extras->price
                                                     @endphp
-                                                        +{{ $extras->extra->name }}<br/>
+                                                        +{{ $extras->name }}<br/>
                                                     @endforeach
                                                 </td>
                                                 <td>{{ $subtotal }} Ft</td>
@@ -201,15 +201,15 @@
                                         @endphp
                                         <tr>
                                             <td><div class="badge badge-secondary"><span>Pizza</span></div></td>
-                                            <td>{{ $pizzas->size->size }} cm</td>
-                                            <td>{{ $pizzas->dough->name }}</td>
-                                            <td>{{ $pizzas->base->name }}</td>
+                                            <td>{{ $pizzas->size_name }}</td>
+                                            <td>{{ $pizzas->dough_name }}</td>
+                                            <td>{{ $pizzas->base_name }}</td>
                                             <td>
                                                 @foreach ($pizzas->toppings as $topping)
                                                 @php
                                                 $subtotal = $subtotal + $topping->price
                                                 @endphp
-                                                    {{ $topping->topping->name }}<br/>
+                                                    {{ $topping->name }}<br/>
                                                 @endforeach
                                             </td>
                                             <td>
@@ -217,7 +217,7 @@
                                                 @php
                                                 $subtotal = $subtotal + $sauce->price
                                                 @endphp
-                                                    {{ $sauce->sauce->name }}<br/>
+                                                    {{ $sauce->name }}<br/>
                                                 @endforeach
                                             </td>
                                             <td>{{ $pizzas->quantity }} darab</td>
@@ -266,6 +266,20 @@
                                 <p><i class="fa fa-address-card" ></i> {{ $order->customer->zipcode }} {{ $order->customer->city }} {{ $order->customer->address }}</p>
                                 @if (strlen($order->comment) > 2)
                                 <p><i class="fas fa-comment" ></i> {{ $order->comment }}</p>
+                                @endif
+                                @if (isset($order->invoice))
+                                <div class="invoice-alert">
+                                <p><i class="fas fa-receipt" ></i> <b>Áfás számla igényelve!</b><br>
+                                <b>Típus:</b> 
+                                @if($order->invoice->invoice_is_company)
+                                Cég
+                                @else
+                                Magánszemély
+                                @endif
+                                <b>Név:</b> {{ $order->invoice->invoice_name }} <b>Cím:</b> {{ $order->invoice->zipcode }} {{ $order->invoice->invoice_city }} {{ $order->invoice->invoice_address }} <b>Adószám:</b> {{ $order->invoice->invoice_tax_number }} </p>
+                                </div>
+                                @else
+                                <p><i class="fas fa-receipt" ></i> Nem lett számla igényelve.</p>
                                 @endif
                                 <p><i class="fa fa-clock" ></i> {{ $order->created_at }}</p>
                                 @if ($order->pickuptime != NULL && $order->is_delivery == 0)
@@ -388,15 +402,9 @@
                                         @endif
                                     </div>
                                     <div class="col-md-6 col-sm-12">
-                                        @if ($order->is_online_payment == 1 && $order->is_paid == 1)
                                         <div class="badge block badge-secondary bg-with-warning" style="font-weight: 600; width: 100%; margin: 8px 0px 7px 0px;">
-                                            <span>Online Fizetve</span>
+                                            <span>{{ $order->paying_method }}</span>
                                         </div>
-                                        @else
-                                        <div class="badge block badge-secondary bg-with-warning" style="font-weight: 600; width: 100%; margin: 8px 0px 7px 0px;">
-                                            <span>Utánvét Készpénz / Bankkártya</span>
-                                        </div>
-                                        @endif
                                     </div>
                                 </div>
                                 <div style="padding: 14px; font-size: 12px; text-align: center; font-weight: 800;">Végösszeg: {{ $order->total_price }} Ft</div>
@@ -559,7 +567,7 @@
                                     
                                     <thead>
                                         <tr>
-                                            <th scope="col">Típus 2</th>
+                                            <th scope="col">Típus 1</th>
                                             <th scope="col">Étel</th>
                                             <th scope="col">Darab</th>
                                             <th scope="col">Extrák</th>
@@ -574,14 +582,14 @@
                                             @endphp
                                             <tr>
                                                 <td><div class="badge badge-secondary"><span>Étel</span></div></td>
-                                                <td>{{ $meals->meal->name }}</td>
+                                                <td>{{ $meals->name }}</td>
                                                 <td>{{ $meals->quantity }} adag</td>
                                                 <td>
                                                     @foreach ($meals->ordermealextras as $extra)
                                                     @php
                                                     $subtotal = $subtotal + $extra->price
                                                     @endphp
-                                                        +{{ $extra->extra->name }}<br/>
+                                                        +{{ $extra->name }}<br/>
                                                     @endforeach
                                                 </td>
                                                 <td>{{ $subtotal }} Ft</td>
@@ -596,7 +604,7 @@
                                             @endphp
                                             <tr>
                                                 <td><div class="badge badge-secondary"><span>Köret</span></div></td>
-                                                <td>{{ $sides->side->name }}</td>
+                                                <td>{{ $sides->name }}</td>
                                                 <td>{{ $sides->quantity }} adag</td>
                                                 <td></td>
                                                 <td>{{ $subtotal }} Ft</td>
@@ -611,7 +619,7 @@
                                             @endphp
                                             <tr>
                                             <td><div class="badge badge-secondary"><span>Ital</span></div></td>
-                                                <td>{{ $drinks->drink->name }}({{ $drinks->drink->size }}ml)</td>
+                                                <td>{{ $drinks->name }}({{ $drinks->drink->size }}ml)</td>
                                                 <td>{{ $drinks->quantity }} darab</td>
                                                 <td></td>
                                                 <td>{{ $subtotal }} Ft</td>
@@ -626,14 +634,14 @@
                                             @endphp
                                             <tr>
                                                 <td><div class="badge badge-secondary"><span>Menü</span></div></td>
-                                                <td>{{ $menus->menu->name }} + {{ $menus->side->name }} + {{ $menus->drink->name }}({{ $menus->drink->size }}ml)</td>
+                                                <td>{{ $menus->menu_name }} + {{ $menus->side_name }} + {{ $menus->drink_name }}</td>
                                                 <td>{{ $menus->quantity }} adag</td>
                                                 <td>
                                                     @foreach ($menus->ordermenuextras as $extras)
                                                     @php
                                                     $subtotal = $subtotal + $extras->price
                                                     @endphp
-                                                        +{{ $extras->extra->name }}<br/>
+                                                        +{{ $extras->name }}<br/>
                                                     @endforeach
                                                 </td>
                                                 <td>{{ $subtotal }} Ft</td>
@@ -666,15 +674,15 @@
                                         @endphp
                                         <tr>
                                             <td><div class="badge badge-secondary"><span>Pizza</span></div></td>
-                                            <td>{{ $pizzas->size->size }} cm</td>
-                                            <td>{{ $pizzas->dough->name }}</td>
-                                            <td>{{ $pizzas->base->name }}</td>
+                                            <td>{{ $pizzas->size_name }}</td>
+                                            <td>{{ $pizzas->dough_name }}</td>
+                                            <td>{{ $pizzas->base_name }}</td>
                                             <td>
                                                 @foreach ($pizzas->toppings as $topping)
                                                 @php
                                                 $subtotal = $subtotal + $topping->price
                                                 @endphp
-                                                    {{ $topping->topping->name }}<br/>
+                                                    {{ $topping->name }}<br/>
                                                 @endforeach
                                             </td>
                                             <td>
@@ -682,7 +690,7 @@
                                                 @php
                                                 $subtotal = $subtotal + $sauce->price
                                                 @endphp
-                                                    {{ $sauce->sauce->name }}<br/>
+                                                    {{ $sauce->name }}<br/>
                                                 @endforeach
                                             </td>
                                             <td>{{ $pizzas->quantity }} darab</td>
@@ -731,6 +739,20 @@
                                 <p><i class="fa fa-address-card" ></i> {{ $order->customer->zipcode }} {{ $order->customer->city }} {{ $order->customer->address }}</p>
                                 @if (strlen($order->comment) > 2)
                                 <p><i class="fas fa-comment" ></i> {{ $order->comment }}</p>
+                                @endif
+                                @if (isset($order->invoice))
+                                <div class="invoice-alert">
+                                <p><i class="fas fa-receipt" ></i> <b>Áfás számla igényelve!</b><br>
+                                <b>Típus:</b> 
+                                @if($order->invoice->invoice_is_company)
+                                Cég
+                                @else
+                                Magánszemély
+                                @endif
+                                <b>Név:</b> {{ $order->invoice->invoice_name }} <b>Cím:</b> {{ $order->invoice->zipcode }} {{ $order->invoice->invoice_city }} {{ $order->invoice->invoice_address }} <b>Adószám:</b> {{ $order->invoice->invoice_tax_number }} </p>
+                                </div>
+                                @else
+                                <p><i class="fas fa-receipt" ></i> Nem lett számla igényelve.</p>
                                 @endif
                                 <p><i class="fa fa-clock" ></i> {{ $order->created_at }}</p>
                                 @if ($order->pickuptime != NULL && $order->is_delivery == 0)
@@ -853,15 +875,9 @@
                                         @endif
                                     </div>
                                     <div class="col-md-6 col-sm-12">
-                                        @if ($order->is_online_payment == 1 && $order->is_paid == 1)
                                         <div class="badge block badge-secondary bg-with-warning" style="font-weight: 600; width: 100%; margin: 8px 0px 7px 0px;">
-                                            <span>Online Fizetve</span>
+                                            <span>{{ $order->paying_method }}</span>
                                         </div>
-                                        @else
-                                        <div class="badge block badge-secondary bg-with-warning" style="font-weight: 600; width: 100%; margin: 8px 0px 7px 0px;">
-                                            <span>Utánvét Készpénz / Bankkártya</span>
-                                        </div>
-                                        @endif
                                     </div>
                                 </div>
                                 <div style="padding: 14px; font-size: 12px; text-align: center; font-weight: 800;">Végösszeg: {{ $order->total_price }} Ft</div>
@@ -975,7 +991,7 @@
                                     
                                     <thead>
                                         <tr>
-                                            <th scope="col">Típus 3</th>
+                                            <th scope="col">Típus 1</th>
                                             <th scope="col">Étel</th>
                                             <th scope="col">Darab</th>
                                             <th scope="col">Extrák</th>
@@ -990,14 +1006,14 @@
                                             @endphp
                                             <tr>
                                                 <td><div class="badge badge-secondary"><span>Étel</span></div></td>
-                                                <td>{{ $meals->meal->name }}</td>
+                                                <td>{{ $meals->name }}</td>
                                                 <td>{{ $meals->quantity }} adag</td>
                                                 <td>
                                                     @foreach ($meals->ordermealextras as $extra)
                                                     @php
                                                     $subtotal = $subtotal + $extra->price
                                                     @endphp
-                                                        +{{ $extra->extra->name }}<br/>
+                                                        +{{ $extra->name }}<br/>
                                                     @endforeach
                                                 </td>
                                                 <td>{{ $subtotal }} Ft</td>
@@ -1012,7 +1028,7 @@
                                             @endphp
                                             <tr>
                                                 <td><div class="badge badge-secondary"><span>Köret</span></div></td>
-                                                <td>{{ $sides->side->name }}</td>
+                                                <td>{{ $sides->name }}</td>
                                                 <td>{{ $sides->quantity }} adag</td>
                                                 <td></td>
                                                 <td>{{ $subtotal }} Ft</td>
@@ -1027,7 +1043,7 @@
                                             @endphp
                                             <tr>
                                             <td><div class="badge badge-secondary"><span>Ital</span></div></td>
-                                                <td>{{ $drinks->drink->name }}({{ $drinks->drink->size }}ml)</td>
+                                                <td>{{ $drinks->name }}({{ $drinks->drink->size }}ml)</td>
                                                 <td>{{ $drinks->quantity }} darab</td>
                                                 <td></td>
                                                 <td>{{ $subtotal }} Ft</td>
@@ -1042,14 +1058,14 @@
                                             @endphp
                                             <tr>
                                                 <td><div class="badge badge-secondary"><span>Menü</span></div></td>
-                                                <td>{{ $menus->menu->name }} + {{ $menus->side->name }} + {{ $menus->drink->name }}({{ $menus->drink->size }}ml)</td>
+                                                <td>{{ $menus->menu_name }} + {{ $menus->side_name }} + {{ $menus->drink_name }}</td>
                                                 <td>{{ $menus->quantity }} adag</td>
                                                 <td>
                                                     @foreach ($menus->ordermenuextras as $extras)
                                                     @php
                                                     $subtotal = $subtotal + $extras->price
                                                     @endphp
-                                                        +{{ $extras->extra->name }}<br/>
+                                                        +{{ $extras->name }}<br/>
                                                     @endforeach
                                                 </td>
                                                 <td>{{ $subtotal }} Ft</td>
@@ -1082,15 +1098,15 @@
                                         @endphp
                                         <tr>
                                             <td><div class="badge badge-secondary"><span>Pizza</span></div></td>
-                                            <td>{{ $pizzas->size->size }} cm</td>
-                                            <td>{{ $pizzas->dough->name }}</td>
-                                            <td>{{ $pizzas->base->name }}</td>
+                                            <td>{{ $pizzas->size_name }}</td>
+                                            <td>{{ $pizzas->dough_name }}</td>
+                                            <td>{{ $pizzas->base_name }}</td>
                                             <td>
                                                 @foreach ($pizzas->toppings as $topping)
                                                 @php
                                                 $subtotal = $subtotal + $topping->price
                                                 @endphp
-                                                    {{ $topping->topping->name }}<br/>
+                                                    {{ $topping->name }}<br/>
                                                 @endforeach
                                             </td>
                                             <td>
@@ -1098,7 +1114,7 @@
                                                 @php
                                                 $subtotal = $subtotal + $sauce->price
                                                 @endphp
-                                                    {{ $sauce->sauce->name }}<br/>
+                                                    {{ $sauce->name }}<br/>
                                                 @endforeach
                                             </td>
                                             <td>{{ $pizzas->quantity }} darab</td>
@@ -1147,6 +1163,20 @@
                                 <p><i class="fa fa-address-card" ></i> {{ $order->customer->zipcode }} {{ $order->customer->city }} {{ $order->customer->address }}</p>
                                 @if (strlen($order->comment) > 2)
                                 <p><i class="fas fa-comment" ></i> {{ $order->comment }}</p>
+                                @endif
+                                @if (isset($order->invoice))
+                                <div class="invoice-alert-post">
+                                <p><i class="fas fa-receipt" ></i> <b>Áfás számla igényelve!</b><br>
+                                <b>Típus:</b> 
+                                @if($order->invoice->invoice_is_company)
+                                Cég
+                                @else
+                                Magánszemély
+                                @endif
+                                <b>Név:</b> {{ $order->invoice->invoice_name }} <b>Cím:</b> {{ $order->invoice->zipcode }} {{ $order->invoice->invoice_city }} {{ $order->invoice->invoice_address }} <b>Adószám:</b> {{ $order->invoice->invoice_tax_number }} </p>
+                                </div>
+                                @else
+                                <p><i class="fas fa-receipt" ></i> Nem lett számla igényelve.</p>
                                 @endif
                                 <p><i class="fa fa-clock" ></i> {{ $order->created_at }}</p>
                                 @if ($order->pickuptime != NULL && $order->is_delivery == 0)
@@ -1269,15 +1299,9 @@
                                         @endif
                                     </div>
                                     <div class="col-md-6 col-sm-12">
-                                        @if ($order->is_online_payment == 1 && $order->is_paid == 1)
                                         <div class="badge block badge-secondary bg-with-warning" style="font-weight: 600; width: 100%; margin: 8px 0px 7px 0px;">
-                                            <span>Online Fizetve</span>
+                                            <span>{{ $order->paying_method }}</span>
                                         </div>
-                                        @else
-                                        <div class="badge block badge-secondary bg-with-warning" style="font-weight: 600; width: 100%; margin: 8px 0px 7px 0px;">
-                                            <span>Utánvét Készpénz / Bankkártya</span>
-                                        </div>
-                                        @endif
                                     </div>
                                 </div>
                                 <div style="padding: 14px; font-size: 12px; text-align: center; font-weight: 800;">Végösszeg: {{ $order->total_price }} Ft</div>

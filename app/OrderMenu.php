@@ -12,6 +12,7 @@ class OrderMenu extends Model
         'menu_id', 
         'side_id', 
         'drink_id', 
+        'name',
         'quantity', 
         'price'
     ];

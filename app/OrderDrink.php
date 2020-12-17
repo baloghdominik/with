@@ -10,6 +10,7 @@ class OrderDrink extends Model
     protected $fillable = [
         'order_id', 
         'drink_id', 
+        'name',
         'quantity', 
         'price'
     ];

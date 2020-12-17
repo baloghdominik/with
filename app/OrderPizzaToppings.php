@@ -10,6 +10,7 @@ class OrderPizzaToppings extends Model
     protected $fillable = [
         'order_pizza_id', 
         'pizzadesigner_topping_id',
+        'name',
         'price'
     ];
 

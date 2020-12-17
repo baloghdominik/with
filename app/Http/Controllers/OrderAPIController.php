@@ -12,6 +12,8 @@ use App\OrderMenuExtras;
 use App\OrderPizza;
 use App\OrderPizzaSauces;
 use App\OrderPizzaToppings;
+use App\OrderInvoice;
+use App\Zipcode;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -33,7 +35,6 @@ class OrderAPIController extends Controller {
             'is_delivery' => 'integer|min:0|max:1|required',
             'coupon' => 'string',
             'comment' => 'string|max:501',
-            'is_online_payment' => 'integer|min:0|max:1|required',
             'meal.*.meal_id' => 'integer|min:0',
             'meal.*.quantity' => 'integer|min:1',
             'meal.*.extras.*.extra_id' => 'integer',
@@ -51,7 +52,20 @@ class OrderAPIController extends Controller {
             'pizza.*.pizzadesigner_size_id' => 'integer|min:0',
             'pizza.*.quantity' => 'integer|min:1',
             'pizza.*.toppings.*.pizzadesigner_topping_id' => 'integer',
-            'pizza.*.sauces.*.pizzadesigner_sauce_id' => 'integer'
+            'pizza.*.sauces.*.pizzadesigner_sauce_id' => 'integer',
+            'customer_ip_address' => 'string', 
+            'customer_country' => 'required|string|min:5|max:25', 
+            'customer_city' => 'required|string|min:3|max:25', 
+            'customer_zipcode' => 'required|numeric|min:999|max:9999', 
+            'customer_address' => 'required|string|min:5|max:50',
+            'paying_method' => 'required|integer|min:1|max:4',
+            'is_invoice_requested' => 'required|integer|min:0|max:1',
+            'invoice.invoice_is_company' => 'required_if:is_invoice_requested,1|integer|min:0|max:1',
+            'invoice.invoice_name' => 'required_if:is_invoice_requested,1|string|max:100',
+            'invoice.invoice_zipcode' => 'required_if:is_invoice_requested,1|integer|min:999|max:9999',
+            'invoice.invoice_city' => 'required_if:is_invoice_requested,1|string|max:100',
+            'invoice.invoice_address' => 'required_if:is_invoice_requested,1|string|max:100',
+            'invoice.invoice_tax_number' => 'required_if:invoice_is_company,1|string|max:50',
         ]);
 
         $customer = Auth::user(); 
@@ -65,6 +79,63 @@ class OrderAPIController extends Controller {
         $order->restaurant_id = request('restaurant_id');
         $restaurantID = request('restaurant_id');
         $order->customer_id = $customer->id;
+
+        $order->customer_ip_address = request('customer_ip_address');
+        $order->customer_firstname = $customer->firstname;
+        $order->customer_lastname = $customer->lastname;
+        $order->customer_email = $customer->email;
+        $order->customer_phone_number = $customer->phone;
+
+        if (request('paying_method') == 1) {
+            $order->is_online_payment = 0;
+            $order->paying_method = "Utánvét - Készpénz";
+        } else if (request('paying_method') == 2) {
+            $order->is_online_payment = 0;
+            $order->paying_method = "Utánvét - Bankkártya";
+        } else if (request('paying_method') == 3) {
+            $order->is_online_payment = 1;
+            $order->paying_method = "Online Bankkártya";
+        } else {
+            return response()->json(['error'=>"Paying method is not valid."], 401); 
+        }
+
+        $country = request('customer_country');
+        $pattern = "/^[\wíÍéÉáÁűŰúÚőŐóÓüÜöÖ-]{5,25}$/";
+        if (preg_match($pattern, $country)) {
+            $order->customer_country = $country;
+        } else {
+            return response()->json(['error'=>"Country is not valid."], 401); 
+        }
+
+        $zipcode = request('customer_zipcode');
+        $pattern = "/^[\d]{4}$/";
+        if (preg_match($pattern, $zipcode)) {
+            $zipcodes = Zipcode::where('zipcode', $zipcode)->count();
+            if ($zipcodes > 0) {
+                $order->customer_zipcode = $zipcode;
+            } else {
+                return response()->json(['error'=>"Zipcode is not valid."], 401); 
+            }
+        } else {
+            return response()->json(['error'=>"Zipcode is not valid."], 401); 
+        }
+
+        $city = request('customer_city');
+        $pattern = "/^[\w\síÍéÉáÁűŰúÚőŐóÓüÜöÖ-]{3,25}$/";
+        if (preg_match($pattern, $city)) {
+            $order->customer_city = $city;
+        } else {
+            return response()->json(['error'=>"City is not valid."], 401); 
+        }
+
+        
+        $address = request('customer_address');
+        $pattern = "/^[A-Za-zíÍéÉáÁűŰúÚőŐóÓüÜöÖ]{3}[\/A-Za-zíÍéÉáÁűŰúÚőŐóÓüÜöÖ\s\d,.-]{1,47}$/";
+        if (preg_match($pattern, $address)) {
+            $order->customer_address = $address;
+        } else {
+            return response()->json(['error'=>"Address is not valid."], 401); 
+        }
 
         $order->comment = request('comment');
 
@@ -89,7 +160,6 @@ class OrderAPIController extends Controller {
         }
 
         $order->is_delivery = request('is_delivery');
-        $order->is_online_payment = request('is_online_payment');
         
         if ($order->is_delivery == 1) {
             if(!$RestaurantService->isRestaurantDelivery($restaurantID)) {
@@ -109,7 +179,7 @@ class OrderAPIController extends Controller {
             }
         }
 
-        $order->coupon = request('coupon');
+        $order->coupon = ""; //request('coupon');
         $order->is_paid = 0;
         $order->coupon_sale = 0;
         $order->total_price = 0;
@@ -150,6 +220,8 @@ class OrderAPIController extends Controller {
 
             $ordermeal->price = $OrderService->getMealPrice($ordermeal->meal_id, $order->restaurant_id);
 
+            $ordermeal->name = $OrderService->getMealName($ordermeal->meal_id, $order->restaurant_id);
+
             $margin = $margin + $OrderService->getMealMargin($ordermeal->meal_id, $order->restaurant_id) * $ordermeal->quantity;
 
             $MealPrice = $ordermeal->price;
@@ -169,6 +241,8 @@ class OrderAPIController extends Controller {
                 }
 
                 $ordermealextras->price = $OrderService->getExtraPrice($ordermealextras->extra_id, $order->restaurant_id);
+
+                $ordermealextras->name = $OrderService->getExtraName($ordermealextras->extra_id, $order->restaurant_id);
 
                 $margin = $margin + $OrderService->getExtraMargin($ordermealextras->extra_id, $order->restaurant_id) * $ordermeal->quantity;
 
@@ -201,6 +275,8 @@ class OrderAPIController extends Controller {
 
             $orderside->price = $OrderService->getSidePrice($orderside->side_id, $order->restaurant_id);
 
+            $orderside->name = $OrderService->getSideName($orderside->side_id, $order->restaurant_id);
+
             $margin = $margin + $OrderService->getSideMargin($orderside->side_id, $order->restaurant_id) * $orderside->quantity;
 
             $SidePrice = $orderside->price * $orderside->quantity;
@@ -226,6 +302,8 @@ class OrderAPIController extends Controller {
             }
 
             $orderdrink->price = $OrderService->getDrinkPrice($orderdrink->drink_id, $order->restaurant_id);
+
+            $orderdrink->name = $OrderService->getDrinkName($orderdrink->drink_id, $order->restaurant_id);
 
             $margin = $margin + $OrderService->getDrinkMargin($orderdrink->drink_id, $order->restaurant_id) * $orderdrink->quantity;
 
@@ -261,6 +339,8 @@ class OrderAPIController extends Controller {
 
             $MealPrice = $OrderService->getMealPrice($MealID, $order->restaurant_id);
 
+            $ordermenu->menu_name = $OrderService->getMealName($MealID, $order->restaurant_id);
+
             $margin = $margin + $OrderService->getMealMargin($MealID, $order->restaurant_id) * $ordermenu->quantity;
             
             $ordermenu->side_id = $request->get('menu')[$i]['side_id'];
@@ -279,6 +359,8 @@ class OrderAPIController extends Controller {
 
             $SidePrice = $OrderService->getSidePrice($ordermenu->side_id, $order->restaurant_id);
 
+            $ordermenu->side_name = $OrderService->getSideName($ordermenu->side_id, $order->restaurant_id);
+
             $margin = $margin + $OrderService->getSideMargin($ordermenu->side_id, $order->restaurant_id) * $ordermenu->quantity;
 
             $ordermenu->drink_id = $request->get('menu')[$i]['drink_id'];
@@ -296,6 +378,8 @@ class OrderAPIController extends Controller {
             }
 
             $DrinkPrice = $OrderService->getDrinkPrice($ordermenu->drink_id, $order->restaurant_id);
+
+            $ordermenu->drink_name = $OrderService->getDrinkName($ordermenu->drink_id, $order->restaurant_id);
 
             $margin = $margin + $OrderService->getDrinkMargin($ordermenu->drink_id, $order->restaurant_id) * $ordermenu->quantity;
 
@@ -330,6 +414,8 @@ class OrderAPIController extends Controller {
 
                 $ordermenuextras->price = $OrderService->getExtraPrice($ordermenuextras->extra_id, $order->restaurant_id);
 
+                $ordermenuextras->name = $OrderService->getExtraName($ordermenuextras->extra_id, $order->restaurant_id);
+
                 $margin = $margin + $OrderService->getExtraMargin($ordermenuextras->extra_id, $order->restaurant_id) * $ordermenu->quantity;
 
                 $ordermenuextras->order_menu_id = $OrderService->getOrderMenuID($ordermenu->order_id, $ordermenu->menu_id);
@@ -362,6 +448,8 @@ class OrderAPIController extends Controller {
 
             $PizzaPrice = $OrderService->getPizzadesignerSizePrice($orderpizza->pizzadesigner_size_id, $order->restaurant_id);
 
+            $orderpizza->size_name = $OrderService->getPizzadesignerSizeName($orderpizza->pizzadesigner_size_id, $order->restaurant_id);
+
             $orderpizza->pizzadesigner_base_id = $request->get('pizza')[$i]['pizzadesigner_base_id'];
 
             if(!$OrderService->isPizzadesignerBase($orderpizza->pizzadesigner_base_id, $orderpizza->pizzadesigner_size_id, $order->restaurant_id)) {
@@ -370,6 +458,8 @@ class OrderAPIController extends Controller {
 
             $PizzaPrice = $PizzaPrice + $OrderService->getPizzadesignerBasePrice($orderpizza->pizzadesigner_base_id, $order->restaurant_id);
 
+            $orderpizza->base_name = $OrderService->getPizzadesignerBaseName($orderpizza->pizzadesigner_base_id, $order->restaurant_id);
+
             $orderpizza->pizzadesigner_dough_id = $request->get('pizza')[$i]['pizzadesigner_dough_id'];
 
             if(!$OrderService->isPizzadesignerDough($orderpizza->pizzadesigner_dough_id, $orderpizza->pizzadesigner_size_id, $order->restaurant_id)) {
@@ -377,6 +467,8 @@ class OrderAPIController extends Controller {
             }
 
             $PizzaPrice = $PizzaPrice + $OrderService->getPizzadesignerDoughPrice($orderpizza->pizzadesigner_dough_id, $order->restaurant_id);
+
+            $orderpizza->dough_name = $OrderService->getPizzadesignerDoughName($orderpizza->pizzadesigner_dough_id, $order->restaurant_id);
 
             $orderpizza->price = round($PizzaPrice);
 
@@ -409,6 +501,8 @@ class OrderAPIController extends Controller {
 
                 $orderpizzatoppings->price = $OrderService->getPizzadesignerToppingPrice($orderpizzatoppings->pizzadesigner_topping_id, $order->restaurant_id);
 
+                $orderpizzatoppings->name = $OrderService->getPizzadesignerToppingName($orderpizzatoppings->pizzadesigner_topping_id, $order->restaurant_id);
+
                 $margin = $margin + $OrderService->getPizzadesignerToppingMargin($orderpizzatoppings->pizzadesigner_topping_id, $order->restaurant_id) * $orderpizza->quantity;
 
                 $orderpizzatoppings->save();
@@ -426,6 +520,8 @@ class OrderAPIController extends Controller {
                 }
 
                 $orderpizzasauces->price = $OrderService->getPizzadesignerSaucePrice($orderpizzasauces->pizzadesigner_sauce_id, $order->restaurant_id);
+
+                $orderpizzasauces->name = $OrderService->getPizzadesignerSauceName($orderpizzasauces->pizzadesigner_sauce_id, $order->restaurant_id);
 
                 $margin = $margin + $OrderService->getPizzadesignerSauceMargin($orderpizzasauces->pizzadesigner_sauce_id, $order->restaurant_id) * $orderpizza->quantity;
 
@@ -452,6 +548,46 @@ class OrderAPIController extends Controller {
             $total_price = $total_price + $RestaurantService->getRestaurantDeliveryPrice($restaurantID);
         }
 
+        if (request('is_invoice_requested')) {
+            $invoice = New OrderInvoice;
+            $invoice->order_id = $OrderID;
+            $invoice->restaurant_id = $restaurantID;
+            $invoice->invoice_is_company = request('invoice.invoice_is_company');
+            $invoice->invoice_name = request('invoice.invoice_name');
+            $invoice->invoice_tax_number = request('invoice.invoice_tax_number');
+
+            $zipcode = request('invoice.invoice_zipcode');
+            $pattern = "/^[\d]{4}$/";
+            if (preg_match($pattern, $zipcode)) {
+                $zipcodes = Zipcode::where('zipcode', $zipcode)->count();
+                if ($zipcodes > 0) {
+                    $invoice->invoice_zipcode = $zipcode;
+                } else {
+                    return response()->json(['error'=>"Invoice zipcode is not valid."], 401); 
+                }
+            } else {
+                return response()->json(['error'=>"Invoice zipcode is not valid."], 401); 
+            }
+
+            $city = request('invoice.invoice_city');
+            $pattern = "/^[\w\síÍéÉáÁűŰúÚőŐóÓüÜöÖ-]{3,25}$/";
+            if (preg_match($pattern, $city)) {
+                $invoice->invoice_city = $city;
+            } else {
+                return response()->json(['error'=>"Invoice city is not valid."], 401); 
+            }
+        
+            $address = request('invoice.invoice_address');
+            $pattern = "/^[A-Za-zíÍéÉáÁűŰúÚőŐóÓüÜöÖ]{3}[\/A-Za-zíÍéÉáÁűŰúÚőŐóÓüÜöÖ\s\d,.-]{1,47}$/";
+            if (preg_match($pattern, $address)) {
+                $invoice->invoice_address = $address;
+            } else {
+                return response()->json(['error'=>"Invoice address is not valid."], 401); 
+            }
+
+            $invoice->save();
+        }
+
         $order2 = Order::where('id', '=', $OrderID)->where('restaurant_id', '=', $restaurantID)->where('customer_id', '=', $customer->id)->first();
         $order2->total_price = $total_price;
         $order2->margin = $margin;
@@ -472,7 +608,8 @@ class OrderAPIController extends Controller {
             ->with('ordermeal.ordermealextras')
             ->with('ordermenu')
             ->with('ordermenu.ordermenuextras')
-            ->with('orderpizza')->first();
+            ->with('orderpizza')
+            ->with('invoice')->first();
    
         return response()->json($order3, 200);
     }

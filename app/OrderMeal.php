@@ -11,6 +11,7 @@ class OrderMeal extends Model
         'order_id', 
         'meal_id', 
         'quantity', 
+        'name',
         'price'
     ];
 

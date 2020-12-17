@@ -10,6 +10,7 @@ class OrderSide extends Model
     protected $fillable = [
         'order_id', 
         'side_id', 
+        'name',
         'quantity', 
         'price'
     ];

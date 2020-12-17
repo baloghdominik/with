@@ -30,7 +30,16 @@ class Order extends Model
         'is_refiund_finished',
         'pickuptime'.
         'identifier',
-        'comment'
+        'customer_firstname',
+        'customer_lastname',
+        'customer_phone_number',
+        'customer_email',
+        'customer_country',
+        'customer_city',
+        'customer_zipcode',
+        'customer_address',
+        'customer_ip_address',
+        'paying_method'
     ];
 
      /**
@@ -64,5 +73,9 @@ class Order extends Model
 
     public function customer(){
         return $this->hasOne('App\Customer','id','customer_id');
+    }
+
+    public function invoice(){
+        return $this->hasOne('App\OrderInvoice','order_id','id');
     }
 }
