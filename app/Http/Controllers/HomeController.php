@@ -93,4 +93,9 @@ class HomeController extends Controller
             'pageConfigs' => $pageConfigs, 'orderCount' => $orderCount, 'userNum' => $userNum, 'orderNum' => $orderNum, 'orders' => $orders
         ]);
     }
+
+    public function mail() 
+    {
+        return view('/email/order', []);
+    }
 }

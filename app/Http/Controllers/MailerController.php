@@ -25,7 +25,7 @@ class MailerController extends Controller
             return response()->json([
                 'status'  => false,
                 'data'    => $details,
-                'message' => 'Nnot sending mail.. retry again...'
+                'message' => 'Not sending mail.. retry again...'
             ]);
         }
         return response()->json([

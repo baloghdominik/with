@@ -31,7 +31,7 @@ class Mailer extends Mailable
     public function build()
     {
         return $this->subject($this->details['subject'])
-                    ->view('email.contact')
+                    ->view('email.order')
                     ->from($this->details['from'], $this->details['from']);
     }
 }
