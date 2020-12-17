@@ -37,6 +37,8 @@ Route::get('restaurant/id/{id}', 'RestaurantAPIController@getRestaurantById');
 Route::get('restaurants', 'RestaurantAPIController@getAllRestaurants');
 Route::get('restaurantids', 'RestaurantAPIController@getAllRestaurantIds');
 
+Route::get('mail', 'MailerController@newMail');
+
 Route::group(['middleware' => 'auth:api'], function(){
     Route::post('details', 'CustomerController@details');
     Route::post('logout', 'CustomerController@logout');
