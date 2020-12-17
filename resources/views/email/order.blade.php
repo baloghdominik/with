@@ -40,7 +40,7 @@ body {
     width:100%;
     height:100%;
     background-color:#e7e7e7;
-	background-image:url("{{ asset('images/mail-order-bg.png') }}");
+	background-image:url({{ asset('images/mail-order-bg.png') }});
 	background-repeat:repeat;
 	background-position:center top;
 }
@@ -404,7 +404,7 @@ a.es-button, button.es-button {
          <tr> 
           <td align="center"> 
            <table class="es-content-body" width="600" cellspacing="0" cellpadding="0" bgcolor="#ffffff" align="center"> 
-             <tr class="bord"> 
+             <tr tr class="bord"> 
               <td class="es-p20t es-p20b es-p20r es-p20l" align="left"> 
                <table width="100%" cellspacing="0" cellpadding="0"> 
                  <tr> 
@@ -415,7 +415,7 @@ a.es-button, button.es-button {
                      </tr> 
                      <!-- {{ asset('images/mail-order.jpg') }}-->
                      <tr> 
-                      <td align="center" style="font-size: 0px"><amp-img class="adapt-img" src="{{ asset('images/mail-order-sm.jpg') }}" alt style="display: block" width="560" height="197" layout="responsive"></amp-img></td> 
+                      <td align="center" style="font-size: 0px"><img class="adapt-img" src="{{ asset('images/mail-order-sm.jpg') }}" alt style="display: block" width="560" height="197" layout="responsive"></amp-img></td> 
                      </tr> 
                      <tr> 
                       <td class="es-p5t es-p5b" align="center" bgcolor="#47b272"><p style="color: #ffffff; line-height: 19px;"><strong>Rendelés Állapota</strong></p></td> 
@@ -522,7 +522,7 @@ a.es-button, button.es-button {
                       <td align="left" class="es-p10b">
                       <table class="products">
                                 <tr class="bg-grey">
-                                    <td width="64px;"><img src="https://cdn.worldvectorlogo.com/logos/square.svg" height="64px" width="64px" alt="Logó"></td>
+                                    <td width="64px;"><img src="https://assets.ifttt.com/images/channels/891279159/icons/large.png" height="64px" width="64px" alt="Étterem Logó"></td>
                                     <td><span class="restaurant">Flamóbár</span><br/>2000 Szentendre Titkos utca X.</td>
                                     <td><a href="https://with.hu/orders" class="es-button" target="_blank" style="float: right; background: #47b272;border-color: #47b272;border-width: 4px 17px;border-radius: 5px;font-weight: bold;font-size: 12px">Étterem megtekintése</a></td>
                                 </tr>
@@ -587,7 +587,7 @@ a.es-button, button.es-button {
                   <td width="560" valign="top" align="center"> 
                    <table width="100%" cellspacing="0" cellpadding="0" role="presentation"> 
                      <tr> 
-                      <td class="es-infoblock es-p20b" align="center" style="font-size: 0px"><a target="_blank" href="https://with.hu"><amp-img src="{{ asset('images/With_Logo_SmallResolution.png') }}" alt width="125" style="display: block" height="66"></amp-img></a></td> 
+                      <td class="es-infoblock es-p20b" align="center" style="font-size: 0px"><a target="_blank" href="https://with.hu"><img src="{{ asset('images/With_Logo_SmallResolution.png') }}" alt="With Logó" width="125" style="display: block" height="66"></amp-img></a></td> 
                      </tr> 
                    </table></td> 
                  </tr> 
