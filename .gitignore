@@ -8,6 +8,7 @@ npm-debug.log
 yarn-error.log
 /vuexy-shell-scripts
 .env.example
+.htaccess
 /public/images/banners/
 /public/images/logos/
 /public/images/galleries/
@@ -16,3 +17,4 @@ yarn-error.log
 /public/images/sides/
 /public/images/drinks/
 /public/.htaccess
+!.gitignore
