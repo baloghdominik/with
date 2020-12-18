@@ -12,7 +12,6 @@ deployment:
     - /bin/cp -R public/php $DEPLOYPATH
     - /bin/cp -R public/sounds $DEPLOYPATH
     - /bin/cp -R public/vendors $DEPLOYPATH
-    - /bin/cp public/.htaccess $DEPLOYPATH
     - /bin/cp public/favicon.ico $DEPLOYPATH
     - /bin/cp public/mix-manifest.json $DEPLOYPATH
     - /bin/cp public/robots.txt $DEPLOYPATH
