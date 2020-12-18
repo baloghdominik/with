@@ -263,8 +263,16 @@ class RestaurantAPIController extends Controller
         return response()->json($pic, 200);
     }
 
-    public function getRestaurantAlldataById($id, RestaurantService $RestaurantService) {
-        $restaurant = Restaurant::with('zipcodes')->with('categories')->where('id', $id)->first();
+    public function getRestaurantAlldataById($type, $id, RestaurantService $RestaurantService) {
+
+        if ($type == "id") {
+            $restaurant = Restaurant::with('zipcodes')->with('categories')->where('id', $id)->first();
+        } else if ($type = "lowercasename") {
+            $restaurant = Restaurant::with('zipcodes')->with('categories')->where('lowercasename', $id)->first();
+            $id = $restaurant->id;
+        } else {
+            return response()->json("Invalid ID", 404);
+        }
 
         if ($restaurant === null) {
             return response()->json("Not found", 404);
