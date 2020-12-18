@@ -351,6 +351,44 @@ class RestaurantAPIController extends Controller
 
         $restaurantDTO->potentialdeliverytime = ($restaurant->deliverytime - 10). "-" .($restaurant->deliverytime + 10). " perc";
 
+        switch ($restaurant->deliverypayingmethod) {
+            case 1:
+                $restaurantDTO->iscash = true;
+                $restaurantDTO->isbankcard = false;
+                $restaurantDTO->isonlinepayment = false;
+                break;
+            case 2:
+                $restaurantDTO->iscash = false;
+                $restaurantDTO->isbankcard = true;
+                $restaurantDTO->isonlinepayment = false;
+                break;
+            case 3:
+                $restaurantDTO->iscash = false;
+                $restaurantDTO->isbankcard = false;
+                $restaurantDTO->isonlinepayment = true;
+                break;
+            case 4:
+                $restaurantDTO->iscash = true;
+                $restaurantDTO->isbankcard = true;
+                $restaurantDTO->isonlinepayment = false;
+                break;
+            case 5:
+                $restaurantDTO->iscash = true;
+                $restaurantDTO->isbankcard = false;
+                $restaurantDTO->isonlinepayment = true;
+                break;
+            case 6:
+                $restaurantDTO->iscash = false;
+                $restaurantDTO->isbankcard = true;
+                $restaurantDTO->isonlinepayment = true;
+                break;
+            case 7:
+                $restaurantDTO->iscash = true;
+                $restaurantDTO->isbankcard = true;
+                $restaurantDTO->isonlinepayment = true;
+                break;
+        }
+
         if ($restaurant->szepcard == 1) {
             $restaurantDTO->isszepcard = true;
         } else {
@@ -374,7 +412,7 @@ class RestaurantAPIController extends Controller
         if (file_exists(public_path()."/images/logos/with.hu_".$restaurant->id."_".$restaurant->lowercasename."_logo.jpg")) {
             $restaurantDTO->logo = getenv('APP_URL')."/images/logos/with.hu_".$restaurant->id."_".$restaurant->lowercasename."_logo.jpg";
         } else {
-            $restaurantDTO->lgoo = getenv('APP_URL')."/images/notfound/logo_default.jpg";;
+            $restaurantDTO->logo = getenv('APP_URL')."/images/notfound/logo_default.jpg";;
         }
 
         if (file_exists(public_path()."/images/banners/with.hu_".$restaurant->id."_".$restaurant->lowercasename."_banner.jpg")) {

@@ -29,6 +29,9 @@ class RestaurantDTO extends Model
         'minimumordervalue',
         'deliveryprice',
         'potentialdeliverytime',
+        'iscash',
+        'isbankcard'.
+        'isonlinepayment',
         'isszepcard',
         'isrestaurantopenfororders',
         'ispizzadesigneravailable',
