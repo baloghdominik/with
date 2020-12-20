@@ -15,3 +15,4 @@ deployment:
     - /bin/cp public/favicon.ico $DEPLOYPATH
     - /bin/cp public/mix-manifest.json $DEPLOYPATH
     - /bin/cp public/robots.txt $DEPLOYPATH
+    - /bin/cp public/notifier.txt $DEPLOYPATH

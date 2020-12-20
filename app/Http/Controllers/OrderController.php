@@ -39,8 +39,17 @@ class OrderController extends Controller {
 
     // show - orders
     public function showOrders(){
+        if (file_exists(public_path() . '/notifier.txt') && filesize(public_path() . '/notifier.txt') > 0) {
+            $myfile = fopen(public_path() . '/notifier.txt', "r") or die();
+            $notifier = fread($myfile,filesize(public_path() . '/notifier.txt'));
+            fclose($myfile);
+        } else {
+            $notifier = "";
+        }
+
         $pageConfigs = [
-            'pageHeader' => false
+            'pageHeader' => false,
+            'notifier' => $notifier
         ];
 
         $restaurantID = Auth::user()->restaurantid;

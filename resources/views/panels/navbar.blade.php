@@ -100,5 +100,9 @@
         </div>
     </div>
 </nav>
-
+@isset($pageConfigs['notifier'])
+    @if (strlen($pageConfigs['notifier']) > 3)
+        <div class="notifier-bar" ><p>{{ $pageConfigs['notifier'] }}</p></div>
+    @endif
+@endif
 <!-- END: Header-->

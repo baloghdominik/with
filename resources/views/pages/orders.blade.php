@@ -15,15 +15,11 @@
 
 @section('content')
 <section id="basic-horizontal-layouts">
+    
+    <div class="row">
+        <div class="card" style="margin: 0px 14px 30px 14px; border-radius: 7px; width: auto; background-image: url('{{ asset('images/elements/clock2.jpg') }}'); background-size: cover; background-position: center; padding: 0px 0px 0px 0px;">
+            <div class="card-content" style="border-radius: 7px; width: auto; padding: 10px 10px 10px 10px; background-color: rgba(71, 178, 114, 0.7); padding: 10px 10px 10px 10px;">
 
-
-
-<div class="row">
-    <div class="col-lg-3 col-md-5 col-sm-12">
-        <div class="card">
-            <div class="card-content">
-                <img class="card-img img-fluid" src="{{ asset('images/elements/clock2.jpg') }}" alt="Card image">
-                <div class="card-img-overlay overflow-hidden overlay-primary overlay-lighten-2">
                     @php
                     date_default_timezone_set('Europe/Budapest');
 
@@ -33,13 +29,11 @@
                     $timenow = new DateTime(date("H:i:s"));
                     $timenow = date_format($timenow, 'H:i:s');
                     @endphp
-                    <h1 class="text-white"><div id="txt"></div></h1>
-                    <p class="card-text text-white">{{ $datenow }}</p>
-                </div>
+                    <h1 class="text-white" style="height: 33px;"><div id="txt"></div></h1>
+                    <p class="card-text text-white" style="margin-right: 80px;">{{ $datenow }}</p>
             </div>
         </div>
     </div>
-</div>
 
     <div class="row">
         <div class="col-md-12 col-12">
@@ -245,25 +239,25 @@
                                         @endif
                                     @endforeach
                                 @if ($x > 0)
-                                <div class="badge badge-primary mb-1" data-toggle="popover" data-content="{{ $order->customer->firstname }} már {{ $x }} alkalommal rendelt önöktől!" data-trigger="hover" data-original-title="Visszatérő vendég!" data-placement="top" style="cursor: pointer; float: right;">
+                                <div class="badge badge-primary mb-1" data-toggle="popover" data-content="{{ $order->customer_firstname }} már {{ $x }} alkalommal rendelt önöktől!" data-trigger="hover" data-original-title="Visszatérő vendég!" data-placement="top" style="cursor: pointer; float: right;">
                                     <i class="fa fa-user-circle"></i>
                                     <span>Visszatérő vendég</span>
                                 </div>
                                 @elseif (count($order->customer->orders) < 1)
-                                <div class="badge badge-primary mb-1" data-toggle="popover" data-content="Ez {{ $order->customer->firstname }} első rendelése!" data-trigger="hover" data-original-title="Új felhasználó!" data-placement="top" style="cursor: pointer; float: right;">
+                                <div class="badge badge-primary mb-1" data-toggle="popover" data-content="Ez {{ $order->customer_firstname }} első rendelése!" data-trigger="hover" data-original-title="Új felhasználó!" data-placement="top" style="cursor: pointer; float: right;">
                                     <i class="fa fa-user-plus"></i>
                                     <span>Új felhasználó</span>
                                 </div>
                                 @elseif (count($order->customer->orders) >= 1)
-                                <div class="badge badge-primary mb-1" data-toggle="popover" data-content="Ez {{ $order->customer->firstname }} első rendelése önöktől!" data-trigger="hover" data-original-title="Új felhasználó!" data-placement="top" style="cursor: pointer; float: right;">
+                                <div class="badge badge-primary mb-1" data-toggle="popover" data-content="Ez {{ $order->customer_firstname }} első rendelése önöktől!" data-trigger="hover" data-original-title="Új felhasználó!" data-placement="top" style="cursor: pointer; float: right;">
                                     <i class="fa fa-user-circle-o"></i>
                                     <span>Új vendég</span>
                                 </div>
                                 @endif
-                                <p><i class="fa fa-user" ></i> <b>{{ $order->customer->lastname }} {{ $order->customer->firstname }}</b></p>
-                                <p><i class="fa fa-phone" ></i> {{ $order->customer->phone }}</p>
-                                <p><i class="fa fa-envelope" ></i> {{ $order->customer->email }}</p>
-                                <p><i class="fa fa-address-card" ></i> {{ $order->customer->zipcode }} {{ $order->customer->city }} {{ $order->customer->address }}</p>
+                                <p><i class="fa fa-user" ></i> <b>{{ $order->customer_lastname }} {{ $order->customer_firstname }}</b></p>
+                                <p><i class="fa fa-phone" ></i> {{ $order->customer_phone_number }}</p>
+                                <p><i class="fa fa-envelope" ></i> {{ $order->customer_email }}</p>
+                                <p><i class="fa fa-address-card" ></i> {{ $order->customer_zipcode }} {{ $order->customer_city }} {{ $order->customer_address }}</p>
                                 @if (strlen($order->comment) > 2)
                                 <p><i class="fas fa-comment" ></i> {{ $order->comment }}</p>
                                 @endif
@@ -718,25 +712,25 @@
                                         @endif
                                     @endforeach
                                 @if ($x > 0)
-                                <div class="badge badge-primary mb-1" data-toggle="popover" data-content="{{ $order->customer->firstname }} már {{ $x }} alkalommal rendelt önöktől!" data-trigger="hover" data-original-title="Visszatérő vendég!" data-placement="top" style="cursor: pointer; float: right;">
+                                <div class="badge badge-primary mb-1" data-toggle="popover" data-content="{{ $order->customer_firstname }} már {{ $x }} alkalommal rendelt önöktől!" data-trigger="hover" data-original-title="Visszatérő vendég!" data-placement="top" style="cursor: pointer; float: right;">
                                     <i class="fa fa-user-circle"></i>
                                     <span>Visszatérő vendég</span>
                                 </div>
                                 @elseif (count($order->customer->orders) < 1)
-                                <div class="badge badge-primary mb-1" data-toggle="popover" data-content="Ez {{ $order->customer->firstname }} első rendelése!" data-trigger="hover" data-original-title="Új felhasználó!" data-placement="top" style="cursor: pointer; float: right;">
+                                <div class="badge badge-primary mb-1" data-toggle="popover" data-content="Ez {{ $order->customer_firstname }} első rendelése!" data-trigger="hover" data-original-title="Új felhasználó!" data-placement="top" style="cursor: pointer; float: right;">
                                     <i class="fa fa-user-plus"></i>
                                     <span>Új felhasználó</span>
                                 </div>
                                 @elseif (count($order->customer->orders) >= 1)
-                                <div class="badge badge-primary mb-1" data-toggle="popover" data-content="Ez {{ $order->customer->firstname }} első rendelése önöktől!" data-trigger="hover" data-original-title="Új felhasználó!" data-placement="top" style="cursor: pointer; float: right;">
+                                <div class="badge badge-primary mb-1" data-toggle="popover" data-content="Ez {{ $order->customer_firstname }} első rendelése önöktől!" data-trigger="hover" data-original-title="Új felhasználó!" data-placement="top" style="cursor: pointer; float: right;">
                                     <i class="fa fa-user-circle-o"></i>
                                     <span>Új vendég</span>
                                 </div>
                                 @endif
-                                <p><i class="fa fa-user" ></i> <b>{{ $order->customer->lastname }} {{ $order->customer->firstname }}</b></p>
-                                <p><i class="fa fa-phone" ></i> {{ $order->customer->phone }}</p>
-                                <p><i class="fa fa-envelope" ></i> {{ $order->customer->email }}</p>
-                                <p><i class="fa fa-address-card" ></i> {{ $order->customer->zipcode }} {{ $order->customer->city }} {{ $order->customer->address }}</p>
+                                <p><i class="fa fa-user" ></i> <b>{{ $order->customer_lastname }} {{ $order->customer_firstname }}</b></p>
+                                <p><i class="fa fa-phone" ></i> {{ $order->customer_phone_number }}</p>
+                                <p><i class="fa fa-envelope" ></i> {{ $order->customer_email }}</p>
+                                <p><i class="fa fa-address-card" ></i> {{ $order->customer_zipcode }} {{ $order->customer_city }} {{ $order->customer_address }}</p>
                                 @if (strlen($order->comment) > 2)
                                 <p><i class="fas fa-comment" ></i> {{ $order->comment }}</p>
                                 @endif
@@ -1142,25 +1136,25 @@
                                         @endif
                                     @endforeach
                                 @if ($x > 0)
-                                <div class="badge badge-primary mb-1" data-toggle="popover" data-content="{{ $order->customer->firstname }} már {{ $x }} alkalommal rendelt önöktől!" data-trigger="hover" data-original-title="Visszatérő vendég!" data-placement="top" style="cursor: pointer; float: right;">
+                                <div class="badge badge-primary mb-1" data-toggle="popover" data-content="{{ $order->customer_firstname }} már {{ $x }} alkalommal rendelt önöktől!" data-trigger="hover" data-original-title="Visszatérő vendég!" data-placement="top" style="cursor: pointer; float: right;">
                                     <i class="fa fa-user-circle"></i>
                                     <span>Visszatérő vendég</span>
                                 </div>
                                 @elseif (count($order->customer->orders) < 1)
-                                <div class="badge badge-primary mb-1" data-toggle="popover" data-content="Ez {{ $order->customer->firstname }} első rendelése!" data-trigger="hover" data-original-title="Új felhasználó!" data-placement="top" style="cursor: pointer; float: right;">
+                                <div class="badge badge-primary mb-1" data-toggle="popover" data-content="Ez {{ $order->customer_firstname }} első rendelése!" data-trigger="hover" data-original-title="Új felhasználó!" data-placement="top" style="cursor: pointer; float: right;">
                                     <i class="fa fa-user-plus"></i>
                                     <span>Új felhasználó</span>
                                 </div>
                                 @elseif (count($order->customer->orders) >= 1)
-                                <div class="badge badge-primary mb-1" data-toggle="popover" data-content="Ez {{ $order->customer->firstname }} első rendelése önöktől!" data-trigger="hover" data-original-title="Új felhasználó!" data-placement="top" style="cursor: pointer; float: right;">
+                                <div class="badge badge-primary mb-1" data-toggle="popover" data-content="Ez {{ $order->customer_firstname }} első rendelése önöktől!" data-trigger="hover" data-original-title="Új felhasználó!" data-placement="top" style="cursor: pointer; float: right;">
                                     <i class="fa fa-user-circle-o"></i>
                                     <span>Új vendég</span>
                                 </div>
                                 @endif
-                                <p><i class="fa fa-user" ></i> <b>{{ $order->customer->lastname }} {{ $order->customer->firstname }}</b></p>
-                                <p><i class="fa fa-phone" ></i> {{ $order->customer->phone }}</p>
-                                <p><i class="fa fa-envelope" ></i> {{ $order->customer->email }}</p>
-                                <p><i class="fa fa-address-card" ></i> {{ $order->customer->zipcode }} {{ $order->customer->city }} {{ $order->customer->address }}</p>
+                                <p><i class="fa fa-user" ></i> <b>{{ $order->customer_lastname }} {{ $order->customer_firstname }}</b></p>
+                                <p><i class="fa fa-phone" ></i> {{ $order->customer_phone_number }}</p>
+                                <p><i class="fa fa-envelope" ></i> {{ $order->customer_email }}</p>
+                                <p><i class="fa fa-address-card" ></i> {{ $order->customer_zipcode }} {{ $order->customer_city }} {{ $order->customer_address }}</p>
                                 @if (strlen($order->comment) > 2)
                                 <p><i class="fas fa-comment" ></i> {{ $order->comment }}</p>
                                 @endif

@@ -10,6 +10,22 @@
 /*========================================================
         DARK LAYOUT
 =========================================================*/
+.notifier-bar {
+ margin-top: 62px;
+ margin-bottom: -62px;
+ width: 100%;
+ background-color: #ffe4ca;
+ color: #333;
+ text-align: center;
+}
+
+.notifier-bar p {
+  padding: 10px;
+  color: #333;
+  font-size: 14px;
+  font-weight: 700;
+  text-align: center;
+ }
 
 .invoice-alert {
   border-radius: 4px;

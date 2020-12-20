@@ -23,12 +23,11 @@
 
 @section('content')
 <section id="basic-horizontal-layouts">
-<div class="row">
-    <div class="col-lg-3 col-md-5 col-sm-12">
-        <div class="card">
-            <div class="card-content">
-                <img class="card-img img-fluid" src="{{ asset('images/elements/clock2.jpg') }}" alt="Card image">
-                <div class="card-img-overlay overflow-hidden overlay-primary overlay-lighten-2">
+
+    <div class="row">
+        <div class="card" style="margin: 0px 14px 30px 14px; border-radius: 7px; width: auto; background-image: url('{{ asset('images/elements/clock2.jpg') }}'); background-size: cover; background-position: center; padding: 0px 0px 0px 0px;">
+            <div class="card-content" style="border-radius: 7px; width: auto; padding: 10px 10px 10px 10px; background-color: rgba(71, 178, 114, 0.7); padding: 10px 10px 10px 10px;">
+
                     @php
                     date_default_timezone_set('Europe/Budapest');
 
@@ -38,13 +37,11 @@
                     $timenow = new DateTime(date("H:i:s"));
                     $timenow = date_format($timenow, 'H:i:s');
                     @endphp
-                    <h1 class="text-white"><div id="txt"></div></h1>
-                    <p class="card-text text-white">{{ $datenow }}</p>
-                </div>
+                    <h1 class="text-white" style="height: 33px;"><div id="txt"></div></h1>
+                    <p class="card-text text-white" style="margin-right: 80px;">{{ $datenow }}</p>
             </div>
         </div>
     </div>
-</div>
     <!-- Modal -->
     <div class="modal fade text-left" id="onshow" tabindex="-1" role="dialog" aria-labelledby="myModalLabel21" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
