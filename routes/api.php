@@ -20,6 +20,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::post('login', 'CustomerController@login');
 Route::post('register', 'CustomerController@register');
 Route::post('forgot', 'CustomerController@forgot');
+Route::post('reset', 'CustomerController@reset');
 
 Route::get('notification/{id}', 'NotificationController@update');
 Route::get('/', 'NotificationController@getinfo');

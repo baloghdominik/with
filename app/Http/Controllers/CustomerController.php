@@ -66,9 +66,9 @@ class CustomerController extends Controller {
 
         $email = request('email');
 
-        $customer = Customer::where('email', '=', $email)->get();
+        $customer = Customer::where('email', '=', $email)->first();
 
-        if ($customer->count() !== 1) {
+        if ($customer == NULL) {
             return response()->json(['error'=>"User not found."], 401); 
         }
 
@@ -95,6 +95,61 @@ class CustomerController extends Controller {
         }
 
         return response()->json(["success" => 'Reset password link sent to the given email address.'], 200);
+    }
+
+    public function reset(Request $request, MailerController $MailerController) {
+        $validator = Validator::make($request->all(), [ 
+            'token' => 'required|string|max:500|min:1',
+            'new_password' => 'required|string|min:8|max:25',
+            'new_password_confirm' => 'required|string|min:8|max:25',
+        ]);
+
+        if ($validator->fails()) { 
+            return response()->json(['error'=>$validator->errors()], 401);            
+        }
+
+        $token = request('token');
+
+        $dt = new DateTime("now", new DateTimeZone('Europe/Budapest'));
+        $dt = $dt->format('Y-m-d H:i:s');
+
+        $DateTime = DateTime::createFromFormat('Y-m-d H:i:s', $dt);
+        $DateTime->modify('-60 minutes');
+        $DateTime->format("Y-m-d H:i:s");
+        $last1hour = $DateTime;
+
+        $customerPasswordReset = CustomerPasswordReset::where('token', '=', $token)->where('created_at', '>', $last1hour)->first();
+
+        if ($customerPasswordReset == NULL) {
+            return response()->json(['error'=>"Invalid token."], 401); 
+        }
+
+        $customer = Customer::where('email', '=', $customerPasswordReset->email)->first();
+
+        if ($customer == NULL) {
+            return response()->json(['error'=>"User not found."], 401); 
+        }
+
+        $password = request('new_password');
+        $password_c = request('new_password_confirm');
+
+        if ($password === $password_c) {
+            if (Hash::check($password, $customer->password)) {
+                return response()->json(['error'=>"The new password can not be the same as the current."], 401);     
+            } else {
+                $pattern = "/^(?=.{8,25})(?=[A-ZÍÖÜÓÚŐŰÁÉ]*)(?=.+[a-zíéáűúőóüö])(?=.+[\d])(?=[@#$%^&+=_!?.&#$*:-]*)[A-ZÍÖÜÓÚŐŰÁÉa-zíéáűúőóüö\d@#$%^&+=_!?.&#$*:-]*$/";
+                if (preg_match($pattern, $password)) {
+                    $customer->password = bcrypt($password);
+                    $customer->save();
+                } else {
+                    return response()->json(['error'=>"Password format is not valid."], 401); 
+                }
+            }
+        } else {
+            return response()->json(['error'=>"The new passwords are not matching."], 401); 
+        }
+
+        return response()->json(["success" => 'The password has been updated.'], 200);
     }
 
     /** 
