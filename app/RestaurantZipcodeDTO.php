@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class RestaurantZipcodeDTO extends Model
 {
     protected $fillable = [
-        'restaurantid', 'zipcode'
+        'restaurantid', 'zipcode', 'city',
     ];
 
     public function restaurant(){

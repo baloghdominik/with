@@ -16,4 +16,8 @@ class RestaurantZipcode extends Model
     public function restaurant(){
         return $this->belongsTo('App\Restaurant','restaurantid','id');
     }
+
+    public function zip(){
+        return $this->hasOne('App\Zipcode','zipcode','zipcode');
+    }
 }

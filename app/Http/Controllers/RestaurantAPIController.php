@@ -459,6 +459,7 @@ class RestaurantAPIController extends Controller
         foreach ($restaurant->zipcodes as $zip) {
             $restaurantZipcodeDTO = new restaurantZipcodeDTO;
             $restaurantZipcodeDTO->zipcode = $zip->zipcode;
+            $restaurantZipcodeDTO->city = $zip->zip->city;
             $restaurantDTO->zipcodes[] = $restaurantZipcodeDTO;
         }
 
