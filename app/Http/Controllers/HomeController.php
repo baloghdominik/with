@@ -108,4 +108,9 @@ class HomeController extends Controller
     {
         return view('/email/order', []);
     }
+
+    public function mail2() 
+    {
+        return view('/email/passwordreset', []);
+    }
 }

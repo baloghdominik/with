@@ -1184,7 +1184,7 @@
                                             <span>Logó</span>
                                         </div>
                                         <div class="col-md-8">
-                                            <img style="max-height: 190px; width: auto;" class="card-img img-fluid mb-1" src="{{ asset('images/logos/with.hu_'.$restaurant->id.'_'.$restaurant->lowercasename.'_logo.jpg') }}" alt="">
+                                            <img style="max-height: 190px; width: auto;" class="card-img img-fluid mb-1" src="{{ asset('images/logos/with.hu_'.$restaurant->id.'_'.$restaurant->lowercasename.'_logo.jpg?nocache='.time()) }}" alt="">
                                             <div class="custom-file">
                                                     <input type="file" name="logo" class="custom-file-input" id="inputGroupFile01">
                                                     <label class="custom-file-label" for="inputGroupFile01">Válasszon fotót</label>
@@ -1199,7 +1199,7 @@
                                             <span>Fejléc</span>
                                         </div>
                                         <div class="col-md-8">
-                                            <img style="max-height: 190px; width: auto;" class="card-img img-fluid mb-1" src="{{ asset('images/banners/with.hu_'.$restaurant->id.'_'.$restaurant->lowercasename.'_banner.jpg') }}" alt="">
+                                            <img style="max-height: 190px; width: auto;" class="card-img img-fluid mb-1" src="{{ asset('images/banners/with.hu_'.$restaurant->id.'_'.$restaurant->lowercasename.'_banner.jpg?nocache='.time()) }}" alt="">
                                             <div class="custom-file">
                                                     <input type="file" name="banner" class="custom-file-input" id="inputGroupFile02">
                                                     <label class="custom-file-label" for="inputGroupFile02">Válasszon fotót</label>
@@ -1214,7 +1214,7 @@
                                             <span>Fő fotó</span>
                                         </div>
                                         <div class="col-md-8">
-                                            <img style="max-height: 190px; width: auto;" class="card-img img-fluid mb-1" src="{{ asset('images/banners/big/with.hu_'.$restaurant->id.'_'.$restaurant->lowercasename.'_banner.jpg') }}" alt="">
+                                            <img style="max-height: 190px; width: auto;" class="card-img img-fluid mb-1" src="{{ asset('images/banners/big/with.hu_'.$restaurant->id.'_'.$restaurant->lowercasename.'_banner.jpg?nocache='.time()) }}" alt="">
                                             <div class="custom-file">
                                                     <input type="file" name="bigbanner" class="custom-file-input" id="inputGroupFile020">
                                                     <label class="custom-file-label" for="inputGroupFile020">Válasszon fotót</label>
@@ -1229,37 +1229,37 @@
                                             <span>Galéria</span>
                                         </div>
                                         <div class="col-md-8">
-                                            <img style="max-height: 190px; width: auto;" class="card-img img-fluid mb-1" src="{{ asset('images/galleries/with.hu_'.$restaurant->id.'_'.$restaurant->lowercasename.'_pic1.jpg') }}" alt="">
+                                            <img style="max-height: 190px; width: auto;" class="card-img img-fluid mb-1" src="{{ asset('images/galleries/with.hu_'.$restaurant->id.'_'.$restaurant->lowercasename.'_pic1.jpg?nocache='.time()) }}" alt="">
                                             <div class="custom-file mb-2">
                                                     <input type="file" name="pic1" class="custom-file-input" id="inputGroupFile03">
                                                     <label class="custom-file-label" for="inputGroupFile03">Válasszon fotót</label>
                                             </div>
 
-                                            <img style="max-height: 190px; width: auto;" class="card-img img-fluid mb-1 mt-2" src="{{ asset('images/galleries/with.hu_'.$restaurant->id.'_'.$restaurant->lowercasename.'_pic2.jpg') }}" alt="">
+                                            <img style="max-height: 190px; width: auto;" class="card-img img-fluid mb-1 mt-2" src="{{ asset('images/galleries/with.hu_'.$restaurant->id.'_'.$restaurant->lowercasename.'_pic2.jpg?nocache='.time()) }}" alt="">
                                             <div class="custom-file mb-2">
                                                     <input type="file" name="pic2" class="custom-file-input" id="inputGroupFile04">
                                                     <label class="custom-file-label" for="inputGroupFile04">Válasszon fotót</label>
                                             </div>
 
-                                            <img style="max-height: 190px; width: auto;" class="card-img img-fluid mb-1 mt-2" src="{{ asset('images/galleries/with.hu_'.$restaurant->id.'_'.$restaurant->lowercasename.'_pic3.jpg') }}" alt="">
+                                            <img style="max-height: 190px; width: auto;" class="card-img img-fluid mb-1 mt-2" src="{{ asset('images/galleries/with.hu_'.$restaurant->id.'_'.$restaurant->lowercasename.'_pic3.jpg?nocache='.time()) }}" alt="">
                                             <div class="custom-file mb-2">
                                                     <input type="file" name="pic3" class="custom-file-input" id="inputGroupFile05">
                                                     <label class="custom-file-label" for="inputGroupFile05">Válasszon fotót</label>
                                             </div>
 
-                                            <img style="max-height: 190px; width: auto;" class="card-img img-fluid mb-1 mt-2" src="{{ asset('images/galleries/with.hu_'.$restaurant->id.'_'.$restaurant->lowercasename.'_pic4.jpg') }}" alt="">
+                                            <img style="max-height: 190px; width: auto;" class="card-img img-fluid mb-1 mt-2" src="{{ asset('images/galleries/with.hu_'.$restaurant->id.'_'.$restaurant->lowercasename.'_pic4.jpg?nocache='.time()) }}" alt="">
                                             <div class="custom-file mb-2">
                                                     <input type="file" name="pic4" class="custom-file-input" id="inputGroupFile06">
                                                     <label class="custom-file-label" for="inputGroupFile06">Válasszon fotót</label>
                                             </div>
 
-                                            <img style="max-height: 190px; width: auto;" class="card-img img-fluid mb-1 mt-2" src="{{ asset('images/galleries/with.hu_'.$restaurant->id.'_'.$restaurant->lowercasename.'_pic5.jpg') }}" alt="">
+                                            <img style="max-height: 190px; width: auto;" class="card-img img-fluid mb-1 mt-2" src="{{ asset('images/galleries/with.hu_'.$restaurant->id.'_'.$restaurant->lowercasename.'_pic5.jpg?nocache='.time()) }}" alt="">
                                             <div class="custom-file mb-2">
                                                     <input type="file" name="pic5" class="custom-file-input" id="inputGroupFile07">
                                                     <label class="custom-file-label" for="inputGroupFile07">Válasszon fotót</label>
                                             </div>
 
-                                            <img style="max-height: 190px; width: auto;" class="card-img img-fluid mb-1 mt-2" src="{{ asset('images/galleries/with.hu_'.$restaurant->id.'_'.$restaurant->lowercasename.'_pic6.jpg') }}" alt="">
+                                            <img style="max-height: 190px; width: auto;" class="card-img img-fluid mb-1 mt-2" src="{{ asset('images/galleries/with.hu_'.$restaurant->id.'_'.$restaurant->lowercasename.'_pic6.jpg?nocache='.time()) }}" alt="">
                                             <div class="custom-file mb-2">
                                                     <input type="file" name="pic6" class="custom-file-input" id="inputGroupFile08">
                                                     <label class="custom-file-label" for="inputGroupFile08">Válasszon fotót</label>

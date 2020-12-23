@@ -3,6 +3,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request; 
 use App\Http\Controllers\Controller; 
 use App\Customer; 
+use App\CustomerPasswordReset; 
 use App\CustomerDTO; 
 use App\Zipcode; 
 use App\Order;
@@ -20,9 +21,12 @@ use App\CustomerOrderProductDTO;
 use App\Restaurant;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth; 
+use Illuminate\Support\Facades\Password;
 use Validator;
 use DateTime;
 use DateTimeZone;
+use App\Http\Controllers\MailerController;
+
 class CustomerController extends Controller {
 
     public $successStatus = 200;
@@ -31,7 +35,17 @@ class CustomerController extends Controller {
      * 
      * @return \Illuminate\Http\Response 
      */ 
-    public function login(){ 
+    public function login(Request $request) { 
+
+        $validator = Validator::make($request->all(), [ 
+            'email' => 'required|email|max:50|min:5',
+            'password' => 'required|string|min:8|max:25',
+        ]);
+
+        if ($validator->fails()) { 
+            return response()->json(['error'=>$validator->errors()], 401);            
+        }
+
         if(Auth::attempt(['email' => request('email'), 'password' => request('password')])){ 
             $customer = Auth::user(); 
             $success['token'] =  $customer->createToken('WithAdmin')-> accessToken; 
@@ -39,6 +53,48 @@ class CustomerController extends Controller {
         } else { 
             return response()->json(['error'=>'Unauthorised'], 401); 
         } 
+    }
+
+    public function forgot(Request $request, MailerController $MailerController) {
+        $validator = Validator::make($request->all(), [ 
+            'email' => 'required|email|max:50|min:5',
+        ]);
+
+        if ($validator->fails()) { 
+            return response()->json(['error'=>$validator->errors()], 401);            
+        }
+
+        $email = request('email');
+
+        $customer = Customer::where('email', '=', $email)->get();
+
+        if ($customer->count() !== 1) {
+            return response()->json(['error'=>"User not found."], 401); 
+        }
+
+        $customerPasswordReset = new CustomerPasswordReset;
+
+        $customerPasswordReset->email = $email;
+
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $charactersLength = strlen($characters);
+        $randomString = '';
+        for ($i = 0; $i < 50; $i++) {
+            $randomString .= $characters[rand(0, $charactersLength - 1)];
+        }
+
+        $customerPasswordReset->token = md5($randomString);
+
+        $dt = new DateTime("now", new DateTimeZone('Europe/Budapest'));
+        $customerPasswordReset->created_at = $dt->format('Y-m-d H:i:s');
+
+        $customerPasswordReset->save();
+
+        if (!$MailerController->passwordResetMail($customerPasswordReset->email, $customerPasswordReset->token)) {
+            return response()->json(['error'=>"Mail not sent."], 401); 
+        }
+
+        return response()->json(["success" => 'Reset password link sent to the given email address.'], 200);
     }
 
     /** 
@@ -465,7 +521,7 @@ class CustomerController extends Controller {
                     $customerOrderDTO->delivery_time = $deliverytime;
                 }
 
-                $customerOrderDTO->delivery_address = $customer->zipcode." ".$customer->city." ".$customer->address;
+                $customerOrderDTO->delivery_address = $order->customer_zipcode." ".$order->customer_city." ".$order->customer_address;
             } else {
                 if ($order->pickuptime === NULL) {
                     $customerOrderDTO->delivery_time = "Átvételre vár!";
@@ -486,21 +542,22 @@ class CustomerController extends Controller {
                 $customerOrderDTO->delivery_address = $restaurant->address;
             }
 
-            $customerOrderDTO->customer_phone = $customer->phone;
-            $customerOrderDTO->name = $customer->lastname." ".$customer->firstname;
+            $customerOrderDTO->customer_phone = $order->customer_phone_number;
+            $customerOrderDTO->name = $order->customer_lastname." ".$order->customer_firstname;
+            $customerOrderDTO->invoice = $order->invoice;
 
             $products = array();
 
             foreach ($order->ordermeal as $item) {
                 $customerOrderProductDTO = new CustomerOrderProductDTO;
-                $customerOrderProductDTO->product_name = $item->meal->name;
+                $customerOrderProductDTO->product_name = $item->name;
 
                 $description = "";
                 foreach ($item->ordermealextras as $extra) {
                     if ($description == "") {
-                        $description = $description."+".$extra->extra->name;
+                        $description = $description."+".$extra->name;
                     } else {
-                        $description = $description.", +".$extra->extra->name;
+                        $description = $description.", +".$extra->name;
                     }
                 }
                 $customerOrderProductDTO->product_description = $description;
@@ -512,7 +569,7 @@ class CustomerController extends Controller {
             
             foreach ($order->orderside as $item) {
                 $customerOrderProductDTO = new CustomerOrderProductDTO;
-                $customerOrderProductDTO->product_name = $item->side->name;
+                $customerOrderProductDTO->product_name = $item->name;
                 $customerOrderProductDTO->product_description = "";
                 $customerOrderProductDTO->product_quantity = $item->quantity;
 
@@ -521,7 +578,7 @@ class CustomerController extends Controller {
 
             foreach ($order->orderdrink as $item) {
                 $customerOrderProductDTO = new CustomerOrderProductDTO;
-                $customerOrderProductDTO->product_name = $item->drink->name;
+                $customerOrderProductDTO->product_name = $item->name;
                 $customerOrderProductDTO->product_description = "";
                 $customerOrderProductDTO->product_quantity = $item->quantity;
 
@@ -530,14 +587,14 @@ class CustomerController extends Controller {
 
             foreach ($order->ordermenu as $item) {
                 $customerOrderProductDTO = new CustomerOrderProductDTO;
-                $customerOrderProductDTO->product_name = $item->menu->name." +".$item->side->name." +".$item->drink->name." (".$item->drink->size."ml)";
+                $customerOrderProductDTO->product_name = $item->menu_name." +".$item->side_name." +".$item->drink_name;
 
                 $description = "";
                 foreach ($item->ordermenuextras as $extra) {
                     if ($description == "") {
-                        $description = $description."+".$extra->extra->name;
+                        $description = $description."+".$extra->name;
                     } else {
-                        $description = $description.", +".$extra->extra->name;
+                        $description = $description.", +".$extra->name;
                     }
                 }
                 $customerOrderProductDTO->product_description = $description;
@@ -549,16 +606,16 @@ class CustomerController extends Controller {
 
             foreach ($order->orderpizza as $item) {
                 $customerOrderProductDTO = new CustomerOrderProductDTO;
-                $customerOrderProductDTO->product_name = $item->size->size."cm-es Egyéni Pizza";
+                $customerOrderProductDTO->product_name = $item->size_name."-es Egyéni Pizza";
 
-                $description = "Tészta: ".$item->dough->name." | Alap: ".$item->base->name." | Feltétek: ";
+                $description = "Tészta: ".$item->dough_name." | Alap: ".$item->base_name." | Feltétek: ";
 
                 $toppings = "";
                 foreach ($item->toppings as $topping) {
                     if ($toppings == "") {
-                        $toppings = $topping->topping->name;
+                        $toppings = $topping->name;
                     } else {
-                        $toppings = $toppings.", ".$topping->topping->name;
+                        $toppings = $toppings.", ".$topping->name;
                     }
                 }
                 if (strlen($toppings) > 1) {
@@ -570,9 +627,9 @@ class CustomerController extends Controller {
                 $sauces = "";
                 foreach ($item->sauces as $sauce) {
                     if ($sauces == "") {
-                        $sauces = $sauce->sauce->name;
+                        $sauces = $sauce->name;
                     } else {
-                        $sauces = $sauces.", ".$sauce->sauce->name;
+                        $sauces = $sauces.", ".$sauce->name;
                     }
                 }
                 if (strlen($sauces) > 1) {

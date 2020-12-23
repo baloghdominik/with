@@ -35,4 +35,23 @@ class MailerController extends Controller
         ]);
     }
 
+    public function passwordResetMail($email, $token)
+    {
+
+        $details = [
+            'to' => $email,
+            'from' => "noreply@with.hu",
+            'subject' => "With - Jelszó helyreállítás",
+            "template" => "email.passwordreset",
+            "token" => $token
+        ];
+
+        \Mail::to($email)->send(new \App\Mail\Mailer($details));
+
+        if (Mail::failures()) {
+            return false;
+        }
+        return true;
+    }
+
 }

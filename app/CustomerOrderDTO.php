@@ -23,6 +23,7 @@ class CustomerOrderDTO extends Model
         'customer_phone',
         'customer_name',
         'comment',
+        'invoice',
         'products'
     ];
 }

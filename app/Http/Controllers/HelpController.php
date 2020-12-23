@@ -107,7 +107,7 @@ class HelpController extends Controller
             $s4 = 0; 
         }
 
-        $url = "https://with.hu";
+        $url = "https://api.barion.com/";
         $s5 = 0;
         $headers = @get_headers($url); 
         if($headers && strpos( $headers[0], '200')) { 

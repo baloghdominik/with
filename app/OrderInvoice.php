@@ -18,6 +18,10 @@ class OrderInvoice extends Model
         'invoice_tax_number'
     ];
 
+    protected $hidden = [
+        'id', 'order_id', 'restaurant_id', 'updated_at', 'created_at'
+    ];
+
     public function order(){
         return $this->belongsTo('App\Order','order_id','id');
     }

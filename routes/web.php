@@ -15,7 +15,6 @@
 
 Route::get('/login', 'LoginController@index')->name('login');
 
-
 Route::get('/add-meal', 'MealController@addMeal');
 Route::get('/add-side', 'SideController@addSide');
 Route::get('/add-drink', 'DrinkController@addDrink');
@@ -114,3 +113,4 @@ Route::get('/', 'HomeController@index')->name('home');
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/mail', 'HomeController@mail');
+Route::get('/mail2', 'HomeController@mail2');

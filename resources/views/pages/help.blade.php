@@ -236,7 +236,7 @@
                         <div class="card-content">
                             <div class="card-body">
                                 <i class="mb-1 fa fa-4x fa-check-circle"></i>
-                                <h4 class="card-title text-white">Online Fizetés</h4>
+                                <h4 class="card-title text-white"><img src="{{ asset('images/barion.png') }}" alt="Barion" height="15px" width="auto" style="margin-bottom: 4px;"> Online Fizetés</h4>
                                 <p class="card-text text-white">Elérhető</p>
                             </div>
                         </div>
@@ -248,7 +248,7 @@
                         <div class="card-content">
                             <div class="card-body">
                                 <i class="mb-1 fa fa-4x fa-times-circle"></i>
-                                <h4 class="card-title text-white">Online Fizetés</h4>
+                                <h4 class="card-title text-white"><img src="{{ asset('images/barion.png') }}" alt="Barion" height="15px" width="auto" style="margin-bottom: 4px;"> Online Fizetés</h4>
                                 <p class="card-text text-white">Nem elérhető</p>
                             </div>
                         </div>
