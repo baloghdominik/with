@@ -28,6 +28,9 @@ Route::get('/', 'NotificationController@getinfo');
 Route::get('restaurants/near/zip/{zipcode}', 'RestaurantAPIController@getAllRestaurantsNearByZipcode');
 Route::get('restaurants/near/geo/{latitude}/{longitude}', 'RestaurantAPIController@getAllRestaurantsNearByGEO');
 
+Route::get('location/geo/{latitude}/{longitude}', 'RestaurantAPIController@getLocationByGEO');
+Route::get('location/zip/{zipcode}', 'RestaurantAPIController@getLocationByZIP');
+
 Route::get('restaurant/alldata/{type}/{id}', 'RestaurantAPIController@getRestaurantAlldataById');
 Route::get('restaurant/logo/{id}', 'RestaurantAPIController@getRestaurantLogoById');
 Route::get('restaurant/lowercasename/{lowercasename}', 'RestaurantAPIController@getRestaurantIdBylowercasename');

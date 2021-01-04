@@ -113,4 +113,28 @@ class HomeController extends Controller
     {
         return view('/email/passwordreset', []);
     }
+
+    public function testdl() 
+    {
+
+        $myfile = fopen(public_path() . '/testdl.json', "w");
+
+        $orderCount = DB::table('order')
+        ->select(DB::raw('DATE(created_at) AS date'), DB::raw('count(*) AS ordercount'))
+        ->where('restaurant_id', '=', 1)
+        ->where('order.is_final_order', '=', 1)
+        ->where('order.is_accepted', '=', 1)
+        ->where('order.is_refund', '=', 0)
+        ->where('order.is_finished', '=', 1)
+        ->orderBy('created_at', 'ASC')
+        ->groupBy('date')->limit(30)->get();
+
+        fwrite($myfile,$orderCount);
+
+        fclose($myfile);
+
+        $link = public_path() . '/testdl.json';
+
+        return response()->json($link, 200);
+    }
 }

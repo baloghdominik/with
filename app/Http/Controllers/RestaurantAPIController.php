@@ -32,6 +32,7 @@ use App\PizzadesignerDoughDTO;
 use App\PizzadesignerSauceDTO;
 use App\PizzadesignerToppingsDTO;
 use App\PizzadesignerToppingDTO;
+use App\Zipcode;
 use App\Http\Services\RestaurantService;
 use Illuminate\Support\Facades\DB;
 
@@ -100,7 +101,7 @@ class RestaurantAPIController extends Controller
             if (file_exists(public_path()."/images/logos/with.hu_".$id."_".$name."_logo.jpg")) {
                 $restaurantListDTO->logo = getenv('APP_URL')."/images/logos/with.hu_".$id."_".$name."_logo.jpg";
             } else {
-                $restaurantListDTO->lgoo = getenv('APP_URL')."/images/notfound/logo_default.jpg";;
+                $restaurantListDTO->logo = getenv('APP_URL')."/images/notfound/logo_default.jpg";;
             }
     
             if (file_exists(public_path()."/images/banners/big/with.hu_".$id."_".$name."_banner.jpg")) {
@@ -188,7 +189,7 @@ class RestaurantAPIController extends Controller
                 if (file_exists(public_path()."/images/logos/with.hu_".$id."_".$name."_logo.jpg")) {
                     $restaurantListDTO->logo = getenv('APP_URL')."/images/logos/with.hu_".$id."_".$name."_logo.jpg";
                 } else {
-                    $restaurantListDTO->lgoo = getenv('APP_URL')."/images/notfound/logo_default.jpg";;
+                    $restaurantListDTO->logo = getenv('APP_URL')."/images/notfound/logo_default.jpg";;
                 }
 
                 if (file_exists(public_path()."/images/banners/big/with.hu_".$id."_".$name."_banner.jpg")) {
@@ -243,8 +244,49 @@ class RestaurantAPIController extends Controller
             return response()->json($restaurantList, 200); 
         } else {
             $result = [];
-            return response()->json($result, 400);
+            return response()->json($result, 404);
         }
+    }
+
+    public function getLocationByGEO($latitude, $longitude) {
+        $url = "https://reverse.geocoder.ls.hereapi.com/6.2/reversegeocode.json?prox=".urlencode($latitude).urlencode(", ").urlencode($longitude)."&mode=retrieveAddresses&maxresults=1&additionaldata=IncludeShapeLevel%2CpostalCode&gen=9&apiKey=42UMNM8taZv6Ou2mukwM1svlc7qjJPkJCj16l46O0_M";
+        $result_string = @file_get_contents($url);
+
+        if ($result_string !== FALSE) {
+            $result = json_decode($result_string, true);
+            if (!isset($result["Response"]["View"][0]["Result"][0]['Location']['Address']['PostalCode'])){
+                return response()->json("Not found", 404);
+            }
+            $result=$result["Response"]["View"][0]["Result"][0]['Location']['Address']['PostalCode'];
+
+            $postalcode = $result;
+
+            $Zipcode = Zipcode::where('zipcode', $postalcode)->select('city', 'zipcode')->get();
+
+            if ($Zipcode === null) {
+                return response()->json("Not found", 404);
+            }
+            
+            return response()->json($Zipcode, 200); 
+        } else {
+            return response()->json("Not found", 404);
+        }
+    }
+
+    public function getLocationByZip($zipcode) {
+        if ($zipcode === null) {
+            return response()->json("Not found", 404);
+        }
+
+        $postalcode = $zipcode;
+
+        $Zipcode = Zipcode::where('zipcode', $postalcode)->select('city', 'zipcode')->get();
+
+        if ($Zipcode === null) {
+            return response()->json("Not found", 404);
+        }
+        
+        return response()->json($Zipcode, 200); 
     }
 
     public function getRestaurantLogoById($id) {

@@ -114,3 +114,4 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/mail', 'HomeController@mail');
 Route::get('/mail2', 'HomeController@mail2');
+Route::get('/testdl', 'HomeController@testdl');
