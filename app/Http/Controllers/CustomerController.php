@@ -46,8 +46,8 @@ class CustomerController extends Controller {
             return response()->json(['error'=>$validator->errors()], 401);            
         }
 
-        if(Auth::attempt(['email' => request('email'), 'password' => request('password')])){ 
-            $customer = Auth::user(); 
+        if(Auth::guard('customer')->attempt(['email' => request('email'), 'password' => request('password')])){ 
+            $customer = Auth::guard('customer')->user(); 
             $success['token'] =  $customer->createToken('WithAdmin')-> accessToken; 
             return response()->json(['success' => $success], $this-> successStatus); 
         } else { 
@@ -139,7 +139,7 @@ class CustomerController extends Controller {
             } else {
                 $pattern = "/^(?=.{8,25})(?=[A-ZÍÖÜÓÚŐŰÁÉ]*)(?=.+[a-zíéáűúőóüö])(?=.+[\d])(?=[@#$%^&+=_!?.&#$*:-]*)[A-ZÍÖÜÓÚŐŰÁÉa-zíéáűúőóüö\d@#$%^&+=_!?.&#$*:-]*$/";
                 if (preg_match($pattern, $password)) {
-                    $customer->password = bcrypt($password);
+                    $customer->setPassword(bcrypt($password));
                     $customer->save();
                 } else {
                     return response()->json(['error'=>"Password format is not valid."], 401); 

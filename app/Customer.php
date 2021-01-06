@@ -24,6 +24,11 @@ protected $hidden = [
     'password', 'remember_token',
 ];
 
+public function setPassword($password) {
+    $this->setAttribute('password', $password);
+    return $this;
+}
+
 public function AauthAcessToken(){
     return $this->hasMany('\App\OauthAccessToken');
 }

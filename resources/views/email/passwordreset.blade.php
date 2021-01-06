@@ -408,10 +408,10 @@ a.es-button, button.es-button {
                       <td class="es-p5t es-p5b"><p><b style="font-size: 18px;">Helló!</b><br>Ezt az emailt azért kapta, mert a <a style="color: #47b272; text-decoration:none;" href="https://with.hu">with.hu</a>-n keresztül jelszó helyreállítást igényelt.</p></td> 
                      </tr> 
                      <tr> 
-                      <td class="es-p5t es-p5b"><p><b>A</b>z alábbi <b>gomb használatával állíthatja be az új jelszavát</b>.</p></td> 
+                      <td class="es-p5t es-p5b"><p><b>Az alábbi gomb használatával állíthatja be az új jelszavát</b>.</p></td> 
                      </tr>
                      <tr> 
-                      <td align="center" class="es-p10t es-p10b"><span class="es-button-border" style="border-left-color: #333333;background: #47b272;border-radius: 5px"><a href="https://with.hu/reset/{{ $details['token'] }}" class="es-button" target="_blank" style="background: #47b272;border-color: #47b272;border-width: 5px 25px;border-radius: 5px;font-weight: bold;font-size: 14px">Új jelszó beállítása</a></span></td> 
+                      <td align="center" class="es-p10t es-p10b"><span class="es-button-border" style="border-left-color: #333333;background: #47b272;border-radius: 5px"><a href="https://with.hu/password-reset/{{ $details['token'] }}" class="es-button" target="_blank" style="background: #47b272;border-color: #47b272;border-width: 5px 25px;border-radius: 5px;font-weight: bold;font-size: 14px">Új jelszó beállítása</a></span></td> 
                      </tr> 
                      <tr> 
                       <td class="es-p5t es-p5b"><p>A jelszó helyreállító link csak <b>60 percig használható</b>!</p></td> 
@@ -428,7 +428,7 @@ a.es-button, button.es-button {
                        </table></td> 
                      </tr> 
                      <tr> 
-                      <td align="center" class="es-p10t es-p5b"><p style="font-size: 13px"><strong>Probléma akadt a gombbal?</strong><br>Másolja ki az alábbi linket és illessze be egy böngészőprogramba: <a style="color: #47b272; text-decoration:none;" href="https://with.hu/reset/{{ $details['token'] }}"><br/>https://with.hu/reset/{{ $details['token'] }}</a></p></td> 
+                      <td align="center" class="es-p10t es-p5b"><p style="font-size: 13px"><strong>Probléma akadt a gombbal?</strong><br>Másolja ki az alábbi linket és illessze be egy böngészőprogramba: <a style="color: #47b272; text-decoration:none;" href="https://with.hu/password-reset/{{ $details['token'] }}"><br/>https://with.hu/password-reset/{{ $details['token'] }}</a></p></td> 
                      </tr> 
                    </table></td> 
                  </tr> 
