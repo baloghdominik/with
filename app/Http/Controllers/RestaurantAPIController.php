@@ -1010,6 +1010,7 @@ class RestaurantAPIController extends Controller
                         if ($item->menusalepercent > 0 && $item->menusalepercent < 91 && $item->meal->saleprice > 0) {
                             $price = $item->meal->saleprice;
                             $price = ($price / 100) * (100 - $item->menusalepercent);
+                            $price = round($price);
                         } else {
                             $price = $item->meal->saleprice;
                         }
@@ -1021,6 +1022,7 @@ class RestaurantAPIController extends Controller
                             $price = ($price / 100) * (100 - $item->menusalepercent);
                             $productDTO->is_sale = true;
                             $productDTO->old_price = $item->meal->price;
+                            $price = round($price);
                         } else {
                             $price = $item->meal->price;
                             $productDTO->is_sale = false;
